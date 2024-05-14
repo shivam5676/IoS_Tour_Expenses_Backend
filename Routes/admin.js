@@ -7,7 +7,7 @@ const getAllUser = require("../Controllers/admin/getAllUser");
 const routes = express.Router();
 routes.post("/createUser", createUser);
 routes.post("/getAllUser", getAllUser);
-routes.post("/getUsers", getUser);
+routes.post("/getUser", getUser);
 routes.post("/getUserVouchers", getUsersVouchers);
 routes.post("/viewVoucher", viewVoucher);
 

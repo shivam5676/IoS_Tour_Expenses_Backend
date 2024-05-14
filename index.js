@@ -23,14 +23,17 @@ VouchersDescription.belongsTo(Vouchers);
 Vouchers.hasMany(voucherExpense);
 voucherExpense.belongsTo(Vouchers);
 
+userTable.hasMany(voucherExpense)
+voucherExpense.belongsTo(userTable)
+
 app.use(bodyParser.json({ extended: false }));
 app.use("/admin", adminRoutes);
 app.use(authRoutes);
-db.sync({ force: true })
+db.sync({ force: !true })
   .then(async () => {
     console.log("second print");
     const userFind = await userTable.findOne({
-      where: { email: "shivam@gmail.com" },
+      where: { email: "shivam@gmail.com" },   
     });
 
     if (!userFind) {

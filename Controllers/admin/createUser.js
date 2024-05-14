@@ -2,13 +2,14 @@ const userTable = require("../../models/userTable");
 const db = require("../../util/database");
 
 const createUser = async (req, res) => {
+  console.log(req.body);
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const email = req.body.email;
   const isAdmin = req.body.isAdmin;
   const mobile = req.body.mobile;
   const password = req.body.password;
-  const signupResponse = await db.findOne({
+  const signupResponse = await userTable.findOne({
     where: { email: req.body.email },
   });
   if (signupResponse) {
@@ -21,7 +22,7 @@ const createUser = async (req, res) => {
       firstName,
       lastName,
       email,
-      isAdmin,
+      isAdmin: false,
       mobile,
       password,
     });
