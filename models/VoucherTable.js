@@ -1,9 +1,13 @@
 const sequelize = require("sequelize");
 const Sequelize = require("../util/database");
 const Vouchers = Sequelize.define("Vouchers", {
-  status: {
+  // status: {
+  //   type: sequelize.STRING,
+  //   // defaultValue: "pending",
+  // },
+  statusType:{
     type: sequelize.STRING,
-    defaultValue: "pending",
+    // allowNull: false,
   },
   tourLocation: {
     type: sequelize.STRING,
