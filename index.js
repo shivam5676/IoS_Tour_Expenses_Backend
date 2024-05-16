@@ -11,6 +11,7 @@ const authRoutes = require("./Routes/auth");
 const VouchersDescription = require("./models/VoucherDescription");
 const voucherExpense = require("./models/voucherExpense");
 const Vouchers = require("./models/VoucherTable");
+const userRoutes = require("./Routes/user");
 app.use(cors());
 // Vouchers.hasOne(userTable)
 // userTable.belongToMany(Vouchers)
@@ -28,6 +29,7 @@ voucherExpense.belongsTo(userTable)
 
 app.use(bodyParser.json({ extended: false }));
 app.use("/admin", adminRoutes);
+app.use("/user",userRoutes)
 app.use(authRoutes);
 db.sync({ force: !true })
   .then(async () => {
