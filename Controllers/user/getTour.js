@@ -8,16 +8,18 @@ console.log(req.body);
   }
   try {
     const vouchers =await Vouchers.findAll({
- 
-      userId: req.body.userId,
+ where:{
+   userId: req.body.userId,
       statusType:"Created"
+ }
+     
       
     });
     
     if (vouchers.length==0) {
       return res
         .status(400)
-        .json({ msg: "voucher not created........plz try again later" });
+        .json({ msg: "no voucher found" });
     }
     return res.status(200).json({ vouchers: vouchers });
   } catch (err) {

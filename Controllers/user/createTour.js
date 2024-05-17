@@ -1,6 +1,6 @@
 const Vouchers = require("../../models/VoucherTable");
 
-const createTour = (req, res) => {
+const createTour = async (req, res) => {
   const getCurrentDate = () => {
     const now = new Date();
     const day = String(now.getDate()).padStart(2, "0");
@@ -13,7 +13,7 @@ const createTour = (req, res) => {
     return res.status(400).json({ msg: "plz add city ...." });
   }
   try {
-    const voucherCreated = Vouchers.create({
+    const voucherCreated =await Vouchers.create({
       statusType: "Created",
       tourLocation: req.body.city,
       userId: req.body.userId,

@@ -12,9 +12,13 @@ const VouchersDescription = Sequelize.define("voucherDescription", {
     type: sequelize.STRING,
     allowNull: false,
   },
-  transport: {
+  transportArrival: {
     type: sequelize.STRING,
   },
+  transportDeparture: {
+    type: sequelize.STRING,
+  },
+
   arrivalTime: {
     type: sequelize.STRING,
     allowNull: false,
@@ -26,9 +30,10 @@ const VouchersDescription = Sequelize.define("voucherDescription", {
   advanceCash: {
     type: sequelize.STRING,
   },
-  DailyAllowance: {
+  dailyAllowance: {
     type: sequelize.STRING,
   },
   tourExpenses: { type: sequelize.STRING },
+  
 });
 module.exports = VouchersDescription;
