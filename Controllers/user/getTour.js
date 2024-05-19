@@ -12,7 +12,7 @@ console.log(req.body);
    userId: req.body.userId,
       statusType:"Created"
  }
-     
+    
       
     });
     
