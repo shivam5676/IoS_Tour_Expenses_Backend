@@ -27,7 +27,7 @@ const createUser = async (req, res) => {
       password,
     });
     return res.status(200).json({ msg: "account created successfully" });
-  } catch (err) {
+  } catch (err) {console.log(err)
     return res.status(400).json({ msg: "something went wrong" });
   }
 };

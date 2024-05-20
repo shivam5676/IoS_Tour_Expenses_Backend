@@ -6,7 +6,7 @@ const Login = async (req, res, next) => {
       where: {
         email: email,
       },
-    });
+      attributes: { exclude: ['password'] }    });
     if (loginResponse) {
       return res.status(200).json({ data: loginResponse });
     }
@@ -14,5 +14,7 @@ const Login = async (req, res, next) => {
   } catch (err) {
     return res.status(400).json({ msg: "false" });
   }
+  
+
 };
 module.exports = { Login };
