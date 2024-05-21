@@ -53,7 +53,7 @@ db.sync({ force: !true })
       });
     }
 
-        
-        app.listen(2000, () => { });
+
+    app.listen(2000, () => { });
   })
   .catch((err) => console.log(err));
