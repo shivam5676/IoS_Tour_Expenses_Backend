@@ -21,10 +21,12 @@ routes.post("/login", Login);
 //     res.redirect(`https://oipl.bitrix24.in/oauth/authorize?${queryParams}`);
 // });
 
-// routes.post('/home', (req, res) => {  //for bitrix redirecting
-//     res.sendFile(path.join(__dirname, "../", "../IoS_Tour_Expenses/build/index.html"));
-// });
-
+routes.post('/home', (req, res) => {  //for bitrix redirecting
+    res.sendFile(path.join(__dirname, "../", "../IoS_Tour_Expenses/build/index.html"));
+});
+routes.get('/home', (req, res) => {  //for bitrix redirecting
+    res.sendFile(path.join(__dirname, "../", "../IoS_Tour_Expenses/build/index.html"));
+});
 // routes.get('/', (req, res) => {  //for bitrix redirecting
 //     res.sendFile(path.join(__dirname, "../", "../IoS_Tour_Expenses/build/index.html"));
 // });
@@ -67,6 +69,47 @@ routes.post("/login", Login);
 //         // res.status(500).send('Error during authentication');
 //     }
 // });
+
+
+
+routes.get('/queryParams', async (req, res) => {
+    try {
+        const REDIRECT_URI = 'http://localhost:3000/home';
+        const CLIENT_ID = "local.6648983f0cc5d5.97469898";
+        const queryParams = querystring.stringify({
+            response_type: 'code',
+            client_id: CLIENT_ID,
+            redirect_uri: REDIRECT_URI
+        });
+        res.status(200).json({ data: queryParams })
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+routes.get('/callback/:code', async (req, res) => {
+
+    try {
+        const { code } = req.params;
+
+        // Exchange the authorization code for an access token
+        const tokenResponse = await axios.get(`http://oipl.bitrix24.in/oauth/token`, {
+            params: {
+                client_id: CLIENT_ID,
+                grant_type: 'authorization_code',
+                client_secret: CLIENT_SECRET,
+                redirect_uri: REDIRECT_URI,
+                code: code,
+                scope: 'user'
+            }
+        });
+        console.log(tokenResponse.data)
+
+        // Send the token response data as JSON
+        res.status(200).json({ data: tokenResponse.data });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Error during authentication');
 
 routes.get("/callback/:code", async (req, res) => {
   try {
@@ -111,6 +154,7 @@ routes.get("/callback/:code", async (req, res) => {
             designation: userDetails.data.result.WORK_POSITION,
           },
         });
+
     }
     // const tokenResponse = await axios.post(`https://oipl.bitrix24.in/oauth/token`, querystring.stringify({
     //     grant_type: 'authorization_code',
