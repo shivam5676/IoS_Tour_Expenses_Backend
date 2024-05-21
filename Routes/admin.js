@@ -9,6 +9,7 @@ const getYearData = require("../Controllers/admin/getYearData");
 const trackVoucherStatus = require("../Controllers/admin/trackVoucherStatus");
 const acceptVoucher = require("../Controllers/admin/acceptVoucher");
 const rejectVoucher = require("../Controllers/admin/rejectVoucher");
+const getUserReport = require("../Controllers/admin/getUserReport");
 const routes = express.Router();
 routes.post("/createUser", createUser);
 routes.post("/getAllUser", getAllUser);
@@ -17,6 +18,8 @@ routes.post("/getUserVouchers", getUsersVouchers);
 routes.post("/viewVoucher", viewVoucher);
 routes.post("/allVoucher", getAllVoucher);
 routes.post("/year", getYearData);
+routes.post("/user", getUserReport);
+
 routes.post("/trackVoucher", trackVoucherStatus);
 routes.post("/acceptVoucher", acceptVoucher);
 routes.post("/rejectVoucher", rejectVoucher);
