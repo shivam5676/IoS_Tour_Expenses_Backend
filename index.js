@@ -12,6 +12,9 @@ const VouchersDescription = require("./models/VoucherDescription");
 const voucherExpense = require("./models/voucherExpense");
 const Vouchers = require("./models/VoucherTable");
 const userRoutes = require("./Routes/user");
+const path = require("path");
+const builtPath = path.join(__dirname, "../IoS_Tour_Expenses/build");
+
 app.use(cors());
 // Vouchers.hasOne(userTable)
 // userTable.belongToMany(Vouchers)
@@ -27,15 +30,16 @@ voucherExpense.belongsTo(Vouchers);
 userTable.hasMany(voucherExpense)
 voucherExpense.belongsTo(userTable)
 
+app.use(express.static(builtPath));
 app.use(bodyParser.json({ extended: false }));
 app.use("/admin", adminRoutes);
-app.use("/user",userRoutes)
+app.use("/user", userRoutes)
 app.use(authRoutes);
 db.sync({ force: !true })
   .then(async () => {
     console.log("second print");
     const userFind = await userTable.findOne({
-      where: { email: "shivam@gmail.com" },   
+      where: { email: "shivam@gmail.com" },
     });
 
     if (!userFind) {
@@ -49,6 +53,7 @@ db.sync({ force: !true })
       });
     }
 
-    app.listen(2000, () => {});
+
+    app.listen(2000, () => { });
   })
   .catch((err) => console.log(err));
