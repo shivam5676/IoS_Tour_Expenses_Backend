@@ -21,10 +21,12 @@ routes.post("/login", Login);
 //     res.redirect(`https://oipl.bitrix24.in/oauth/authorize?${queryParams}`);
 // });
 
-// routes.post('/home', (req, res) => {  //for bitrix redirecting
-//     res.sendFile(path.join(__dirname, "../", "../IoS_Tour_Expenses/build/index.html"));
-// });
-
+routes.post('/home', (req, res) => {  //for bitrix redirecting
+    res.sendFile(path.join(__dirname, "../", "../IoS_Tour_Expenses/build/index.html"));
+});
+routes.get('/home', (req, res) => {  //for bitrix redirecting
+    res.sendFile(path.join(__dirname, "../", "../IoS_Tour_Expenses/build/index.html"));
+});
 // routes.get('/', (req, res) => {  //for bitrix redirecting
 //     res.sendFile(path.join(__dirname, "../", "../IoS_Tour_Expenses/build/index.html"));
 // });
@@ -70,7 +72,20 @@ routes.post("/login", Login);
 // });
 
 
-
+routes.get('/queryParams', async (req, res) => {
+    try {
+        const REDIRECT_URI = 'http://localhost:3000/home';
+        const CLIENT_ID = "local.6648983f0cc5d5.97469898";
+        const queryParams = querystring.stringify({
+            response_type: 'code',
+            client_id: CLIENT_ID,
+            redirect_uri: REDIRECT_URI
+        });
+        res.status(200).json({ data: queryParams })
+    } catch (error) {
+        console.log(error)
+    }
+})
 
 routes.get('/callback/:code', async (req, res) => {
 
