@@ -2,6 +2,12 @@ const sequelize = require("sequelize");
 const Sequelize = require("../util/database");
 
 const userTable = Sequelize.define("users", {
+  id: {
+    type: sequelize.INTEGER,
+    allowNull: false,
+    autoIncrement: false,
+    primaryKey:true
+  },
   firstName: {
     type: sequelize.STRING,
     allowNull: false,
@@ -11,9 +17,9 @@ const userTable = Sequelize.define("users", {
     allowNull: false,
   },
   mobile: {
-    type: sequelize.INTEGER,
-    allowNull: false,
-    unique: true,
+
+    type: sequelize.STRING,
+   
   },
   email: {
     type: sequelize.STRING,
@@ -24,10 +30,11 @@ const userTable = Sequelize.define("users", {
     type: sequelize.BOOLEAN,
     defaultValue: true,
   },
-  password: {
+  designation: {
     type: sequelize.STRING,
     allowNull: false,
   },
 });
 console.log("i am inside user table");
+
 module.exports = userTable;

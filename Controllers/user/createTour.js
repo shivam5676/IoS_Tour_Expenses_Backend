@@ -1,6 +1,7 @@
 const Vouchers = require("../../models/VoucherTable");
 
 const createTour = async (req, res) => {
+  
   const getCurrentDate = () => {
     const now = new Date();
     const day = String(now.getDate()).padStart(2, "0");
