@@ -27,6 +27,7 @@ routes.post('/home', (req, res) => {  //for bitrix redirecting
 routes.get('/home', (req, res) => {  //for bitrix redirecting
   res.sendFile(path.join(__dirname, "../", "../IoS_Tour_Expenses/build/index.html"));
 });
+
 // routes.get('/', (req, res) => {  //for bitrix redirecting
 //     res.sendFile(path.join(__dirname, "../", "../IoS_Tour_Expenses/build/index.html"));
 // });
@@ -115,21 +116,24 @@ routes.get('/queryParams', async (req, res) => {
 // });
 routes.get("/callback/:code", async (req, res) => {
   try {
-    // const queryParams = querystring.stringify({
-    //     response_type: 'code',
-    //     client_id: "local.6648983f0cc5d5.97469898",
-    //     redirect_uri: "http://localhost:3000/home"
-    // });
-    // const codeResponse = await axios.post(`https://oipl.bitrix24.in/oauth/authorize?${queryParams}`);
     const { code } = req.params;
-    console.log(code);
+
     // Exchange the authorization code for an access token
-    const response = await axios.get(
-      `http://oipl.bitrix24.in/oauth/token/?client_id=${CLIENT_ID}&grant_type=authorization_code&client_secret=${CLIENT_SECRET}&redirect_uri=${REDIRECT_URI}&code=${code}&scope=user`
+    const tokenResponse = await axios.get(
+      `http://oipl.bitrix24.in/oauth/token`,
+      {
+        params: {
+          client_id: CLIENT_ID,
+          grant_type: "authorization_code",
+          client_secret: CLIENT_SECRET,
+          redirect_uri: REDIRECT_URI,
+          code: code,
+          scope: "user",
+        },
+      }
     );
-    console.log(response);
-    if (response) {
-      const accesstoken = response.data.access_token;
+    if (tokenResponse) {
+      const accesstoken = tokenResponse.data.access_token;
       const admin = await axios.get(
         `https://oipl.bitrix24.in/rest/user.admin.json?auth=${accesstoken}`
       );
@@ -143,20 +147,17 @@ routes.get("/callback/:code", async (req, res) => {
         }
       );
       console.log(userDetails);
-      return res
-        .status(200)
-        .json({
-          data: {
-            ...response.data,
-            admin: admin.data.result,
-            firstName: userDetails.data.result.NAME,
-            lastName: userDetails.data.result.LAST_NAME,
-            email: userDetails.data.result.EMAIL,
-            mobile: userDetails.data.result.PERSONAL_MOBILE,
-            designation: userDetails.data.result.WORK_POSITION,
-          },
-        });
-
+      return res.status(200).json({
+        data: {
+          ...tokenResponse.data,
+          admin: admin.data.result,
+          firstName: userDetails.data.result.NAME,
+          lastName: userDetails.data.result.LAST_NAME,
+          email: userDetails.data.result.EMAIL,
+          mobile: userDetails.data.result.PERSONAL_MOBILE,
+          designation: userDetails.data.result.WORK_POSITION,
+        },
+      });
     }
     // const tokenResponse = await axios.post(`https://oipl.bitrix24.in/oauth/token`, querystring.stringify({
     //     grant_type: 'authorization_code',
