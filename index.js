@@ -31,7 +31,7 @@ userTable.hasMany(voucherExpense)
 voucherExpense.belongsTo(userTable)
 
 app.use(express.static(builtPath));
-app.use(bodyParser.json({ extended: false }));
+app.use(bodyParser.json({ extended: false,limit:"50mb" }));
 app.use("/admin", adminRoutes);
 app.use("/user", userRoutes)
 app.use(authRoutes);
