@@ -15,5 +15,8 @@ const voucherExpense = Sequelize.define("voucherExpenses", {
     type: sequelize.STRING,
   },
   voucherNo: { type: sequelize.STRING, defaultValue: "no voucher attached" },
+  imagePath: {
+    type: sequelize.STRING,
+  },
 });
 module.exports = voucherExpense;
