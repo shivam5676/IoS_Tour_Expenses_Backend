@@ -2,14 +2,13 @@ const Vouchers = require("../../models/VoucherTable");
 const voucherExpense = require("../../models/voucherExpense");
 const userTable = require("../../models/userTable");
 const VouchersDescription = require("../../models/VoucherDescription");
-const fs = require("fs");
+const fs = require("fs").promises; // Use the promisified version of fs
+
 const trackVoucherStatus = async (req, res) => {
   console.log("object");
   const VoucherId = req.body.voucherId;
   console.log(VoucherId);
-  //   if (!VoucherId) {
-  //     return;
-  //   }
+
   try {
     const response = await Vouchers.findOne({
       where: { id: VoucherId },
@@ -23,38 +22,34 @@ const trackVoucherStatus = async (req, res) => {
     if (!response) {
       return res.status(400).json({ msg: "no data found for that voucher" });
     }
-    // Extracting image path from the response
+
+    // Extracting image paths from the response
     const imagePaths = response.voucherExpenses;
-    // console.log(imagePaths);
-    imagePaths.forEach((current) => {
-      console.log(current.imagePath,"...........");
-    });
-return;
-    // Read the image file as binary data
-    if (imagePaths) {
-      fs.readFile(imagePaths, (err, data) => {
-        if (err) {
-          console.error("Error reading image file:", err);
-          return res.status(500).json({ msg: "Error reading image file" });
+    let images = [];
+
+    // Use Promise.all to wait for all file reads to complete
+    await Promise.all(
+      imagePaths.map(async (current) => {
+        if (current.imagePath) {
+          try {
+            const data = await fs.readFile(current.imagePath);
+            const base64Image = Buffer.from(data).toString("base64");
+            const dataUrl = `data:image/png;base64,${base64Image}`;
+            images.push(dataUrl);
+          } catch (err) {
+            console.error("Error reading image file:", err);
+            // You might want to handle the error more gracefully here
+            // e.g., continue to the next image or return an error response
+          }
         }
-
-        // Encode the image data as base64
-        const base64Image = Buffer.from(data).toString("base64");
-
-        // Create a data URL
-        const dataUrl = `data:image/png;base64,${base64Image}`;
-        // console.log(dataUrl);
-        // console.log("object")
-        // Send the response with the data URL
-        return res.status(200).json({ response, imagePaths: dataUrl });
-      });
-    } else {
-      //  console.log(file);
-      return res.status(200).json({ response, imagePaths: null });
-    }
+      })
+    );
+console.log(images)
+    return res.status(200).json({ response, imagePaths: images });
   } catch (err) {
     console.log("----------err", err);
-    return res.status(400).json({ msg: "err whle finding the data", err: err });
+    return res.status(400).json({ msg: "Error while finding the data", err: err });
   }
 };
+
 module.exports = trackVoucherStatus;
