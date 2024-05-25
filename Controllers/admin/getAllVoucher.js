@@ -2,9 +2,9 @@ const Vouchers = require("../../models/VoucherTable");
 const userTable = require("../../models/userTable");
 
 const getAllVoucher = async (req, res) => {
-  // if (req.role != "Admin") {
-  //   return res.status(400).json({ msg: "You are not a admin" });
-  // }
+  if (req.role != "Admin") {
+    return res.status(400).json({ msg: "You are not a admin" });
+  }
   console.log("object")
   // return
   const response = await Vouchers.findAll({
