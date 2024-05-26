@@ -1,15 +1,23 @@
 const Vouchers = require("../../models/VoucherTable");
+const userTable = require("../../models/userTable");
 const voucherExpense = require("../../models/voucherExpense");
 
 const getUserReport = async (req, res) => {
   const userId = req.query.uid;
-  console.log(userId);
+  console.log(userId, "...........");
   try {
     const response = await Vouchers.findAll({
       where: { userId: userId, statusType: "Accepted" },
-      include: [{ model: voucherExpense }],
+      include: [
+        { model: voucherExpense },
+        {
+          model: userTable,
+          attributes: ["firstName", "lastName"]
+        }
+      ],
     });
-    return res.status(200).json( response );
+    console.log(response);
+    return res.status(200).json(response);
   } catch (err) {
     console.log(err);
   }

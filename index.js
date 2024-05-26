@@ -18,8 +18,8 @@ const builtPath = path.join(__dirname, "../IoS_Tour_Expenses/build");
 app.use(cors());
 // Vouchers.hasOne(userTable)
 // userTable.belongToMany(Vouchers)
-userTable.hasMany(Vouchers)
-Vouchers.belongsTo(userTable)
+userTable.hasMany(Vouchers);
+Vouchers.belongsTo(userTable);
 
 Vouchers.hasOne(VouchersDescription);
 VouchersDescription.belongsTo(Vouchers);
@@ -27,13 +27,13 @@ VouchersDescription.belongsTo(Vouchers);
 Vouchers.hasMany(voucherExpense);
 voucherExpense.belongsTo(Vouchers);
 
-userTable.hasMany(voucherExpense)
-voucherExpense.belongsTo(userTable)
+userTable.hasMany(voucherExpense);
+voucherExpense.belongsTo(userTable);
 
 app.use(express.static(builtPath));
-app.use(bodyParser.json({ extended: false,limit:"50mb" }));
+app.use(bodyParser.json({ extended: false, limit: "50mb" }));
 app.use("/admin", adminRoutes);
-app.use("/user", userRoutes)
+app.use("/user", userRoutes);
 app.use(authRoutes);
 db.sync({ force: !true })
   .then(async () => {
@@ -53,7 +53,6 @@ db.sync({ force: !true })
     //   });
     // }
 
-
-    app.listen(2000, () => { });
+    app.listen(2000, () => {});
   })
   .catch((err) => console.log(err));
