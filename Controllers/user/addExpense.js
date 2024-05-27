@@ -61,7 +61,7 @@ const addExpense = async (req, res, next) => {
           description,
           VoucherId: voucherId,
           userId,
-          imagePath:filename
+          imagePath: filename,
         });
         if (response) {
           return res.status(200).json({ expenseData: response });
@@ -75,26 +75,10 @@ const addExpense = async (req, res, next) => {
           .status(400)
           .json({ msg: "something went wrong !! try again ...." });
       }
-      // Continue to save the rest of the data to your database
-      // Here you can save the data along with the filename to your database
-      // res.status(200).json({
-      //   message: "Expense saved successfully",
-      //   expenseData: {
-      //     date,
-      //     amount,
-      //     expenseType,
-      //     voucher,
-      //     paymentType,
-      //     description,
-      //     voucherId,
-      //     token,
-      //     domain,
-      //     billImage: filename,
-      //   },
-      // });
     });
-  }
-  try {
+  }else{
+
+    try {
     const response = await voucherExpense.create({
       Amount: +amount,
       expenseType,
@@ -104,7 +88,7 @@ const addExpense = async (req, res, next) => {
       description,
       VoucherId: voucherId,
       userId,
-      imagePath:null
+      imagePath: null,
     });
     if (response) {
       return res.status(200).json({ expenseData: response });
@@ -118,44 +102,7 @@ const addExpense = async (req, res, next) => {
       .status(400)
       .json({ msg: "something went wrong !! try again ...." });
   }
-
-  // if (!amount) {
-  //   return res.status(400).json({ msg: "amount can not null" });
-  // }
-  // if (isNaN(amount)) {
-  //   return res.status(400).json({ msg: "amount can not string" });
-  // }
-  // if (!expenseType) {
-  //   return res.status(400).json({ msg: "expense type can not null" });
-  // }
-  // if (!paymentType) {
-  //   return res.status(400).json({ msg: "payment type can not null" });
-  // }
-  // if (!date) {
-  //   return res.status(400).json({ msg: "please select date " });
-  // }
-  // try {
-  //   const response = await voucherExpense.create({
-  //     Amount: +amount,
-  //     expenseType,
-  //     voucherNo: voucher,
-  //     paymentType,
-  //     date,
-  //     description,
-  //     VoucherId: voucherId,
-  //     userId,
-  //   });
-  //   if (response) {
-  //     return res.status(200).json({ expenseData: response });
-  //   }
-  //   console.log(response);
-  //   return res
-  //     .status(400)
-  //     .json({ msg: "some problem while saving Your expense" });
-  // } catch (err) {
-  //   return res
-  //     .status(400)
-  //     .json({ msg: "something went wrong !! try again ...." });
-  // }
+  }
+  
 };
 module.exports = addExpense;
