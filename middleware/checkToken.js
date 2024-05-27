@@ -15,7 +15,7 @@ console.log(domain,token)
     if (response.data.result) {
         req.body.userId=(response.data.result.ID)
         // req.role=
-        console.log("hello");
+        // console.log("hello");
       next();
       //   return res.status(200).json({ valid: true, user: response.data.result });
     } else {
@@ -24,12 +24,13 @@ console.log(domain,token)
         .json({ valid: false, error: response.data.error_description });
     }
   } catch (error) {
-    console.log(error)
+    // console.log(error)
     if (error.response && error.response.data) {
       return res
         .status(400)
         .json({ valid: false, error: error.response.data.error_description });
     }
+
     return res
       .status(500)
       .json({ valid: false, error: "An unknown error occurred." });

@@ -1,17 +1,21 @@
 const express = require("express");
 const { Login } = require("../Controllers/auth");
 const routes = express.Router();
+const dontenv = require("dotenv").config();
 // const CLIENT_SECRET = "oZdDNROPloGD7ejfkJLtrlC0L6L3Z7n50xHEBAh4OX3QHcECI5";
 
 // const CLIENT_ID = "local.6648983f0cc5d5.97469898";
-const CLIENT_SECRET="borh0rzwyFJ6VZcwKYTxweW4C0W4V6yq8ebR3iJBKhDibRy9mp"
-const CLIENT_ID="local.664b0f441b4be8.22121143"
+
+// const CLIENT_SECRET="borh0rzwyFJ6VZcwKYTxweW4C0W4V6yq8ebR3iJBKhDibRy9mp"
+// const CLIENT_ID="local.664b0f441b4be8.22121143"
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const CLIENT_ID = process.env.CLIENT_ID;
 const axios = require("axios");
 const path = require("path");
 const querystring = require("querystring");
 const userTable = require("../models/userTable");
-const REDIRECT_URI = "http://localhost:3000/home";
-const COMPANY_DOMAIN = "oipl.bitrix24.in";
+const REDIRECT_URI = process.env.REDIRECT_URI;
+// const COMPANY_DOMAIN = "oipl.bitrix24.in";
 routes.post("/login", Login);
 
 // Route for initiating the OAuth flow
@@ -39,10 +43,11 @@ routes.get("/home", (req, res) => {
 });
 
 routes.get("/queryParams", async (req, res) => {
+  console.log("env", process.env.CLIENT_SECRET);
   try {
-    const REDIRECT_URI = "http://localhost:3000/home";
+    // const REDIRECT_URI = "http://localhost:3000/home";
     // const CLIENT_ID = "local.6648983f0cc5d5.97469898";
-    const CLIENT_ID="local.664b0f441b4be8.22121143"
+    // const CLIENT_ID = "local.664b0f441b4be8.22121143"; //gaurav
     const queryParams = querystring.stringify({
       response_type: "code",
       client_id: CLIENT_ID,
@@ -60,8 +65,9 @@ routes.get("/callback/:code", async (req, res) => {
 
     // Exchange the authorization code for an access token
     const tokenResponse = await axios.get(
-      // `http://oipl.bitrix24.in/oauth/token`,
-      `http://b24-awzvaa.bitrix24.in/oauth/token`,
+      `http://${process.env.COMPANY_DOMAIN}/oauth/token`,
+
+      // `http://b24-awzvaa.bitrix24.in/oauth/token`,
       {
         params: {
           client_id: CLIENT_ID,
@@ -76,11 +82,12 @@ routes.get("/callback/:code", async (req, res) => {
     if (tokenResponse) {
       const accesstoken = tokenResponse.data.access_token;
       const admin = await axios.get(
-        `https://b24-awzvaa.bitrix24.in/rest/user.admin.json?auth=${accesstoken}`
+        `https://${process.env.COMPANY_DOMAIN}/rest/user.admin.json?auth=${accesstoken}`
       );
       console.log(admin);
+
       const userDetails = await axios.get(
-        `https://b24-awzvaa.bitrix24.in/rest/user.current`,
+        `https://${process.env.COMPANY_DOMAIN}/rest/user.current`,
         {
           headers: {
             Authorization: `Bearer ${accesstoken}`,
@@ -102,7 +109,6 @@ routes.get("/callback/:code", async (req, res) => {
             isAdmin: admin.data.result,
             designation: userDetails.data.result.WORK_POSITION,
             id: tokenResponse.data.user_id,
-
           });
           return res.status(200).json({
             data: {
@@ -120,12 +126,10 @@ routes.get("/callback/:code", async (req, res) => {
             },
           });
         } catch (err) {
-          return res
-            .status(400)
-            .json({
-              msg: "err while creating user...try again later ",
-              response: err,
-            });
+          return res.status(400).json({
+            msg: "err while creating user...try again later ",
+            response: err,
+          });
         }
       }
       return res.status(200).json({
@@ -137,7 +141,7 @@ routes.get("/callback/:code", async (req, res) => {
           refresh_token: tokenResponse.data.refresh_token,
           isAdmin: userValid.isAdmin,
           firstName: userValid.firstName,
-          lastName:  userValid.lastName,
+          lastName: userValid.lastName,
           email: userDetails.data.result.EMAIL,
           mobile: userDetails.data.result.PERSONAL_MOBILE,
           designation: userValid.designation,
@@ -152,7 +156,7 @@ routes.get("/callback/:code", async (req, res) => {
 
 routes.post("/check-token", async (req, res) => {
   const { domain, token } = req.body;
-console.log(domain)
+  console.log(domain);
   if (!domain || !token) {
     return res.status(400).json({ error: "Domain and token are required." });
   }
