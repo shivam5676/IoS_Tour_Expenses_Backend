@@ -22,7 +22,7 @@ routes.post("/allVoucher", checkToken,checkAdmin,getAllVoucher);
 routes.post("/year", checkToken,checkAdmin,getYearData);
 routes.post("/user", checkToken,checkAdmin,getUserReport);
 
-routes.post("/trackVoucher", checkToken,checkAdmin, trackVoucherStatus);
+routes.post("/trackVoucher", checkToken, trackVoucherStatus);
 routes.post("/acceptVoucher", checkToken,checkAdmin, acceptVoucher);
 routes.post("/rejectVoucher", checkToken,checkAdmin, rejectVoucher);
 

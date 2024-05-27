@@ -3,6 +3,7 @@ const voucherExpense = require("../../models/voucherExpense");
 const fs = require("fs");
 
 const addExpense = async (req, res, next) => {
+  console.log("object");
   const {
     amount,
     expenseType,
@@ -92,6 +93,30 @@ const addExpense = async (req, res, next) => {
       //   },
       // });
     });
+  }
+  try {
+    const response = await voucherExpense.create({
+      Amount: +amount,
+      expenseType,
+      voucherNo: voucher,
+      paymentType,
+      date,
+      description,
+      VoucherId: voucherId,
+      userId,
+      imagePath:null
+    });
+    if (response) {
+      return res.status(200).json({ expenseData: response });
+    }
+    console.log(response);
+    return res
+      .status(400)
+      .json({ msg: "some problem while saving Your expense" });
+  } catch (err) {
+    return res
+      .status(400)
+      .json({ msg: "something went wrong !! try again ...." });
   }
 
   // if (!amount) {
