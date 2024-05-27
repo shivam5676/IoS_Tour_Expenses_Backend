@@ -15,6 +15,7 @@ console.log(domain,token)
     if (response.data.result) {
         req.body.userId=(response.data.result.ID)
         // req.role=
+        console.log("hello");
       next();
       //   return res.status(200).json({ valid: true, user: response.data.result });
     } else {
