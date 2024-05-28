@@ -35,7 +35,7 @@ app.use(bodyParser.json({ extended: false, limit: "50mb" }));
 app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
 app.use(authRoutes);
-db.sync({ force: !true })
+db.sync({ force: true })
   .then(async () => {
     // console.log("second print");
     // const userFind = await userTable.findOne({
