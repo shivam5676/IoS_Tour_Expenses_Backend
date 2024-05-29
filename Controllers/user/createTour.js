@@ -1,7 +1,7 @@
 const Vouchers = require("../../models/VoucherTable");
 
 const createTour = async (req, res) => {
-  
+  console.log(req.body)
   const getCurrentDate = () => {
     const now = new Date();
     const day = String(now.getDate()).padStart(2, "0");
@@ -10,23 +10,29 @@ const createTour = async (req, res) => {
     return `${day}/${month}/${year}`;
   };
 
+
   if (!req.body.city) {
     return res.status(400).json({ msg: "plz add city ...." });
   }
   try {
+    console.log("inside try")
     const voucherCreated =await Vouchers.create({
       statusType: "Created",
       tourLocation: req.body.city,
       userId: req.body.userId,
       tourDate: getCurrentDate(),
     });
+    console.log("voucher ceraed......",voucherCreated)
     if (!voucherCreated) {
+
       return res
         .status(400)
         .json({ msg: "voucher not created........plz try again later" });
     }
     return res.status(200).json({ voucher: voucherCreated });
-  } catch (err) {
+
+
+  } catch (err) {console.log(err)
     return res.status(40).json({ msg: "internal server problem .........." });
   }
 };

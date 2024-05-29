@@ -11,9 +11,10 @@ console.log(domain,token)
     const response = await axios.get(
       `https://${domain}/rest/user.current?auth=${token}`
     );
-    console.log(response.data.result,"=========>");
+    console.log(response.data.result,"=========>")
     if (response.data.result) {
         req.body.userId=(response.data.result.ID)
+        req.body.UF_Department_Id=(response.data.result.UF_DEPARTMENT[0])
         // req.role=
         // console.log("hello");
       next();

@@ -17,5 +17,13 @@ const Vouchers = Sequelize.define("Vouchers", {
     type: sequelize.STRING,
     allowNull: false,
   },
+  sender: {
+    type: sequelize.STRING,
+    // allowNull: false,
+  },
+  comment: {
+    type: sequelize.STRING,
+    // allowNull: false,
+  },
 });
 module.exports = Vouchers;

@@ -8,7 +8,8 @@ const rejectVoucher = async (req, res) => {
       //   { stausType: "Pending" },
       { where: { id: voucherId } }
     );
-    await updatedData.update({ statusType: "Rejected" });
+    await updatedData.update({ statusType: "Rejected" ,comment: req.body.comment,
+    sender:req.body.userId});
     console.log(updatedData);
     return res.status(200).json({ details: updatedData });
   } catch (err) {
