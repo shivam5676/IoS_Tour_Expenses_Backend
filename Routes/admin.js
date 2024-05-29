@@ -12,19 +12,21 @@ const rejectVoucher = require("../Controllers/admin/rejectVoucher");
 const getUserReport = require("../Controllers/admin/getUserReport");
 const checkToken = require("../middleware/checkToken");
 const checkAdmin = require("../middleware/checkAdmin");
+const postComment = require("../Controllers/admin/PostComment");
 const routes = express.Router();
-routes.post("/createUser", checkToken,checkAdmin,createUser);
-routes.post("/getAllUser", checkToken,checkAdmin,getAllUser);
-routes.post("/getUser", checkToken,checkAdmin,getUser);
-routes.post("/getUserVouchers", checkToken,checkAdmin,getUsersVouchers);
-routes.post("/viewVoucher", checkAdmin, checkToken,checkAdmin,viewVoucher);
-routes.post("/allVoucher", checkToken,checkAdmin,getAllVoucher);
-routes.post("/year", checkToken,checkAdmin,getYearData);
-routes.post("/user", checkToken,checkAdmin,getUserReport);
+routes.post("/createUser", checkToken, checkAdmin, createUser);
+routes.post("/getAllUser", checkToken, checkAdmin, getAllUser);
+routes.post("/getUser", checkToken, checkAdmin, getUser);
+routes.post("/getUserVouchers", checkToken, checkAdmin, getUsersVouchers);
+routes.post("/viewVoucher", checkAdmin, checkToken, checkAdmin, viewVoucher);
+routes.post("/allVoucher", checkToken, checkAdmin, getAllVoucher);
+routes.post("/year", checkToken, checkAdmin, getYearData);
+routes.post("/user", checkToken, checkAdmin, getUserReport);
 
 routes.post("/trackVoucher", checkToken, trackVoucherStatus);
-routes.post("/acceptVoucher", checkToken,checkAdmin, acceptVoucher);
-routes.post("/rejectVoucher", checkToken,checkAdmin, rejectVoucher);
+routes.post("/acceptVoucher", checkToken, checkAdmin, acceptVoucher);
+routes.post("/rejectVoucher", checkToken, checkAdmin, rejectVoucher);
+routes.post("/postComment", checkToken, checkAdmin, postComment);
 
 // routes.post("/allVouchers",)
 module.exports = routes;
