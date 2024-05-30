@@ -5,7 +5,7 @@ const Vouchers = Sequelize.define("Vouchers", {
   //   type: sequelize.STRING,
   //   // defaultValue: "pending",
   // },
-  statusType:{
+  statusType: {
     type: sequelize.STRING,
     // allowNull: false,
   },
@@ -24,6 +24,9 @@ const Vouchers = Sequelize.define("Vouchers", {
   comment: {
     type: sequelize.STRING,
     // allowNull: false,
+  },
+  assignedTo: {
+    type: sequelize.STRING,
   },
 });
 module.exports = Vouchers;

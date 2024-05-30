@@ -10,11 +10,11 @@ const userTable = Sequelize.define("users", {
   },
   firstName: {
     type: sequelize.STRING,
-    allowNull: false,
+    // allowNull: false,
   },
   lastName: {
     type: sequelize.STRING,
-    allowNull: false,
+    // allowNull: false,
   },
   mobile: {
 
@@ -23,7 +23,7 @@ const userTable = Sequelize.define("users", {
   },
   email: {
     type: sequelize.STRING,
-    allowNull: false,
+    // allowNull: false,
     unique: true,
   },
   isAdmin: {
@@ -32,9 +32,9 @@ const userTable = Sequelize.define("users", {
   },
   designation: {
     type: sequelize.STRING,
-    allowNull: false,
+    // allowNull: false,
   },
 });
-console.log("i am inside user table");
+// console.log("i am inside user table");
 
 module.exports = userTable;

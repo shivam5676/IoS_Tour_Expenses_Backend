@@ -4,6 +4,8 @@ const dotenv = require("dotenv").config();
 
 const acceptVoucher = async (req, res) => {
   const voucherId = req.body.voucherId;
+  console.log(req.body.assignedTo, "..............=>");
+  // return;
   // const accessToken = req.body.token;
   // const userId = req.body.userId;
   // const DepartMentId= req.body.UF_Department_Id
@@ -16,8 +18,6 @@ const acceptVoucher = async (req, res) => {
   // } catch (err) {
   //   console.log(err);
   // }
-  
-  
 
   // Function to get supervisor information
 
@@ -26,11 +26,22 @@ const acceptVoucher = async (req, res) => {
       //   { stausType: "Pending" },
       { where: { id: voucherId } }
     );
-    await updatedData.update({
-      statusType: "Accepted",
-      comment: req.body.comment,
-      sender:req.body.userId
-    });
+    if (!req.body.assignedTo) {
+      await updatedData.update({
+        statusType: "Accepted",
+        comment: req.body.comment,
+        sender: req.body.userId,
+        assignedTo: req.body.assignedTo,
+      });
+    } else {
+      await updatedData.update({
+        statusType: "Pending",
+        comment: req.body.comment,
+        sender: req.body.userId,
+        assignedTo: req.body.assignedTo,
+      });
+    }
+
     console.log(updatedData);
     return res.status(200).json({ details: updatedData });
   } catch (err) {
