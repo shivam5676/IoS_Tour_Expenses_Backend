@@ -13,6 +13,7 @@ const voucherExpense = require("./models/voucherExpense");
 const Vouchers = require("./models/VoucherTable");
 const userRoutes = require("./Routes/user");
 const path = require("path");
+const assignedVoucher = require("./models/assignedVoucher");
 const builtPath = path.join(__dirname, "../IoS_Tour_Expenses/build");
 
 app.use(cors());
@@ -30,12 +31,15 @@ voucherExpense.belongsTo(Vouchers);
 userTable.hasMany(voucherExpense);
 voucherExpense.belongsTo(userTable);
 
+Vouchers.hasMany(assignedVoucher);
+assignedVoucher.belongsTo(Vouchers)
+
 app.use(express.static(builtPath));
-app.use(bodyParser.json({ extended: false, limit: "50mb" }));
+app.use(bodyParser.json({ extended: false, limit: "500mb" }));
 app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
 app.use(authRoutes);
-db.sync({ force: !true })
+db.sync({ force: true })
   .then(async () => {
     // console.log("second print");
     // const userFind = await userTable.findOne({
