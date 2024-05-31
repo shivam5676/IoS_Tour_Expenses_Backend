@@ -10,10 +10,10 @@ const checkSupervisor = require("../middleware/checkSupervisor");
 
 const routes = express.Router();
 routes.post("/saveExpense", checkToken, addExpense);
-routes.post("/createTour", checkToken,checkSupervisor, createTour);
+routes.post("/createTour", checkToken, createTour);
 routes.post("/getTour", checkToken, getTour);
 routes.post("/getTourExpenses", checkToken, getTourExpenses);
-routes.post("/addDetails", checkToken, addTourDetails);
+routes.post("/addDetails", checkToken,checkSupervisor, addTourDetails);
 routes.post("/getPendingVouchers", checkToken, getPendingVoucher);
 
 module.exports = routes;
