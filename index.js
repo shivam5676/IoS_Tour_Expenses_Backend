@@ -22,6 +22,7 @@ app.use(cors());
 userTable.hasMany(Vouchers);
 Vouchers.belongsTo(userTable);
 
+
 Vouchers.hasOne(VouchersDescription);
 VouchersDescription.belongsTo(Vouchers);
 
@@ -32,14 +33,16 @@ userTable.hasMany(voucherExpense);
 voucherExpense.belongsTo(userTable);
 
 Vouchers.hasMany(assignedVoucher);
-assignedVoucher.belongsTo(Vouchers)
+assignedVoucher.belongsTo(Vouchers);
 
+userTable.hasMany(assignedVoucher);
+assignedVoucher.belongsTo(userTable);
 app.use(express.static(builtPath));
 app.use(bodyParser.json({ extended: false, limit: "500mb" }));
 app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
 app.use(authRoutes);
-db.sync({ force: true })
+db.sync({ force: !true })
   .then(async () => {
     // console.log("second print");
     // const userFind = await userTable.findOne({
@@ -58,6 +61,5 @@ db.sync({ force: true })
     // }
 
     app.listen(2000, () => {});
-
   })
   .catch((err) => console.log(err));

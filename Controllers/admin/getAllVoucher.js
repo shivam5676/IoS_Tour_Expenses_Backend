@@ -1,14 +1,21 @@
 const Vouchers = require("../../models/VoucherTable");
+const assignedVoucher = require("../../models/assignedVoucher");
 const userTable = require("../../models/userTable");
 
 const getAllVoucher = async (req, res) => {
   if (req.role != "Admin") {
     return res.status(400).json({ msg: "You are not a admin" });
   }
-  console.log("object")
+  console.log("object");
   // return
-  const response = await Vouchers.findAll({
-    include: [{ model: userTable, attributes: ["firstName", "lastName"] }],
+  const response = await assignedVoucher.findAll({
+    where: {
+      assignedTo: req.body.userId,
+    },
+    include: [
+      { model: userTable, attributes: ["firstName", "lastName"] },
+      { model: Vouchers },
+    ],
   });
   if (response.length == 0) {
     return res.status(400).json({ msg: "no voucher found" });

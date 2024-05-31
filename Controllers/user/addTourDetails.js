@@ -1,5 +1,6 @@
 const VouchersDescription = require("../../models/VoucherDescription");
 const Vouchers = require("../../models/VoucherTable");
+const assignedVoucher = require("../../models/assignedVoucher");
 
 const addTourDetails = async (req, res) => {
   console.log(req.body);
@@ -69,6 +70,12 @@ const addTourDetails = async (req, res) => {
       { where: { id: voucherId, userId: +userId } }
     );
     await updatedData.update({ statusType: "Pending" });
+    const assigned = assignedVoucher.create({
+      status: "Pending",
+      assignedTo: req.body.assignedTo,
+      VoucherId: voucherId,
+      userId: req.body.userId,
+    });
     console.log(updatedData);
     return res.status(200).json({ details: updatedData });
   } catch (err) {

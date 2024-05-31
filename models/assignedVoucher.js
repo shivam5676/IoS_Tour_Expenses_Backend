@@ -5,7 +5,7 @@ const assignedVoucher = Sequelize.define("assignedVoucher", {
   id: {
     type: sequelize.INTEGER,
     allowNull: false,
-    autoIncrement: false,
+    autoIncrement: true,
     primaryKey: true,
   },
   assignedTo: {

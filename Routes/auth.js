@@ -98,15 +98,37 @@ routes.get("/callback/:code", async (req, res) => {
       const userValid = await userTable.findOne({
         where: { id: tokenResponse.data.user_id },
       });
-      console.log(userValid);
+
+      // console.log(supervisor);
+      // console.log(superVisor.data.result, tokenResponse.data.user_id,)
+
       if (!userValid) {
+        const departments = userDetails.data.result.UF_DEPARTMENT;
+        let supervisor = false;
+
+        // Check if user is head of any department
+        for (const deptId of departments) {
+          const deptResponse = await axios.get(
+            `https://${process.env.COMPANY_DOMAIN}/rest/department.get.json?ID=${deptId}&auth=${accesstoken}`
+          );
+          console.log(
+            deptResponse.data.result[0].UF_HEAD,
+            tokenResponse.data.user_id
+          );
+          const deptHead = deptResponse.data.result[0].UF_HEAD;
+          if (deptHead == tokenResponse.data.user_id) {
+            supervisor = true;
+            break;
+          }
+        }
+
         try {
           const saveUser = await userTable.create({
             firstName: userDetails.data.result.NAME,
             lastName: userDetails.data.result.LAST_NAME,
             email: userDetails.data.result.EMAIL,
             mobile: userDetails.data.result.PERSONAL_MOBILE,
-            isAdmin: admin.data.result,
+            isAdmin: admin.data.result || supervisor,
             designation: userDetails.data.result.WORK_POSITION,
             id: tokenResponse.data.user_id,
           });
@@ -117,7 +139,7 @@ routes.get("/callback/:code", async (req, res) => {
               domain: tokenResponse.data.domain,
               access_token: tokenResponse.data.access_token,
               refresh_token: tokenResponse.data.refresh_token,
-              isAdmin: admin.data.result,
+              isAdmin: admin.data.result || supervisor,
               firstName: userDetails.data.result.NAME,
               lastName: userDetails.data.result.LAST_NAME,
               email: userDetails.data.result.EMAIL,

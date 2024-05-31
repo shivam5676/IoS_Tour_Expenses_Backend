@@ -1,5 +1,5 @@
 const Vouchers = require("../../models/VoucherTable");
-const assignedVoucher = require("../../models/assignedVoucher");
+// const assignedVoucher = require("../../models/assignedVoucher");
 
 const createTour = async (req, res) => {
   console.log(req.body);
@@ -22,12 +22,8 @@ const createTour = async (req, res) => {
       userId: req.body.userId,
       tourDate: getCurrentDate(),
     });
-    const assigned = assignedVoucher.create({
-      status: "Pending",
-      assignedTo: req.body.assignedTo,
-      voucherId: voucherCreated.data.id,
-    });
-    console.log("voucher ceraed......", voucherCreated);
+    
+    console.log("voucher created......", voucherCreated);
     if (!voucherCreated) {
       return res
         .status(400)

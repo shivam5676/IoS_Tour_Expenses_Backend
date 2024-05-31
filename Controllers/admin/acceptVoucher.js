@@ -1,5 +1,6 @@
 const { default: axios } = require("axios");
 const Vouchers = require("../../models/VoucherTable");
+const assignedVoucher = require("../../models/assignedVoucher");
 const dotenv = require("dotenv").config();
 
 const acceptVoucher = async (req, res) => {
@@ -22,28 +23,47 @@ const acceptVoucher = async (req, res) => {
   // Function to get supervisor information
 
   try {
-    const updatedData = await Vouchers.findOne(
-      //   { stausType: "Pending" },
-      { where: { id: voucherId } }
-    );
-    if (!req.body.assignedTo) {
-      await updatedData.update({
-        statusType: "Accepted",
-        comment: req.body.comment,
-        sender: req.body.userId,
-        assignedTo: req.body.assignedTo,
-      });
-    } else {
-      await updatedData.update({
-        statusType: "Pending",
-        comment: req.body.comment,
-        sender: req.body.userId,
-        assignedTo: req.body.assignedTo,
-      });
-    }
+    const getAssignedVoucher = await assignedVoucher.findOne({
+      where: {
+        assignedTo: req.body.userId,
+        status: "Pending",
+        VoucherId: voucherId,
+      },
+    });
+    const updateAssignedVoucher = await getAssignedVoucher.update({
+      status: "Accepted",
+    });
+ 
+    if (updateAssignedVoucher) {
+      const updatedData = await Vouchers.findOne(
+        //   { stausType: "Pending" },
+        { where: { id: voucherId } }
+      );
+      if (!req.body.assignedTo) {
+        await updatedData.update({
+          statusType: "Accepted",
+          comment: req.body.comment,
+          sender: req.body.userId,
+          assignedTo: req.body.assignedTo,
+        });
+      } else {
+        await assignedVoucher.create({
+          assignedTo: req.body.assignedTo,
+          status: "Pending",
+          VoucherId: voucherId,
+          userId: updateAssignedVoucher.userId
+        });
+        await updatedData.update({
+          statusType: "Pending",
+          comment: req.body.comment,
+          sender: req.body.userId,
+          assignedTo: req.body.assignedTo,
+        });
+      }
 
-    console.log(updatedData);
-    return res.status(200).json({ details: updatedData });
+      console.log(updatedData);
+      return res.status(200).json({ details: updatedData });
+    }
   } catch (err) {
     console.log(err);
     return res.status(400).json({ msg: "something went wrong" });
