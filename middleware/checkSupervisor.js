@@ -22,7 +22,9 @@ const checkSupervisor = async (req, res, next) => {
           `https://${process.env.COMPANY_DOMAIN}/rest/department.get.json?ID=${superVisor.data.result[0].PARENT}&auth=${accessToken}`
         );
         console.log(parentResponse.data.result[0]);
-        req.body.assignedTo = parentResponse.data.result[0].UF_HEAD;
+        if (parentResponse.data.result[0]) {
+          req.body.assignedTo = parentResponse.data.result[0].UF_HEAD;
+        }
       } else {
         req.body.assignedTo = superVisor.data.result[0].UF_HEAD;
       }
@@ -30,7 +32,6 @@ const checkSupervisor = async (req, res, next) => {
     // else if(){
     //     req.body.assignedTo=  superVisor.data.result[0].UF_HEAD
     // }
-
     next();
   } catch (err) {
     console.log(err);
