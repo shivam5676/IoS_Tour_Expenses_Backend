@@ -28,5 +28,8 @@ const Vouchers = Sequelize.define("Vouchers", {
   assignedTo: {
     type: sequelize.STRING,
   },
+  currency: {
+    type: sequelize.STRING,
+  },
 });
 module.exports = Vouchers;
