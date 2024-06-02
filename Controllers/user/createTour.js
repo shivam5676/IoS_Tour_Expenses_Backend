@@ -14,15 +14,19 @@ const createTour = async (req, res) => {
   if (!req.body.city) {
     return res.status(400).json({ msg: "plz add city ...." });
   }
+  if (!req.body.currency) {
+    return res.status(400).json({ msg: "plz add currency ...." });
+  }
   try {
     console.log("inside try");
     const voucherCreated = await Vouchers.create({
       statusType: "Created",
       tourLocation: req.body.city,
       userId: req.body.userId,
+      currency: req.body.currency,
       tourDate: getCurrentDate(),
     });
-    
+
     console.log("voucher created......", voucherCreated);
     if (!voucherCreated) {
       return res

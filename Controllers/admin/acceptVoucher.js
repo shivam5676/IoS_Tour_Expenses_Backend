@@ -1,6 +1,7 @@
 const { default: axios } = require("axios");
 const Vouchers = require("../../models/VoucherTable");
 const assignedVoucher = require("../../models/assignedVoucher");
+const VouchersDescription = require("../../models/VoucherDescription");
 const dotenv = require("dotenv").config();
 
 const acceptVoucher = async (req, res) => {
@@ -33,8 +34,12 @@ const acceptVoucher = async (req, res) => {
     const updateAssignedVoucher = await getAssignedVoucher.update({
       status: "Accepted",
     });
- 
+
     if (updateAssignedVoucher) {
+      const voucherDetails = await VouchersDescription.findOne({
+        where: { voucherId: req.body.voucherId },
+      });
+      await voucherDetails.update({ dailyAllowance: +req.body.dailyAllowance });
       const updatedData = await Vouchers.findOne(
         //   { stausType: "Pending" },
         { where: { id: voucherId } }
@@ -51,7 +56,7 @@ const acceptVoucher = async (req, res) => {
           assignedTo: req.body.assignedTo,
           status: "Pending",
           VoucherId: voucherId,
-          userId: updateAssignedVoucher.userId
+          userId: updateAssignedVoucher.userId,
         });
         await updatedData.update({
           statusType: "Pending",
