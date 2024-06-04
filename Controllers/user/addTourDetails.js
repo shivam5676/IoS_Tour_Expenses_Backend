@@ -33,7 +33,7 @@ const addTourDetails = async (req, res) => {
   }
   if (arrivalTime.length == 0) {
     return res.status(400).json({ msg: "arrival time field is empty" });
-  }
+  }   
   console.log(typeof +advanceCash);
   if (isNaN(+advanceCash)) {
     return res.status(400).json({ msg: "advance cash should be only number" });
@@ -70,9 +70,9 @@ const addTourDetails = async (req, res) => {
       //   { stausType: "Pending" },
       { where: { id: voucherId, userId: +userId } }
     );
-    await updatedData.update({ statusType: "Pending" });
+    await updatedData.update({ statusType:  req.body.assignedTo?"Pending":"Accepted" });
     const assigned = assignedVoucher.create({
-      status: "Pending",
+      status: req.body.assignedTo?"Pending":"Accepted",
       assignedTo: req.body.assignedTo,
       VoucherId: voucherId,
       userId: req.body.userId,
