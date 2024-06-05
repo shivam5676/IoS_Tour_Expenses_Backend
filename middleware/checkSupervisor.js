@@ -18,6 +18,7 @@ const checkSupervisor = async (req, res, next) => {
     console.log(superVisor.data.result[0], userId);
     if (superVisor.data.result[0].UF_HEAD) {
       if (superVisor.data.result[0].UF_HEAD == req.body.userId) {
+        req.role = "supervisor";
         const parentResponse = await axios.get(
           `https://${process.env.COMPANY_DOMAIN}/rest/department.get.json?ID=${superVisor.data.result[0].PARENT}&auth=${accessToken}`
         );

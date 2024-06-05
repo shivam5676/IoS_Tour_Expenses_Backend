@@ -29,6 +29,7 @@ const VouchersDescription = Sequelize.define("voucherDescription", {
   },
   advanceCash: {
     type: sequelize.STRING,
+    
   },
   dailyAllowance: {
     type: sequelize.STRING,

@@ -1,6 +1,9 @@
 const Vouchers = require("../../models/VoucherTable");
 
-const getUsersVouchers = async (req, res) => {
+const getUsersVouchers = async (req, res) => { if (req.role != "Admin" && req.role != "supervisor") {
+  console.log("objectssssssss",req.role)
+  return res.status(400).json({ msg: "You are not a authorised user" });
+}
   try {
     const vouchers = Vouchers.findAll({
       where: {
