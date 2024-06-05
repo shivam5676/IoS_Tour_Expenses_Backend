@@ -1,7 +1,10 @@
 const { Op } = require("sequelize");
 const voucherExpense = require("../../models/voucherExpense");
 
-const getYearData = async (req, res) => {
+const getYearData = async (req, res) => { if (req.role != "Admin" && req.role != "supervisor") {
+  console.log("objectssssssss",req.role)
+  return res.status(400).json({ msg: "You are not a authorised user" });
+}
   const year = req.query.year;
   console.log(year)
   const userId = req.body.userId;

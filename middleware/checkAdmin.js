@@ -17,11 +17,12 @@ const checkAdmin = async (req, res, next) => {
       console.log(verifyAdmin, "verify");
       if (verifyAdmin) {
         req.role = "Admin";
-        next();
-      } else {
-        // console.log(admin.data.result == false);
-        return res.status(400).json({ msg: "user is not a admin" });
       }
+      next();
+      // else {
+      //   // console.log(admin.data.result == false);
+      //   return res.status(400).json({ msg: "user is not a admin" });
+      // }
     } else {
       req.role = "Admin";
       next();

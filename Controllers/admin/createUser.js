@@ -2,6 +2,10 @@ const userTable = require("../../models/userTable");
 const db = require("../../util/database");
 
 const createUser = async (req, res) => {
+  if (req.role != "Admin" && req.role != "supervisor") {
+    console.log("objectssssssss",req.role)
+    return res.status(400).json({ msg: "You are not a authorised user" });
+  }
   console.log(req.body);
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
@@ -27,7 +31,8 @@ const createUser = async (req, res) => {
       password,
     });
     return res.status(200).json({ msg: "account created successfully" });
-  } catch (err) {console.log(err)
+  } catch (err) {
+    console.log(err);
     return res.status(400).json({ msg: "something went wrong" });
   }
 };

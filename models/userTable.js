@@ -6,7 +6,7 @@ const userTable = Sequelize.define("users", {
     type: sequelize.INTEGER,
     allowNull: false,
     autoIncrement: false,
-    primaryKey:true
+    primaryKey: true,
   },
   firstName: {
     type: sequelize.STRING,
@@ -17,9 +17,7 @@ const userTable = Sequelize.define("users", {
     // allowNull: false,
   },
   mobile: {
-
     type: sequelize.STRING,
-   
   },
   email: {
     type: sequelize.STRING,
@@ -33,6 +31,9 @@ const userTable = Sequelize.define("users", {
   designation: {
     type: sequelize.STRING,
     // allowNull: false,
+  },
+  supervisor: {
+    type: sequelize.BOOLEAN,
   },
 });
 // console.log("i am inside user table");

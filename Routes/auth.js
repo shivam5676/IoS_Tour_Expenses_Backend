@@ -94,14 +94,14 @@ routes.get("/callback/:code", async (req, res) => {
           },
         }
       );
-      console.log(tokenResponse.data.mobile, "..............");
+      // console.log(tokenResponse.data.mobile, "..............");
       const userValid = await userTable.findOne({
         where: { id: tokenResponse.data.user_id },
       });
 
       // console.log(supervisor);
-      // console.log(superVisor.data.result, tokenResponse.data.user_id,)
-
+      // console.log(supervisor.data.result, "======>result")
+// return
       if (!userValid) {
         const departments = userDetails.data.result.UF_DEPARTMENT;
         let supervisor = false;
@@ -128,9 +128,10 @@ routes.get("/callback/:code", async (req, res) => {
             lastName: userDetails.data.result.LAST_NAME,
             email: userDetails.data.result.EMAIL,
             mobile: userDetails.data.result.PERSONAL_MOBILE,
-            isAdmin: admin.data.result || supervisor,
+            isAdmin: admin.data.result ,
             designation: userDetails.data.result.WORK_POSITION,
             id: tokenResponse.data.user_id,
+            supervisor:supervisor
           });
           return res.status(200).json({
             data: {
@@ -139,12 +140,13 @@ routes.get("/callback/:code", async (req, res) => {
               domain: tokenResponse.data.domain,
               access_token: tokenResponse.data.access_token,
               refresh_token: tokenResponse.data.refresh_token,
-              isAdmin: admin.data.result || supervisor,
+              isAdmin: admin.data.result ,
               firstName: userDetails.data.result.NAME,
               lastName: userDetails.data.result.LAST_NAME,
               email: userDetails.data.result.EMAIL,
               mobile: userDetails.data.result.PERSONAL_MOBILE,
               designation: userDetails.data.result.WORK_POSITION,
+              supervisor:supervisor
             },
           });
         } catch (err) {
@@ -167,6 +169,7 @@ routes.get("/callback/:code", async (req, res) => {
           email: userDetails.data.result.EMAIL,
           mobile: userDetails.data.result.PERSONAL_MOBILE,
           designation: userValid.designation,
+          supervisor:userValid.supervisor
         },
       });
     }

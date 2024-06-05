@@ -3,7 +3,10 @@ const userTable = require("../../models/userTable");
 const voucherExpense = require("../../models/voucherExpense");
 const db = require("../../util/database");
 
-const getUser = async (req, res) => {
+const getUser = async (req, res) => { if (req.role != "Admin" && req.role != "supervisor") {
+  console.log("objectssssssss",req.role)
+  return res.status(400).json({ msg: "You are not a authorised user" });
+}
   console.log(req.query.id);
   // return;
   try {

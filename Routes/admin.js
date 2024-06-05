@@ -15,16 +15,29 @@ const checkToken = require("../middleware/checkToken");
 const checkAdmin = require("../middleware/checkAdmin");
 const postComment = require("../Controllers/admin/PostComment");
 const checkSupervisor = require("../middleware/checkSupervisor");
+const getSuperVisor = require("../Controllers/admin/getSupervisorList");
 // const { default: checkSupervisor } = require("../middleware/checkSupervisor");
 
-routes.post("/createUser", checkToken, checkAdmin, createUser);
-routes.post("/getAllUser", checkToken, checkAdmin, getAllUser);
-routes.post("/getUser", checkToken, checkAdmin, getUser);
-routes.post("/getUserVouchers", checkToken, getUsersVouchers);
-routes.post("/viewVoucher", checkAdmin, checkToken, checkAdmin, viewVoucher);
-routes.post("/allVoucher", checkToken, checkAdmin, getAllVoucher);
-routes.post("/year", checkToken, checkAdmin, getYearData);
-routes.post("/user", checkToken, checkAdmin, getUserReport);
+routes.post("/createUser", checkToken, checkSupervisor, checkAdmin, createUser);
+routes.post("/getAllUser", checkToken, checkSupervisor, checkAdmin, getAllUser);
+routes.post("/getUser", checkToken, checkSupervisor, checkAdmin, getUser);
+routes.post("/getUserVouchers", checkToken, checkSupervisor, getUsersVouchers);
+routes.post(
+  "/viewVoucher",
+  checkToken,
+  checkSupervisor,
+  checkAdmin,
+  viewVoucher
+);
+routes.post(
+  "/allVoucher",
+  checkToken,
+  checkSupervisor,
+  checkAdmin,
+  getAllVoucher
+);
+routes.post("/year", checkToken, checkSupervisor, checkAdmin, getYearData);
+routes.post("/user", checkToken, checkSupervisor, checkAdmin, getUserReport);
 
 routes.post("/trackVoucher", checkToken, trackVoucherStatus);
 routes.post(
@@ -34,8 +47,20 @@ routes.post(
   checkSupervisor,
   acceptVoucher
 );
-routes.post("/rejectVoucher", checkToken, checkAdmin, rejectVoucher);
-routes.post("/postComment", checkToken, checkAdmin, postComment);
-
+routes.post(
+  "/rejectVoucher",
+  checkToken,
+  checkSupervisor,
+  checkAdmin,
+  rejectVoucher
+);
+routes.post(
+  "/postComment",
+  checkToken,
+  checkSupervisor,
+  checkAdmin,
+  postComment
+);
+routes.post("/getSuperVisor",checkToken,checkAdmin,getSuperVisor)
 // routes.post("/allVouchers",)
 module.exports = routes;

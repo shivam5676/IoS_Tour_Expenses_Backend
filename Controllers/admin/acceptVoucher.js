@@ -32,19 +32,26 @@ const acceptVoucher = async (req, res) => {
         VoucherId: voucherId,
       },
     });
+    console.log("get", getAssignedVoucher);
     const updateAssignedVoucher = await getAssignedVoucher.update({
       status: "Accepted",
     });
 
     if (updateAssignedVoucher) {
-      const voucherDetails = await VouchersDescription.findOne({
-        where: { voucherId: req.body.voucherId },
-      });
-      await voucherDetails.update({ dailyAllowance: +req.body.dailyAllowance });
+      console.log("dailyAllowance", req.body.dailyAllowance);
+      if (req.body.dailyAllowance ) {
+        const voucherDetails = await VouchersDescription.findOne({
+          where: { voucherId: req.body.voucherId },
+        });
+        await voucherDetails.update({
+          dailyAllowance: +req.body.dailyAllowance,
+        });
+      }
       const updatedData = await Vouchers.findOne(
         //   { stausType: "Pending" },
         { where: { id: voucherId } }
       );
+
       if (!req.body.assignedTo) {
         await updatedData.update({
           statusType: "Accepted",
