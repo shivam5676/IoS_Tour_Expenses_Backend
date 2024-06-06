@@ -39,7 +39,7 @@ const acceptVoucher = async (req, res) => {
 
     if (updateAssignedVoucher) {
       console.log("dailyAllowance", req.body.dailyAllowance);
-      if (req.body.dailyAllowance ) {
+      if (req.body.dailyAllowance) {
         const voucherDetails = await VouchersDescription.findOne({
           where: { voucherId: req.body.voucherId },
         });
@@ -53,12 +53,18 @@ const acceptVoucher = async (req, res) => {
       );
 
       if (!req.body.assignedTo) {
+      
+        if (!req.body.AccountDepartment) {
+          return res
+            .status(400)
+            .json({ msg: "please select Account department field" });
+        }
         await updatedData.update({
           statusType: "Accepted",
           comment: req.body.comment,
           sender: req.body.userId,
-          assignedTo: req.body.assignedTo,
-        });
+          assignedTo: req.body.AccountDepartment,
+        })
       } else {
         await assignedVoucher.create({
           assignedTo: req.body.assignedTo,
