@@ -12,7 +12,7 @@ const getPendingVoucher = async (req, res) => {
   // return
   try {
     const response = await Vouchers.findAll({
-      where: { statusType: "Pending", userId: req.body.userId },
+      where: {  userId: req.body.userId },
       include: [{ model: userTable, attributes: ["firstName", "lastName"] }],
     });
     if (response.length == 0) {

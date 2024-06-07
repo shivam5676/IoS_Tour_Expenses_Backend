@@ -146,7 +146,9 @@ routes.get("/callback/:code", async (req, res) => {
               email: userDetails.data.result.EMAIL,
               mobile: userDetails.data.result.PERSONAL_MOBILE,
               designation: userDetails.data.result.WORK_POSITION,
-              supervisor:supervisor
+              supervisor:supervisor,
+              id: tokenResponse.data.user_id,
+
             },
           });
         } catch (err) {
@@ -169,7 +171,8 @@ routes.get("/callback/:code", async (req, res) => {
           email: userDetails.data.result.EMAIL,
           mobile: userDetails.data.result.PERSONAL_MOBILE,
           designation: userValid.designation,
-          supervisor:userValid.supervisor
+          supervisor:userValid.supervisor,
+           id: tokenResponse.data.user_id,
         },
       });
     }

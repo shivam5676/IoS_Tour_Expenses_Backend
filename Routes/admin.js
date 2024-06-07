@@ -16,6 +16,8 @@ const checkAdmin = require("../middleware/checkAdmin");
 const postComment = require("../Controllers/admin/PostComment");
 const checkSupervisor = require("../middleware/checkSupervisor");
 const getSuperVisor = require("../Controllers/admin/getSupervisorList");
+const reAssignVoucher = require("../Controllers/admin/reassignVoucher");
+const getPaymentVoucher = require("../Controllers/admin/getPAymentVoucher");
 // const { default: checkSupervisor } = require("../middleware/checkSupervisor");
 
 routes.post("/createUser", checkToken, checkSupervisor, checkAdmin, createUser);
@@ -61,6 +63,8 @@ routes.post(
   checkAdmin,
   postComment
 );
-routes.post("/getSuperVisor",checkToken,checkAdmin,getSuperVisor)
-// routes.post("/allVouchers",)
+routes.post("/getSuperVisor", checkToken, checkAdmin, getSuperVisor);
+routes.post("/reAssign", checkToken, checkAdmin, reAssignVoucher);
+routes.post("/getPaymentVoucher", checkToken, checkAdmin, getPaymentVoucher);
+
 module.exports = routes;
