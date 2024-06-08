@@ -28,6 +28,9 @@ const Vouchers = Sequelize.define("Vouchers", {
   assignedTo: {
     type: sequelize.STRING,
   },
+  assignedName: {
+    type: sequelize.STRING,
+  },
   currency: {
     type: sequelize.STRING,
   },
