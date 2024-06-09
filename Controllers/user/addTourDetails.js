@@ -70,17 +70,17 @@ const addTourDetails = async (req, res) => {
       //   { stausType: "Pending" },
       { where: { id: voucherId, userId: +userId } }
     );
-    if (!req.body.assignedTo) {
-      return res
-        .status(400)
-        .json({ msg: "something went wrong...contact administration " }); //if therreis problem in bitrix hierrachy
-    }
+    // if (!req.body.assignedTo) {
+    //   return res
+    //     .status(400)
+    //     .json({ msg: "something went wrong...contact administration " }); //if therreis problem in bitrix hierrachy
+    // }
     await updatedData.update({
       statusType: req.body.assignedTo ? "Pending" : "Accepted",
     });
     const assigned = assignedVoucher.create({
       status: req.body.assignedTo ? "Pending" : "Accepted",
-      assignedTo: req.body.assignedTo,
+      assignedTo: req.body.assignedTo||req.body.userId,
       VoucherId: voucherId,
       userId: req.body.userId,
     });
