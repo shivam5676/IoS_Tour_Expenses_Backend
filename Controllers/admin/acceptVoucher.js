@@ -6,21 +6,8 @@ const dotenv = require("dotenv").config();
 
 const acceptVoucher = async (req, res) => {
   const voucherId = req.body.voucherId;
-  // console.log(req.body);
-  // console.log(req.body.assignedTo, "..............=>");
-  // return;
-  // const accessToken = req.body.token;
-  // const userId = req.body.userId;
-  // const DepartMentId= req.body.UF_Department_Id
-  // // console.log(userId);
-  // try {
-  //   const superVisor = await axios.get(
-  //     `https://${process.env.COMPANY_DOMAIN}/rest/department.get.json?ID=${DepartMentId}&auth=${accessToken}`
-  //   );
-  //   console.log(superVisor.data.result);
-  // } catch (err) {
-  //   console.log(err);
-  // }
+  
+
 
   // Function to get supervisor information
 

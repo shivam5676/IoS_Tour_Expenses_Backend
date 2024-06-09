@@ -33,8 +33,11 @@ const trackVoucherStatus = async (req, res) => {
         if (current.imagePath) {
           try {
             const data = await fs.readFile(current.imagePath);
+            const mime = await import("mime"); // Dynamically import mime
+            const mimeType = mime.default.getType(current.imagePath); // Use the default export
+      
             const base64Image = Buffer.from(data).toString("base64");
-            const dataUrl = `data:image/png;base64,${base64Image}`;
+            const dataUrl = `data:${mimeType};base64,${base64Image}`;
             images.push(dataUrl);
           } catch (err) {
             console.error("Error reading image file:", err);

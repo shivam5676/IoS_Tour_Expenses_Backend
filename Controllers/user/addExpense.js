@@ -3,7 +3,6 @@ const voucherExpense = require("../../models/voucherExpense");
 const fs = require("fs");
 
 const addExpense = async (req, res, next) => {
-  console.log("object");
   const {
     amount,
     expenseType,
@@ -15,7 +14,6 @@ const addExpense = async (req, res, next) => {
     userId,
     billImage,
   } = req.body;
-  console.log(billImage);
 
   const uploadDir = path.join(__dirname, "..", "..", "uploads");
   if (!fs.existsSync(uploadDir)) {
@@ -42,9 +40,14 @@ const addExpense = async (req, res, next) => {
     return res.status(400).json({ msg: "please select date " });
   }
   if (billImage) {
+    const matches = billImage.match(/^data:image\/(\w+);base64,/);
+    if (!matches) {
+      return res.status(400).json({ msg: "Invalid image format" });
+    }
+    const extension = matches[1];
     const base64Data = billImage.replace(/^data:image\/\w+;base64,/, "");
     const buffer = Buffer.from(base64Data, "base64");
-    const filename = `uploads/${Date.now()}-billImage.png`;
+    const filename = `uploads/${Date.now()}-billImage.${extension}`;
 
     fs.writeFile(filename, buffer, async (err) => {
       if (err) {
