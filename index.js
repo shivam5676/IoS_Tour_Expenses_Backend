@@ -44,21 +44,7 @@ app.use("/user", userRoutes);
 app.use(authRoutes);
 db.sync({ force: !true })
   .then(async () => {
-    // console.log("second print");
-    // const userFind = await userTable.findOne({
-    //   where: { email: "shivam@gmail.com" },
-    // });
-
-    // if (!userFind) {
-    //   userTable.create({
-    //     firstName: "shivam",
-    //     lastName: "singh",
-    //     email: "shivam@gmail.com",
-    //     mobile: "1234567890",
-    //     isAdmin: true,
-    //     password: "12345",
-    //   });
-    // }
+ 
 
     app.listen(2000, () => {});
   })

@@ -5,9 +5,7 @@ const VouchersDescription = require("../../models/VoucherDescription");
 const fs = require("fs").promises; // Use the promisified version of fs
 
 const trackVoucherStatus = async (req, res) => {
-  console.log("object");
   const VoucherId = req.body.voucherId;
-  console.log(VoucherId);
 
   try {
     const response = await Vouchers.findOne({
@@ -26,7 +24,6 @@ const trackVoucherStatus = async (req, res) => {
     // Extracting image paths from the response
     const imagePaths = response.voucherExpenses;
     let images = [];
-
     // Use Promise.all to wait for all file reads to complete
     await Promise.all(
       imagePaths.map(async (current) => {
@@ -47,7 +44,6 @@ const trackVoucherStatus = async (req, res) => {
         }
       })
     );
-console.log(images)
     return res.status(200).json({ response, imagePaths: images });
   } catch (err) {
     console.log("----------err", err);
