@@ -15,6 +15,7 @@ const userRoutes = require("./Routes/user");
 const path = require("path");
 const assignedVoucher = require("./models/assignedVoucher");
 const builtPath = path.join(__dirname, "../IoS_Tour_Expenses/build");
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use(cors());
 // Vouchers.hasOne(userTable)
@@ -44,8 +45,6 @@ app.use("/user", userRoutes);
 app.use(authRoutes);
 db.sync({ force: !true })
   .then(async () => {
- 
-
     app.listen(2000, () => {});
   })
   .catch((err) => console.log(err));
