@@ -13,21 +13,25 @@ const deleteExpense = async (req, res, next) => {
     const expense = await voucherExpense.findOne({ where: { id: expenseId } });
 
     if (!expense) {
-      return res.status(404).json({ msg: "No item found with the given expense ID" });
+      return res
+        .status(404)
+        .json({ msg: "No item found with the given expense ID" });
     }
 
     // Extract the filename from the imagePath
-    const filename = path.basename(expense.imagePath);
+    console.log(expense.imagePath);
+    if (expense.imagePath) {
+      const filename = path.basename(expense.imagePath);
+      // Construct the full path to the image file
+      const imagePath = path.join(__dirname, "..", "..", expense.imagePath);
 
-    // Construct the full path to the image file
-    const imagePath = path.join(__dirname, "..", "..", expense.imagePath);
-
-    // Check if the file exists before attempting to delete it
-    if (fs.existsSync(imagePath)) {
-      // Delete the file
-      fs.unlinkSync(imagePath);
-    } else {
-      console.log("File does not exist:", imagePath);
+      // Check if the file exists before attempting to delete it
+      if (fs.existsSync(imagePath)) {
+        // Delete the file
+        fs.unlinkSync(imagePath);
+      } else {
+        console.log("File does not exist:", imagePath);
+      }
     }
 
     // Delete the expense record from the database
