@@ -66,7 +66,7 @@ const updateExpense = async (req, res, next) => {
         const getExpense = await voucherExpense.findOne({
           where: { id: expenseId },
         });
-        const previousImageUrl=getExpense.imagePath
+        const previousImageUrl = getExpense.imagePath;
         if (!getExpense) {
           return res
             .status(400)
@@ -84,24 +84,20 @@ const updateExpense = async (req, res, next) => {
           userId,
           imagePath: filename,
         });
-                if (getExpense.imagePath) {
-                  const filename = path.basename(previousImageUrl);
-                  // Construct the full path to the image file
-                  const imagePath = path.join(
-                    __dirname,
-                    "..",
-                    "..",
-                    previousImageUrlgetExpense.imagePath
-                  );
-        console.log(imagePath)
-                  // Check if the file exists before attempting to delete it
-                  if (fs.existsSync(imagePath)) {
-                    // Delete the file
-                    fs.unlinkSync(imagePath);
-                  } else {
-                    console.log("File does not exist:", imagePath);
-                  }
-                }
+        console.log(getExpense.imagePath, ",,mmm,,,,,,");
+        if (getExpense.imagePath) {
+          // const filename = path.basename(previousImageUrl);
+          // Construct the full path to the image file
+          const imagePath = path.join(__dirname, "..", "..", previousImageUrl);
+          console.log(imagePath, previousImageUrl);
+          // Check if the file exists before attempting to delete it
+          if (fs.existsSync(imagePath)) {
+            // Delete the file
+            fs.unlinkSync(imagePath);
+          } else {
+            console.log("File does not exist:", imagePath);
+          }
+        }
 
         if (response) {
           //   if (fs.existsSync(imagePath)) {
