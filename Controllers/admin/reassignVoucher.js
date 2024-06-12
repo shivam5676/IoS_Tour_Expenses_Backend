@@ -7,6 +7,9 @@ const reAssignVoucher = async (req, res, next) => {
       .status(400)
       .json({ msg: "please select re assigned supervisor" });
   }
+  if (!req.body.userId) {
+    return res.status(400).json({ msg: "invalid user  ...." });
+  }
   try {
     const getVoucher = await Vouchers.findOne({
       where: {

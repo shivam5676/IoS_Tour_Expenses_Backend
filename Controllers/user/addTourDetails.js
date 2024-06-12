@@ -47,6 +47,9 @@ const addTourDetails = async (req, res) => {
   if (!voucherId) {
     return res.status(400).json({ msg: "voucherId is invalid" });
   }
+  if (!userId) {
+    return res.status(400).json({ msg: "userId is invalid" });
+  }
   try {
     const savedDetails = await VouchersDescription.create({
       purpose,

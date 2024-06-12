@@ -15,7 +15,9 @@ const updateExpense = async (req, res, next) => {
     userId,
     billImage,
   } = req.body;
-
+  if (!req.body.userId) {
+    return res.status(400).json({ msg: "invalid user  ...." });
+  }
   const uploadDir = path.join(__dirname, "..", "..", "uploads");
   if (!fs.existsSync(uploadDir)) {
     try {
@@ -84,7 +86,6 @@ const updateExpense = async (req, res, next) => {
           userId,
           imagePath: filename,
         });
-        console.log(getExpense.imagePath, ",,mmm,,,,,,");
         if (getExpense.imagePath) {
           // const filename = path.basename(previousImageUrl);
           // Construct the full path to the image file

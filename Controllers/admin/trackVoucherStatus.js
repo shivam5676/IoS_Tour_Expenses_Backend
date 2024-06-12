@@ -6,7 +6,9 @@ const fs = require("fs").promises; // Use the promisified version of fs
 
 const trackVoucherStatus = async (req, res) => {
   const VoucherId = req.body.voucherId;
-
+  if (!req.body.userId) {
+    return res.status(400).json({ msg: "invalid user  ...." });
+  }
   try {
     const response = await Vouchers.findOne({
       where: { id: VoucherId },

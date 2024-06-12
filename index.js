@@ -20,8 +20,8 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(cors());
 // Vouchers.hasOne(userTable)
 // userTable.belongToMany(Vouchers)
-userTable.hasMany(Vouchers);
-Vouchers.belongsTo(userTable);
+userTable.hasMany(Vouchers,{ onDelete: 'CASCADE' });
+Vouchers.belongsTo(userTable,{ onDelete: 'CASCADE' });
 
 
 Vouchers.hasOne(VouchersDescription);

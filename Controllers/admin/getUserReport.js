@@ -2,12 +2,15 @@ const Vouchers = require("../../models/VoucherTable");
 const userTable = require("../../models/userTable");
 const voucherExpense = require("../../models/voucherExpense");
 
-const getUserReport = async (req, res) => { if (req.role != "Admin" && req.role != "supervisor") {
-  console.log("objectssssssss",req.role)
-  return res.status(400).json({ msg: "You are not a authorised user" });
-}
+const getUserReport = async (req, res) => {
+  if (req.role != "Admin" && req.role != "supervisor") {
+    return res.status(400).json({ msg: "You are not a authorised user" });
+  }
   const userId = req.query.uid;
-  console.log(userId, "...........");
+
+  if (!req.body.userId) {
+    return res.status(400).json({ msg: "invalid user  ...." });
+  }
   try {
     const response = await Vouchers.findAll({
       where: { userId: userId, statusType: "Accepted" },
@@ -15,8 +18,8 @@ const getUserReport = async (req, res) => { if (req.role != "Admin" && req.role 
         { model: voucherExpense },
         {
           model: userTable,
-          attributes: ["firstName", "lastName"]
-        }
+          attributes: ["firstName", "lastName"],
+        },
       ],
     });
     console.log(response);

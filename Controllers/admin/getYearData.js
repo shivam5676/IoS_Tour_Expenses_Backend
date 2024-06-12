@@ -5,6 +5,9 @@ const getYearData = async (req, res) => { if (req.role != "Admin" && req.role !=
   console.log("objectssssssss",req.role)
   return res.status(400).json({ msg: "You are not a authorised user" });
 }
+if (!req.body.userId) {
+  return res.status(400).json({ msg: "invalid user  ...." });
+}
   const year = req.query.year;
   console.log(year)
   const userId = req.body.userId;
