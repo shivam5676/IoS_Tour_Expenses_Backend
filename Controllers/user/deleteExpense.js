@@ -5,6 +5,9 @@ const { error } = require("console");
 
 const deleteExpense = async (req, res, next) => {
   const { expenseId } = req.body;
+  if (!voucherId) {
+    return res.status(400).json({ msg: "voucherId is invalid" });
+  }
   if (!expenseId) {
     return res.status(400).json({ msg: "expense id  can not null" });
   }

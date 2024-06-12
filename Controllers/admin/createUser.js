@@ -4,6 +4,8 @@ const db = require("../../util/database");
 const createUser = async (req, res) => {
   if (req.role != "Admin" && req.role != "supervisor") {
     return res.status(400).json({ msg: "You are not a authorised user" });
+  }  if (!req.body.userId) {
+    return res.status(400).json({ msg: "invalid user  ...." });
   }
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;

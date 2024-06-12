@@ -1,7 +1,9 @@
 const voucherExpense = require("../../models/voucherExpense");
 
 const getYearData = async (req, res) => {
-  const userId = req.body.userId;
+  const userId = req.body.userId;  if (!req.body.userId) {
+    return res.status(400).json({ msg: "invalid user  ...." });
+  }
   try {
     const response = await voucherExpense.findAll({
       where: { userId: userId },

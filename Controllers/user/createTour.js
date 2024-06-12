@@ -17,6 +17,9 @@ const createTour = async (req, res) => {
   if (!req.body.currency) {
     return res.status(400).json({ msg: "plz add currency ...." });
   }
+  if (!req.body.userId) {
+    return res.status(400).json({ msg: "invalid user  ...." });
+  }
   try {
     console.log("inside try");
     const voucherCreated = await Vouchers.create({

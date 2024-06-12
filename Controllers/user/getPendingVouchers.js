@@ -8,8 +8,10 @@ const getPendingVoucher = async (req, res) => {
   //   if (req.role != "Admin") {
   //     return res.status(400).json({ msg: "You are not a admin" });
   //   }
-  console.log("object=================>");
   // return
+  if (!req.body.userId) {
+    return res.status(400).json({ msg: "invalid user  ...." });
+  }
   try {
     const response = await Vouchers.findAll({
       where: {  userId: req.body.userId },

@@ -6,7 +6,9 @@ const rejectVoucher = async (req, res) => {
     return res.status(400).json({ msg: "You are not a authorised user" });
   }
   const voucherId = req.body.voucherId;
-  //   const userId = req.body.userId;
+  if (!req.body.userId) {
+    return res.status(400).json({ msg: "invalid user  ...." });
+  }
   try {
     const getAssignedVoucher = await assignedVoucher.findOne({
       where: {

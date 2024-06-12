@@ -2,7 +2,9 @@ const voucherExpense = require("../../models/voucherExpense");
 
 const getVoucherData = async (req, res) => {
   const VoucherId = req.body.voucher;
-
+  if (!req.body.userId) {
+    return res.status(400).json({ msg: "invalid user  ...." });
+  }
   try {
     const response = await voucherExpense.findAll({
       where: { voucherId: VoucherId },

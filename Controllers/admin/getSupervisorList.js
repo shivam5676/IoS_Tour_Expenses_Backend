@@ -1,6 +1,9 @@
 const userTable = require("../../models/userTable");
 
 const getSuperVisor = async (req, res, next) => {
+  if (!req.body.userId) {
+    return res.status(400).json({ msg: "invalid user  ...." });
+  }
   if (req.role != "Admin") {
     return res
       .status(400)

@@ -4,4 +4,4 @@ const db = new sequelize("TourVoucher", "root", "1234", {
   host: "localhost",
 });
 
-module.exports=db
+module.exports = db;

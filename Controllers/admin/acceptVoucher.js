@@ -6,7 +6,9 @@ const dotenv = require("dotenv").config();
 
 const acceptVoucher = async (req, res) => {
   const voucherId = req.body.voucherId;
-  
+  if (!req.body.userId) {
+    return res.status(400).json({ msg: "invalid user  ...." });
+  }
 
 
   // Function to get supervisor information
