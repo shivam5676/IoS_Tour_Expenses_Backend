@@ -6,13 +6,13 @@ const dotenv = require("dotenv").config();
 
 const acceptVoucher = async (req, res) => {
   const voucherId = req.body.voucherId;
+  console.log(voucherId);
   if (!req.body.userId) {
     return res.status(400).json({ msg: "invalid user  ...." });
   }
 
-
   // Function to get supervisor information
-
+  console.log(req.body.userId, voucherId);
   try {
     const getAssignedVoucher = await assignedVoucher.findOne({
       where: {
@@ -21,6 +21,9 @@ const acceptVoucher = async (req, res) => {
         VoucherId: voucherId,
       },
     });
+    if (!getAssignedVoucher) {
+      return res.status(400).json({ msg: "voucher id is undefined.." });
+    }
     const updateAssignedVoucher = await getAssignedVoucher.update({
       status: "Accepted",
     });

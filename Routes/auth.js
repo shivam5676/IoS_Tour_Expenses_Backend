@@ -101,7 +101,7 @@ routes.get("/callback/:code", async (req, res) => {
 
       // console.log(supervisor);
       // console.log(supervisor.data.result, "======>result")
-// return
+      // return
       if (!userValid) {
         const departments = userDetails.data.result.UF_DEPARTMENT;
         let supervisor = false;
@@ -128,10 +128,10 @@ routes.get("/callback/:code", async (req, res) => {
             lastName: userDetails.data.result.LAST_NAME,
             email: userDetails.data.result.EMAIL,
             mobile: userDetails.data.result.PERSONAL_MOBILE,
-            isAdmin: admin.data.result ,
+            isAdmin: admin.data.result,
             designation: userDetails.data.result.WORK_POSITION,
             id: tokenResponse.data.user_id,
-            supervisor:supervisor
+            supervisor: supervisor,
           });
           return res.status(200).json({
             data: {
@@ -140,15 +140,14 @@ routes.get("/callback/:code", async (req, res) => {
               domain: tokenResponse.data.domain,
               access_token: tokenResponse.data.access_token,
               refresh_token: tokenResponse.data.refresh_token,
-              isAdmin: admin.data.result ,
+              isAdmin: admin.data.result,
               firstName: userDetails.data.result.NAME,
               lastName: userDetails.data.result.LAST_NAME,
               email: userDetails.data.result.EMAIL,
               mobile: userDetails.data.result.PERSONAL_MOBILE,
               designation: userDetails.data.result.WORK_POSITION,
-              supervisor:supervisor,
+              supervisor: supervisor,
               id: tokenResponse.data.user_id,
-
             },
           });
         } catch (err) {
@@ -157,24 +156,53 @@ routes.get("/callback/:code", async (req, res) => {
             response: err,
           });
         }
-      }
-      return res.status(200).json({
-        data: {
-          // ...tokenResponse.data,
-          mobile: tokenResponse.data.mobile,
-          domain: tokenResponse.data.domain,
-          access_token: tokenResponse.data.access_token,
-          refresh_token: tokenResponse.data.refresh_token,
-          isAdmin: userValid.isAdmin,
-          firstName: userValid.firstName,
-          lastName: userValid.lastName,
+      } else {
+        const departments = userDetails.data.result.UF_DEPARTMENT;
+        let supervisor = false;
+
+        // Check if user is head of any department
+        for (const deptId of departments) {
+          const deptResponse = await axios.get(
+            `https://${process.env.COMPANY_DOMAIN}/rest/department.get.json?ID=${deptId}&auth=${accesstoken}`
+          );
+          console.log(
+            deptResponse.data.result[0].UF_HEAD,
+            tokenResponse.data.user_id
+          );
+          const deptHead = deptResponse.data.result[0].UF_HEAD;
+          if (deptHead == tokenResponse.data.user_id) {
+            supervisor = true;
+            break;
+          }
+        }
+        const updatedResponse = await userValid.update({
+          firstName: userDetails.data.result.NAME,
+          lastName: userDetails.data.result.LAST_NAME,
           email: userDetails.data.result.EMAIL,
           mobile: userDetails.data.result.PERSONAL_MOBILE,
-          designation: userValid.designation,
-          supervisor:userValid.supervisor,
-           id: tokenResponse.data.user_id,
-        },
-      });
+          isAdmin: admin.data.result,
+          designation: userDetails.data.result.WORK_POSITION,
+          id: tokenResponse.data.user_id,
+          supervisor: supervisor,
+        });
+        return res.status(200).json({
+          data: {
+            // ...tokenResponse.data,
+            mobile: tokenResponse.data.mobile,
+            domain: tokenResponse.data.domain,
+            access_token: tokenResponse.data.access_token,
+            refresh_token: tokenResponse.data.refresh_token,
+            isAdmin: userValid.isAdmin,
+            firstName: userValid.firstName,
+            lastName: userValid.lastName,
+            email: userDetails.data.result.EMAIL,
+            mobile: userDetails.data.result.PERSONAL_MOBILE,
+            designation: userValid.designation,
+            supervisor: userValid.supervisor,
+            id: tokenResponse.data.user_id,
+          },
+        });
+      }
     }
   } catch (error) {
     console.error("Error:", error);

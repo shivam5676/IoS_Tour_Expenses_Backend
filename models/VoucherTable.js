@@ -34,5 +34,8 @@ const Vouchers = Sequelize.define("Vouchers", {
   currency: {
     type: sequelize.STRING,
   },
+  exchangeRates:{
+    type:sequelize.FLOAT
+  }
 });
 module.exports = Vouchers;

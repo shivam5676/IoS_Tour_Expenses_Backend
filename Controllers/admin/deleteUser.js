@@ -1,7 +1,9 @@
 const userTable = require("../../models/userTable");
 
 const deleteUser = async (req, res, next) => {
+  console.log("executing delete component")
   const {delId} = req.body;
+  console.log(delId)
   if (req.role != "Admin") {
     return res.status(400).json({ msg: "You are not a admin" });
   }
