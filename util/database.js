@@ -1,7 +1,10 @@
 const sequelize = require("sequelize");
-const db = new sequelize("TourVoucher", "root", "1234", {
+require("dotenv").config();
+const db = new sequelize("TourVoucher", process.env.SQLSCHEMANAME,  process.env.SQLSCHEMAPASSWORD, {
   dialect: "mysql",
-  host: "localhost",
+
+  host:  process.env.SQLHOST,
+  
 });
 
 module.exports = db;
