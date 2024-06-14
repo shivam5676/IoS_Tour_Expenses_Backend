@@ -13,7 +13,7 @@ const trackVoucherStatus = async (req, res) => {
     const response = await Vouchers.findOne({
       where: { id: VoucherId },
       include: [
-        { model: userTable, attributes: ["firstName", "lastName"] },
+        { model: userTable, attributes: ["firstName", "lastName","designation"] },
         { model: VouchersDescription },
         { model: voucherExpense },
       ],
@@ -40,8 +40,7 @@ const trackVoucherStatus = async (req, res) => {
             images.push(dataUrl);
           } catch (err) {
             console.error("Error reading image file:", err);
-            // You might want to handle the error more gracefully here
-            // e.g., continue to the next image or return an error response
+          
           }
         }
       })
