@@ -9,15 +9,17 @@ const getPendingVoucher = require("../Controllers/user/getPendingVouchers");
 const checkSupervisor = require("../middleware/checkSupervisor");
 const deleteExpense = require("../Controllers/user/deleteExpense");
 const updateExpense = require("../Controllers/user/updateExpense");
+const DeleteOnGoingTour = require("../Controllers/user/deleteOnGoingTour");
 
 const routes = express.Router();
 routes.post("/saveExpense", checkToken, addExpense);
 routes.post("/createTour", checkToken, createTour);
 routes.post("/getTour", checkToken, getTour);
 routes.post("/getTourExpenses", checkToken, getTourExpenses);
-routes.post("/addDetails", checkToken,checkSupervisor, addTourDetails);
+routes.post("/addDetails", checkToken, checkSupervisor, addTourDetails);
 routes.post("/getPendingVouchers", checkToken, getPendingVoucher);
-routes.post("/deleteExpense",checkToken,deleteExpense)
+routes.post("/deleteExpense", checkToken, deleteExpense);
 routes.post("/updateExpense", checkToken, updateExpense);
+routes.post("/deleteOnGoingTour", checkToken, DeleteOnGoingTour);
 
 module.exports = routes;

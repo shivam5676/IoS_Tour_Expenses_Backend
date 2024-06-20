@@ -49,6 +49,7 @@ const updateExpense = async (req, res, next) => {
     "........"
   );
   if (billImage) {
+    console.log("if executing");
     console.log(billImage);
     const matches = billImage.match(/^data:image\/(\w+);base64,/);
     if (!matches) {
@@ -89,35 +90,47 @@ const updateExpense = async (req, res, next) => {
         if (getExpense.imagePath) {
           // const filename = path.basename(previousImageUrl);
           // Construct the full path to the image file
-          const imagePath = path.join(__dirname, "..", "..", previousImageUrl);
-          console.log(imagePath, previousImageUrl);
-          // Check if the file exists before attempting to delete it
-          if (fs.existsSync(imagePath)) {
-            // Delete the file
-            fs.unlinkSync(imagePath);
-          } else {
-            console.log("File does not exist:", imagePath);
+          console.log(previousImageUrl, "...");
+          if (previousImageUrl) {
+            const imagePath = path.join(
+              __dirname,
+              "..",
+              "..",
+              previousImageUrl
+            );
+
+            console.log(imagePath);
+            // Check if the file exists before attempting to delete it
+
+            if (fs.existsSync(imagePath)) {
+              // Delete the file
+              fs.unlinkSync(imagePath);
+            } else {
+              console.log("File does not exist:", imagePath);
+            }
           }
         }
 
-        if (response) {
+        if (!response) {
+          return res
+            .status(400)
+            .json({ msg: "some problem while updating Your expense" });
           //   if (fs.existsSync(imagePath)) {
           //     // Delete the file
           //     fs.unlinkSync(imagePath);
           //   }
-          return res.status(200).json({ expenseData: response });
         }
         console.log(response);
-        return res
-          .status(400)
-          .json({ msg: "some problem while updating Your expense" });
+        return res.status(200).json({ expenseData: response });
       } catch (err) {
+        console.log(err);
         return res
           .status(400)
           .json({ msg: "something went wrong !! try again ...." });
       }
     });
   } else {
+    console.log("else executing");
     try {
       console.log(expenseId);
       const getExpense = await voucherExpense.findOne({
@@ -140,13 +153,13 @@ const updateExpense = async (req, res, next) => {
         userId,
         imagePath: getExpense.imagePath,
       });
-      if (response) {
-        return res.status(200).json({ expenseData: response });
+      if (!response) {
+        return res
+          .status(400)
+          .json({ msg: "some problem while updating  Your expense" });
       }
       console.log(response);
-      return res
-        .status(400)
-        .json({ msg: "some problem while updating  Your expense" });
+      return res.status(200).json({ expenseData: response });
     } catch (err) {
       return res
         .status(400)
