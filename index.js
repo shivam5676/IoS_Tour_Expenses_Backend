@@ -14,7 +14,7 @@ const Vouchers = require("./models/VoucherTable");
 const userRoutes = require("./Routes/user");
 const path = require("path");
 const assignedVoucher = require("./models/assignedVoucher");
-const builtPath = path.join(__dirname, "../IoS_Tour_Expenses/build");
+// const builtPath = path.join(__dirname, "../IoS_Tour_Expenses/build");
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use(cors());
@@ -38,7 +38,7 @@ assignedVoucher.belongsTo(Vouchers);
 
 userTable.hasMany(assignedVoucher);
 assignedVoucher.belongsTo(userTable);
-app.use(express.static(builtPath));
+// app.use(express.static(builtPath));
 app.use(bodyParser.json({ extended: false, limit: "500mb" }));
 app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
