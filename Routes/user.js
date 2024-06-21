@@ -10,6 +10,7 @@ const checkSupervisor = require("../middleware/checkSupervisor");
 const deleteExpense = require("../Controllers/user/deleteExpense");
 const updateExpense = require("../Controllers/user/updateExpense");
 const DeleteOnGoingTour = require("../Controllers/user/deleteOnGoingTour");
+const UpdateDetails = require("../Controllers/user/updateDetails");
 
 const routes = express.Router();
 routes.post("/saveExpense", checkToken, addExpense);
@@ -21,5 +22,7 @@ routes.post("/getPendingVouchers", checkToken, getPendingVoucher);
 routes.post("/deleteExpense", checkToken, deleteExpense);
 routes.post("/updateExpense", checkToken, updateExpense);
 routes.post("/deleteOnGoingTour", checkToken, DeleteOnGoingTour);
+routes.post("/updateDetails", checkToken, UpdateDetails);
+
 
 module.exports = routes;
