@@ -13,7 +13,7 @@ const checkAdmin = async (req, res, next) => {
           id: req.body.userId,
           isAdmin: true,
         },
-      });
+      })
       console.log(verifyAdmin, "verify");
       if (verifyAdmin) {
         req.role = "Admin";
