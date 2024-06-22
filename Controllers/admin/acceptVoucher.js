@@ -5,13 +5,13 @@ const VouchersDescription = require("../../models/VoucherDescription");
 const dotenv = require("dotenv").config();
 
 const acceptVoucher = async (req, res) => {
-  const voucherId = req.body.voucherId;
+  const voucherId = req.body.voucherId; //extraction of voucher id
   if (!req.body.userId) {
     return res.status(400).json({ msg: "invalid user  ...." });
   }
 
-  // Function to get supervisor information
   try {
+    //find pending assignedVoucher by using status and voucherId
     const getAssignedVoucher = await assignedVoucher.findOne({
       where: {
         assignedTo: req.body.userId,
@@ -22,11 +22,13 @@ const acceptVoucher = async (req, res) => {
     if (!getAssignedVoucher) {
       return res.status(400).json({ msg: "voucher id is undefined.." });
     }
+    //update status from pending to accepted
     const updateAssignedVoucher = await getAssignedVoucher.update({
       status: "Accepted",
     });
 
     if (updateAssignedVoucher) {
+      //check dailyAllowance value from  req body and update it if value exist
       if (req.body.dailyAllowance) {
         const voucherDetails = await VouchersDescription.findOne({
           where: { voucherId: req.body.voucherId },
@@ -35,6 +37,7 @@ const acceptVoucher = async (req, res) => {
           dailyAllowance: +req.body.dailyAllowance,
         });
       }
+      //find voucher from voucher table and if assigned value is not exist in req body  then update the voucher status to accepted and assigned value to account department
       const updatedData = await Vouchers.findOne(
         //   { stausType: "Pending" },
         { where: { id: voucherId } }
@@ -47,27 +50,36 @@ const acceptVoucher = async (req, res) => {
             .json({ msg: "please select Account department field" });
         }
         console.log(req.body.assignedName);
-        await updatedData.update({
-          statusType: "Accepted",
-          comment: req.body.comment,
-          sender: req.body.userId,
-          assignedTo: req.body.AccountDepartment,
-          assignedName: req.body.assignedName,
-        });
-      } else {
-        await assignedVoucher.create({
-          assignedTo: req.body.assignedTo,
 
-          status: "Pending",
-          VoucherId: voucherId,
-          userId: updateAssignedVoucher.userId,
-        });
-        await updatedData.update({
-          statusType: "Pending",
-          comment: req.body.comment,
-          sender: req.body.userId,
-          // assignedTo: req.body.assignedTo,
-        });
+        //update the assigned voucher to accountDepartment with pending status
+      } else {
+        console.log(req.body.assignedTo, "..>");
+
+        console.log(req.body.AccountDepartment, ">>>,,,");
+        if (req.body.assignedTo) {
+          await updatedData.update({
+            statusType: "Accepted",
+            comment: req.body.comment,
+            sender: req.body.userId,
+            assignedTo: req.body.AccountDepartment,
+            assignedName: req.body.assignedName,
+          });
+          
+        } else {
+          await assignedVoucher.create({
+            assignedTo: req.body.assignedTo,
+
+            status: "Pending",
+            VoucherId: voucherId,
+            userId: updateAssignedVoucher.userId,
+          });
+          await updatedData.update({
+            statusType: "Pending",
+            comment: req.body.comment,
+            sender: req.body.userId,
+            // assignedTo: req.body.assignedTo,
+          });
+        }
       }
       async function sendApprovalRequest(currentUserid, nextUserId, voucherId) {
         try {
@@ -101,8 +113,11 @@ const acceptVoucher = async (req, res) => {
           throw error;
         }
       }
-      if (req.body.assignedTo) {
+      if (req.body.assignedTo&&!req.body.AccountDepartment) {
         sendApprovalRequest(req.body.userId, req.body.assignedTo, voucherId);
+      }
+      else if(req.body.AccountDepartment){
+        sendApprovalRequest(req.body.userId, req.body.AccountDepartment, voucherId);
       }
       console.log(updatedData);
       return res.status(200).json({ details: updatedData });
