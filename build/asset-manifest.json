@@ -1,8 +1,9 @@
 {
   "files": {
-    "main.css": "/static/css/main.4a37d633.css",
-    "main.js": "/static/js/main.e9220aba.js",
+    "main.css": "/static/css/main.2c3bf3c5.css",
+    "main.js": "/static/js/main.3a54c2dd.js",
     "static/media/ios logo2.png": "/static/media/ios logo2.bbfbc0f543d61ca9bacc.png",
+    "static/media/bg7.jpg": "/static/media/bg7.e4e4850b249f3236311a.jpg",
     "static/media/accepted.png": "/static/media/accepted.f8b9a6c7dbe99d185ed6.png",
     "static/media/metaverse.gif": "/static/media/metaverse.4cd21c346a6da2121e10.gif",
     "static/media/computer.gif": "/static/media/computer.927047f999065fc27516.gif",
@@ -19,11 +20,11 @@
     "static/media/bitrixLogo.png": "/static/media/bitrixLogo.856e24bb1cf92a37526a.png",
     "static/media/ios logo.png": "/static/media/ios logo.eb53ebab9bd47da8c6d3.png",
     "index.html": "/index.html",
-    "main.4a37d633.css.map": "/static/css/main.4a37d633.css.map",
-    "main.e9220aba.js.map": "/static/js/main.e9220aba.js.map"
+    "main.2c3bf3c5.css.map": "/static/css/main.2c3bf3c5.css.map",
+    "main.3a54c2dd.js.map": "/static/js/main.3a54c2dd.js.map"
   },
   "entrypoints": [
-    "static/css/main.4a37d633.css",
-    "static/js/main.e9220aba.js"
+    "static/css/main.2c3bf3c5.css",
+    "static/js/main.3a54c2dd.js"
   ]
 }

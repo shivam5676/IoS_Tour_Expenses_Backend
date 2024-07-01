@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <style>
+    .container {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #f0f0f0;
+    }
+    .button {
+      background-color: #3498db;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+    .button img {
+      width: 100px;
+      height: 50px;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="button" onclick="bitrixHandler()">
+      Sign in with
+      <img src="path/to/bitrixLogo.png" alt="Bitrix Logo">
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    // const connectionString = "http://localhost";
+    // const backendPort = 2000;
+    // const bitrixUrl = "https://shivam.bitrix24.in";
+
+    // document.addEventListener('DOMContentLoaded', (event) => {
+    //   const urlParams = new URLSearchParams(window.location.search);
+    //   const code = urlParams.get('code');
+
+    //   if (code) {
+    //     getAccessToken(code);
+    //   }
+    // });
+
+    // async function getAccessToken(code) {
+    //   try {
+    //     const response = await axios.get(`${connectionString}:${backendPort}/callback/${code}`);
+    //     if (response.data.data.access_token) {
+    //       localStorage.setItem('token', JSON.stringify(response.data.data));
+    //       window.location.href = "/";
+    //     } else {
+    //       window.location.href = "/";
+    //     }
+    //   } catch (error) {
+    //     console.error("Error fetching the access token", error);
+    //   }
+    // }
+
+    async function bitrixHandler() {
+      try {
+        // const response = await axios.get(`${connectionString}:${backendPort}/queryParams/`);
+        // const queryParams = response.data.data;
+        // const authorizationUrl = `${bitrixUrl}/oauth/authorize?${queryParams}`;
+        window.location.href = "https://www.google.com/";
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  </script>
+</body>
+</html>

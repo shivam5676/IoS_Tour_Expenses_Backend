@@ -29,11 +29,10 @@ routes.post("/login", Login);
 //     res.redirect(`https://oipl.bitrix24.in/oauth/authorize?${queryParams}`);
 // });
 
-routes.post("/home", (req, res) => {
+routes.post("/", (req, res) => {
   //for bitrix redirecting
-  res.sendFile(
-    path.join(__dirname, "../", "../IoS_Tour_Expenses/build/index.html")
-  );
+  console.log(path.join(__dirname, "../", "build/index.html"));
+  res.sendFile(path.join(__dirname, "../", "build/index.html"));
 });
 routes.get("/home", (req, res) => {
   //for bitrix redirecting
@@ -43,7 +42,6 @@ routes.get("/home", (req, res) => {
 });
 
 routes.get("/queryParams", async (req, res) => {
-  console.log("env", process.env.CLIENT_SECRET);
   try {
     // const REDIRECT_URI = "http://localhost:3000/home";
     // const CLIENT_ID = "local.6648983f0cc5d5.97469898";
@@ -55,6 +53,7 @@ routes.get("/queryParams", async (req, res) => {
     });
     res.status(200).json({ data: queryParams });
   } catch (error) {
+    res.status(400).json("SOMETHING WENT WRONG");
     console.log(error);
   }
 });
@@ -79,12 +78,12 @@ routes.get("/callback/:code", async (req, res) => {
         },
       }
     );
+    // console.log(tokenResponse,"....>")
     if (tokenResponse) {
       const accesstoken = tokenResponse.data.access_token;
       const admin = await axios.get(
         `https://${process.env.COMPANY_DOMAIN}/rest/user.admin.json?auth=${accesstoken}`
       );
-      console.log(admin);
 
       const userDetails = await axios.get(
         `https://${process.env.COMPANY_DOMAIN}/rest/user.current`,
@@ -94,6 +93,8 @@ routes.get("/callback/:code", async (req, res) => {
           },
         }
       );
+      // console.log(userDetails, "....>");
+      // return;
       // console.log(tokenResponse.data.mobile, "..............");
       const userValid = await userTable.findOne({
         where: { id: tokenResponse.data.user_id },
@@ -111,10 +112,7 @@ routes.get("/callback/:code", async (req, res) => {
           const deptResponse = await axios.get(
             `https://${process.env.COMPANY_DOMAIN}/rest/department.get.json?ID=${deptId}&auth=${accesstoken}`
           );
-          console.log(
-            deptResponse.data.result[0].UF_HEAD,
-            tokenResponse.data.user_id
-          );
+
           const deptHead = deptResponse.data.result[0].UF_HEAD;
           if (deptHead == tokenResponse.data.user_id) {
             supervisor = true;
@@ -132,6 +130,7 @@ routes.get("/callback/:code", async (req, res) => {
             designation: userDetails.data.result.WORK_POSITION,
             id: tokenResponse.data.user_id,
             supervisor: supervisor,
+            profilePic: userDetails.data.result.PERSONAL_PHOTO,
           });
           return res.status(200).json({
             data: {
@@ -148,6 +147,7 @@ routes.get("/callback/:code", async (req, res) => {
               designation: userDetails.data.result.WORK_POSITION,
               supervisor: supervisor,
               id: tokenResponse.data.user_id,
+              profilePic: userDetails.data.result.PERSONAL_PHOTO,
             },
           });
         } catch (err) {
@@ -180,10 +180,11 @@ routes.get("/callback/:code", async (req, res) => {
           lastName: userDetails.data.result.LAST_NAME,
           email: userDetails.data.result.EMAIL,
           mobile: userDetails.data.result.PERSONAL_MOBILE,
-          isAdmin: admin.data.result,
+          // isAdmin: admin.data.result,
           designation: userDetails.data.result.WORK_POSITION,
           id: tokenResponse.data.user_id,
           supervisor: supervisor,
+          profilePic: userDetails.data.result.PERSONAL_PHOTO,
         });
         return res.status(200).json({
           data: {
@@ -200,6 +201,7 @@ routes.get("/callback/:code", async (req, res) => {
             designation: userValid.designation,
             supervisor: userValid.supervisor,
             id: tokenResponse.data.user_id,
+            profilePic: userDetails.data.result.PERSONAL_PHOTO,
           },
         });
       }
