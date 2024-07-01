@@ -4,12 +4,12 @@ const userTable = require("../../models/userTable");
 
 const getAllVoucher = async (req, res) => {
   if (req.role != "Admin" && req.role != "supervisor") {
-    console.log("objectssssssss",req.role)
+    console.log("objectssssssss",req.role,req.body.userId)
     return res.status(400).json({ msg: "You are not a authorised user" });
   }  if (!req.body.userId) {
     return res.status(400).json({ msg: "invalid user  ...." });
   }
-  console.log("inside get voucgher");
+  console.log("inside get voucher");
   // return
   const response = await assignedVoucher.findAll({
     where: {

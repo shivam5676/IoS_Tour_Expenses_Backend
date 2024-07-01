@@ -35,6 +35,9 @@ const userTable = Sequelize.define("users", {
   supervisor: {
     type: sequelize.BOOLEAN,
   },
+  profilePic:{
+    type: sequelize.STRING,
+  }
 });
 // console.log("i am inside user table");
 

@@ -21,6 +21,10 @@ const getPaymentVoucher = require("../Controllers/admin/getPAymentVoucher");
 const deleteUser = require("../Controllers/admin/deleteUser");
 const getAllTimeData = require("../Controllers/admin/getAllTimeData");
 const closeVoucher = require("../Controllers/admin/closeVoucher");
+const assignAdmin = require("../Controllers/admin/assignAdmin");
+const superAdmin = require("../middleware/superAdmin");
+const deleteAdmin = require("../Controllers/admin/deleteAdmin");
+const TokenRefresher = require("../middleware/tokenRefresher");
 // const { default: checkSupervisor } = require("../middleware/checkSupervisor");
 
 routes.post("/createUser", checkToken, checkSupervisor, checkAdmin, createUser);
@@ -75,7 +79,12 @@ routes.post(
 );
 routes.post("/getSuperVisor", checkToken, checkAdmin, getSuperVisor);
 routes.post("/reAssign", checkToken, checkAdmin, reAssignVoucher);
+routes.post("/assignAsAdmin", checkToken, superAdmin, assignAdmin);
+routes.post("/removeAsAdmin", checkToken, superAdmin, deleteAdmin);
+
 routes.post("/getPaymentVoucher", checkToken, checkAdmin, getPaymentVoucher);
 routes.post("/deleteUser", checkToken, checkAdmin, deleteUser);
 routes.post("/allTime", checkToken, checkAdmin, getAllTimeData);
+// routes.post("/sessionVerify", checkToken);
+// routes.post("/sessionRefresh", TokenRefresher);
 module.exports = routes;

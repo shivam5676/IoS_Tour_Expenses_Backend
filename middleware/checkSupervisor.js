@@ -30,6 +30,7 @@ const checkSupervisor = async (req, res, next) => {
         req.body.assignedTo = superVisor.data.result[0].UF_HEAD;
       }
     }
+    console.log(req.body.assignedTo, "assignedTo...........");
     // else if(){
     //     req.body.assignedTo=  superVisor.data.result[0].UF_HEAD
     // }

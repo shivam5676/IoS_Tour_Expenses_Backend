@@ -11,6 +11,8 @@ const deleteExpense = require("../Controllers/user/deleteExpense");
 const updateExpense = require("../Controllers/user/updateExpense");
 const DeleteOnGoingTour = require("../Controllers/user/deleteOnGoingTour");
 const UpdateDetails = require("../Controllers/user/updateDetails");
+const TokenRefresher = require("../middleware/tokenRefresher");
+const TokenIsVAlid = require("../middleware/tokenIsVAlid");
 
 const routes = express.Router();
 routes.post("/saveExpense", checkToken, addExpense);
@@ -23,6 +25,6 @@ routes.post("/deleteExpense", checkToken, deleteExpense);
 routes.post("/updateExpense", checkToken, updateExpense);
 routes.post("/deleteOnGoingTour", checkToken, DeleteOnGoingTour);
 routes.post("/updateDetails", checkToken, UpdateDetails);
-
-
+routes.post("/sessionRefresh", TokenRefresher);
+routes.post("/sessionVerify", TokenIsVAlid);
 module.exports = routes;

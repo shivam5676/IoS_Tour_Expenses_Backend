@@ -52,35 +52,34 @@ const acceptVoucher = async (req, res) => {
         console.log(req.body.assignedName);
 
         //update the assigned voucher to accountDepartment with pending status
-      } else {
-        console.log(req.body.assignedTo, "..>");
-
-        console.log(req.body.AccountDepartment, ">>>,,,");
-        if (req.body.assignedTo) {
-          await updatedData.update({
-            statusType: "Accepted",
-            comment: req.body.comment,
-            sender: req.body.userId,
-            assignedTo: req.body.AccountDepartment,
-            assignedName: req.body.assignedName,
-          });
-          
-        } else {
-          await assignedVoucher.create({
-            assignedTo: req.body.assignedTo,
-
-            status: "Pending",
-            VoucherId: voucherId,
-            userId: updateAssignedVoucher.userId,
-          });
-          await updatedData.update({
-            statusType: "Pending",
-            comment: req.body.comment,
-            sender: req.body.userId,
-            // assignedTo: req.body.assignedTo,
-          });
-        }
       }
+      console.log(req.body.assignedTo, "..>");
+
+      console.log(req.body.AccountDepartment, ">>>,,,");
+      if (req.body.AccountDepartment) {
+        await updatedData.update({
+          statusType: "Accepted",
+          comment: req.body.comment,
+          sender: req.body.userId,
+          assignedTo: req.body.AccountDepartment,
+          assignedName: req.body.assignedName,
+        });
+      } else {
+        await assignedVoucher.create({
+          assignedTo: req.body.assignedTo,
+
+          status: "Pending",
+          VoucherId: voucherId,
+          userId: updateAssignedVoucher.userId,
+        });
+        await updatedData.update({
+          statusType: "Pending",
+          comment: req.body.comment,
+          sender: req.body.userId,
+          // assignedTo: req.body.assignedTo,
+        });
+      }
+
       async function sendApprovalRequest(currentUserid, nextUserId, voucherId) {
         try {
           // Send notification to the next user
@@ -113,11 +112,14 @@ const acceptVoucher = async (req, res) => {
           throw error;
         }
       }
-      if (req.body.assignedTo&&!req.body.AccountDepartment) {
+      if (req.body.assignedTo && !req.body.AccountDepartment) {
         sendApprovalRequest(req.body.userId, req.body.assignedTo, voucherId);
-      }
-      else if(req.body.AccountDepartment){
-        sendApprovalRequest(req.body.userId, req.body.AccountDepartment, voucherId);
+      } else if (req.body.AccountDepartment) {
+        sendApprovalRequest(
+          req.body.userId,
+          req.body.AccountDepartment,
+          voucherId
+        );
       }
       console.log(updatedData);
       return res.status(200).json({ details: updatedData });

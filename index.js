@@ -14,15 +14,14 @@ const Vouchers = require("./models/VoucherTable");
 const userRoutes = require("./Routes/user");
 const path = require("path");
 const assignedVoucher = require("./models/assignedVoucher");
-// const builtPath = path.join(__dirname, "../IoS_Tour_Expenses/build");
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+const builtPath = path.join(__dirname, "build");
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use(cors());
 // Vouchers.hasOne(userTable)
 // userTable.belongToMany(Vouchers)
-userTable.hasMany(Vouchers,{ onDelete: 'CASCADE' });
-Vouchers.belongsTo(userTable,{ onDelete: 'CASCADE' });
-
+userTable.hasMany(Vouchers, { onDelete: "CASCADE" });
+Vouchers.belongsTo(userTable, { onDelete: "CASCADE" });
 
 Vouchers.hasOne(VouchersDescription);
 VouchersDescription.belongsTo(Vouchers);
@@ -38,11 +37,23 @@ assignedVoucher.belongsTo(Vouchers);
 
 userTable.hasMany(assignedVoucher);
 assignedVoucher.belongsTo(userTable);
-// app.use(express.static(builtPath));
+app.use(express.static(builtPath));
+
+app.post("/", (req, res) => {
+  //for bitrix redirecting
+  console.log(path.join(__dirname, "build/index.html"));
+  res.sendFile(path.join(__dirname, "build/index.html"));
+});
+app.get("/", (req, res) => {
+  //for bitrix redirecting
+  console.log(path.join(__dirname, "build/index.html"));
+  res.sendFile(path.join(__dirname, "build/index.html"));
+});
 app.use(bodyParser.json({ extended: false, limit: "500mb" }));
 app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
 app.use(authRoutes);
+
 db.sync({ force: !true })
   .then(async () => {
     app.listen(2000, () => {});

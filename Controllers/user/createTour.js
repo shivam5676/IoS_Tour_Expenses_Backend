@@ -10,6 +10,7 @@ async function convertCurrency(fromCurrency, toCurrency, amount) {
   try {
     const response = await axios.get(`${baseUrl}${fromCurrency}`);
     const exchangeRates = response.data.conversion_rates;
+    console.log(exchangeRates)
     const rate = exchangeRates[toCurrency];
 
     if (!rate) {
