@@ -3,7 +3,7 @@ const userTable = require("../models/userTable");
 
 const TokenIsVAlid = async (req, res, next) => {
   const { domain, token } = req.body;
-  
+ 
   if (!domain || !token) {
     return res.status(400).json({ error: "Domain and token are required." });
   }
