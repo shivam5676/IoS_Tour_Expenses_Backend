@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Authorization Popup</title>
+  </head>
+  <body>
+    <script>
+      console.log("object");
+      // Log some message before redirection
+      console.log("Redirecting to authorization URL");
+
+      // Delay the redirection slightly to ensure the logs are displayed
+      setTimeout(() => {
+        window.open(
+          "https://b24-ye5msp.bitrix24.in/oauth/authorize?response_type=code&client_id=local.668781624cf843.86743111&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fhome",
+          "BitrixAuth",
+          `width=${width},height=${height},top=${top},left=${left}`
+        );
+        // window.location.href = "https://b24-ye5msp.bitrix24.in/oauth/authorize?response_type=code&client_id=local.668781624cf843.86743111&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fhome";
+      }, 1000);
+
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get("code");
+      console.log("Query parameters:", params.toString()); // Log all query parameters
+      console.log("code", code);
+    </script>
+  </body>
+</html>
