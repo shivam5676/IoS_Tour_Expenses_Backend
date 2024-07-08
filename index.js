@@ -14,14 +14,15 @@ const Vouchers = require("./models/VoucherTable");
 const userRoutes = require("./Routes/user");
 const path = require("path");
 const assignedVoucher = require("./models/assignedVoucher");
-const BITRIX24_INSTANCE = "https://b24-ye5msp.bitrix24.in";  // Replace with your Bitrix24 instance URL
+// const { machine } = require("os")
+const Flavor = require("./models/flavour");
+const MachineWiseFlavor = require("./models/machineWiseFlavor");
+const machine = require("./models/machine");
+const Machines = require("./models/machine");
+const BITRIX24_INSTANCE = "https://b24-ye5msp.bitrix24.in"; // Replace with your Bitrix24 instance URL
 const LOCALHOST_INSTANCE = "http://localhost:2000";
 // const path = require('path');
 
-app.get('/authCallback', (req, res) => {
-  console.log(path.join(__dirname, 'authCallback.html'))
-  res.sendFile(path.join(__dirname, 'authCallback.html'));
-});
 // Adjust X-Frame-Options to allow framing from Bitrix24 and localhost
 app.use((req, res, next) => {
   res.setHeader("X-Frame-Options", `ALLOW-FROM ${BITRIX24_INSTANCE}`);
@@ -35,12 +36,15 @@ app.use((req, res, next) => {
     `frame-ancestors 'self' ${BITRIX24_INSTANCE} ${LOCALHOST_INSTANCE};`
   );
   next();
-  
 });
+app.use(cors({ credentials: true }));
 const builtPath = path.join(__dirname, "build");
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-app.use(cors());
+app.get("/popup", (req, res) => {
+  console.log(path.join(__dirname, "popup.html"));
+  res.sendFile(path.join(__dirname, "popup.html"));
+});
 // Vouchers.hasOne(userTable)
 // userTable.belongToMany(Vouchers)
 userTable.hasMany(Vouchers, { onDelete: "CASCADE" });
@@ -60,6 +64,12 @@ assignedVoucher.belongsTo(Vouchers);
 
 userTable.hasMany(assignedVoucher);
 assignedVoucher.belongsTo(userTable);
+
+
+Machines.belongsToMany(Flavor, { through: MachineWiseFlavor, foreignKey: 'machineId' });
+Flavor.belongsToMany(Machines,{ through: MachineWiseFlavor, foreignKey: 'recipie' })
+
+
 app.use(express.static(builtPath));
 
 app.post("/", (req, res) => {
@@ -68,6 +78,7 @@ app.post("/", (req, res) => {
   res.sendFile(path.join(__dirname, "build/index.html"));
 });
 app.get("/", (req, res) => {
+
   //for bitrix redirecting
   console.log(path.join(__dirname, "build/index.html"));
   res.sendFile(path.join(__dirname, "build/index.html"));
@@ -77,7 +88,7 @@ app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
 app.use(authRoutes);
 
-db.sync({ force: !true })
+db.sync({ force: true })
   .then(async () => {
     app.listen(2000, () => {});
   })
