@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Authorization</title>
+  </head>
+  <body>
+    <script>
+      (function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        console.log(urlParams)
+        const authorizationCode = urlParams.get("code");
+        const error = urlParams.get("error");
+
+        if (authorizationCode) {
+          window.opener.postMessage(
+            { code: authorizationCode },
+            window.location.origin
+          );
+        } else if (error) {
+          window.opener.postMessage({ error }, window.location.origin);
+        }
+        console.log("object");
+        //   window.close();
+      })();
+    </script>
+  </body>
+</html>
