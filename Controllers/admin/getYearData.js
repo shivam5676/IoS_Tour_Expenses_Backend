@@ -3,7 +3,7 @@ const voucherExpense = require("../../models/voucherExpense");
 const Vouchers = require("../../models/VoucherTable");
 
 const getYearData = async (req, res) => { if (req.role != "Admin" && req.role != "supervisor") {
-  console.log("objectssssssss",req.role)
+  // console.log("objectssssssss",req.role)
   return res.status(400).json({ msg: "You are not a authorised user" });
 }
 if (!req.body.userId) {
@@ -23,7 +23,7 @@ if (!req.body.userId) {
       ]
     });
     if (response.length == 0) {
-      return res.status(400).json({ msg: "no data found for that year" });
+      return res.status(200).json({ data:[],msg: "no data found for that year" });
     }
     return res.status(200).json({ data: response });
   } catch (err) {
