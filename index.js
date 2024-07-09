@@ -15,10 +15,7 @@ const userRoutes = require("./Routes/user");
 const path = require("path");
 const assignedVoucher = require("./models/assignedVoucher");
 // const { machine } = require("os")
-const Flavor = require("./models/flavour");
-const MachineWiseFlavor = require("./models/machineWiseFlavor");
-const machine = require("./models/machine");
-const Machines = require("./models/machine");
+
 const BITRIX24_INSTANCE = "https://b24-ye5msp.bitrix24.in"; // Replace with your Bitrix24 instance URL
 const LOCALHOST_INSTANCE = "http://localhost:2000";
 // const path = require('path');
@@ -66,8 +63,6 @@ userTable.hasMany(assignedVoucher);
 assignedVoucher.belongsTo(userTable);
 
 
-Machines.belongsToMany(Flavor, { through: MachineWiseFlavor, foreignKey: 'machineId' });
-Flavor.belongsToMany(Machines,{ through: MachineWiseFlavor, foreignKey: 'recipie' })
 
 
 app.use(express.static(builtPath));
