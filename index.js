@@ -83,8 +83,9 @@ app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
 app.use(authRoutes);
 
-db.sync({ force: true })
+db.sync({ force: !true })
   .then(async () => {
+
     app.listen(2000, () => {});
   })
   .catch((err) => console.log(err));
