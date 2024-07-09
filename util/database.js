@@ -20,5 +20,4 @@ const db = new sequelize("TourVoucher", process.env.SQLUSERNAME, process.env.SQL
   //   }
   // }
 });
-
 module.exports = db;
