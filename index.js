@@ -82,7 +82,6 @@ app.use(bodyParser.json({ extended: false, limit: "500mb" }));
 app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
 app.use(authRoutes);
-
 db.sync({ force: !true })
   .then(async () => {
     app.listen(2000, () => {});
