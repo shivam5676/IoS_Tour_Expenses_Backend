@@ -38,6 +38,7 @@ const createTour = async (req, res) => {
   };
 
   if (!req.body.city) {
+    console.log(req.body.city)
     return res.status(400).json({ msg: "plz add city ...." });
   }
   if (!req.body.currency) {
