@@ -3,8 +3,9 @@ const userTable = require("../../models/userTable");
 const voucherExpense = require("../../models/voucherExpense");
 
 const getUserReport = async (req, res) => {
-  if (req.role != "Admin" && req.role != "supervisor") {
-    return res.status(400).json({ msg: "You are not a authorised user" });
+  if (req.role != "Admin") {
+    // console.log("objectssssssss",req.role)
+    return res.status(400).json({ msg: "Only admin can  check reports" });
   }
   const userId = req.query.uid;
 
