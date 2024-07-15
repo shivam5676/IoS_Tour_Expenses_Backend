@@ -22,7 +22,7 @@ const deleteExpense = async (req, res, next) => {
     }
 
     // Extract the filename from the imagePath
-    console.log(expense.imagePath);
+   
     if (expense.imagePath) {
       const filename = path.basename(expense.imagePath);
       // Construct the full path to the image file

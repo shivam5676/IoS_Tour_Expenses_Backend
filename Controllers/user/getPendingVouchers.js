@@ -18,7 +18,7 @@ const getPendingVoucher = async (req, res) => {
       include: [{ model: userTable, attributes: ["firstName", "lastName"] }],
     });
     if (response.length == 0) {
-      return res.status(400).json({ msg: "no voucher found" });
+      return res.status(200).json({userList:[], msg: "no voucher found" });
     }
     console.log(response);
     return res.status(200).json({ userList: response });

@@ -71,7 +71,7 @@ const addExpense = async (req, res, next) => {
         if (response) {
           return res.status(200).json({ expenseData: response });
         }
-        console.log(response);
+       
         return res
           .status(400)
           .json({ msg: "some problem while saving Your expense" });
@@ -98,7 +98,7 @@ const addExpense = async (req, res, next) => {
     if (response) {
       return res.status(200).json({ expenseData: response });
     }
-    console.log(response);
+   
     return res
       .status(400)
       .json({ msg: "some problem while saving Your expense" });

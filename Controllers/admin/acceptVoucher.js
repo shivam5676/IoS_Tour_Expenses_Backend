@@ -53,9 +53,7 @@ const acceptVoucher = async (req, res) => {
 
         //update the assigned voucher to accountDepartment with pending status
       }
-      console.log(req.body.assignedTo, "..>");
-
-      console.log(req.body.AccountDepartment, ">>>,,,");
+     
       if (req.body.AccountDepartment) {
         await updatedData.update({
           statusType: "Accepted",
@@ -106,7 +104,7 @@ const acceptVoucher = async (req, res) => {
           //   DESTINATION: [{ TYPE: "USER", ID: currentUserid }],
           // });
 
-          console.log("Approval request sent successfully");
+     
         } catch (error) {
           // console.error("Error sending approval request:", error);
           throw error;
@@ -121,7 +119,6 @@ const acceptVoucher = async (req, res) => {
           voucherId
         );
       }
-      console.log(updatedData);
       return res.status(200).json({ details: updatedData });
     }
   } catch (err) {
