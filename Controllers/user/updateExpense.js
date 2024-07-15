@@ -42,15 +42,9 @@ const updateExpense = async (req, res, next) => {
   if (!date) {
     return res.status(400).json({ msg: "please select date " });
   }
-  console.log(
-    billImage == undefined,
-    !billImage,
-    billImage.length == 0,
-    "........"
-  );
+
   if (billImage) {
-    console.log("if executing");
-    console.log(billImage);
+  
     const matches = billImage.match(/^data:image\/(\w+);base64,/);
     if (!matches) {
       return res.status(400).json({ msg: "Invalid image format" });
@@ -75,7 +69,7 @@ const updateExpense = async (req, res, next) => {
             .status(400)
             .json({ msg: "invalid id... please refresh the page" });
         }
-        console.log(filename, "...<<<");
+        
         const response = await getExpense.update({
           Amount: +amount,
           expenseType,
@@ -90,7 +84,7 @@ const updateExpense = async (req, res, next) => {
         if (getExpense.imagePath) {
           // const filename = path.basename(previousImageUrl);
           // Construct the full path to the image file
-          console.log(previousImageUrl, "...");
+         
           if (previousImageUrl) {
             const imagePath = path.join(
               __dirname,
@@ -99,7 +93,7 @@ const updateExpense = async (req, res, next) => {
               previousImageUrl
             );
 
-            console.log(imagePath);
+   
             // Check if the file exists before attempting to delete it
 
             if (fs.existsSync(imagePath)) {
@@ -120,7 +114,7 @@ const updateExpense = async (req, res, next) => {
           //     fs.unlinkSync(imagePath);
           //   }
         }
-        console.log(response);
+       
         return res.status(200).json({ expenseData: response });
       } catch (err) {
         console.log(err);
@@ -130,9 +124,9 @@ const updateExpense = async (req, res, next) => {
       }
     });
   } else {
-    console.log("else executing");
+
     try {
-      console.log(expenseId);
+  
       const getExpense = await voucherExpense.findOne({
         where: { id: expenseId },
       });
@@ -158,7 +152,7 @@ const updateExpense = async (req, res, next) => {
           .status(400)
           .json({ msg: "some problem while updating  Your expense" });
       }
-      console.log(response);
+   
       return res.status(200).json({ expenseData: response });
     } catch (err) {
       return res

@@ -15,26 +15,13 @@ const UpdateDetails = async (req, res) => {
     userId,
     descriptionId,
   } = req.body;
-  console.log(
-    purpose,
-    arrivalDate,
-    departureDate,
-    transportArrival,
-    transportDeparture,
-    arrivalTime,
-    departureTime,
-    advanceCash,
-    dailyAllowance,
-    voucherId,
-    userId,
-    descriptionId
-  );
+
   //   return;
   try {
     const getDescription = await VouchersDescription.findOne({
       where: { id: descriptionId },
     });
-    console.log(getDescription);
+ 
     // return;
     if (!getDescription) {
       return res

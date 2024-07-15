@@ -4,14 +4,14 @@ const Vouchers = require("../../models/VoucherTable");
 
 const getYearData = async (req, res) => {
   if (req.role != "Admin") {
-    // console.log("objectssssssss",req.role)
+
     return res.status(400).json({ msg: "Only admin can  check reports" });
   }
   if (!req.body.userId) {
     return res.status(400).json({ msg: "invalid user  ...." });
   }
   const year = req.query.year;
-  console.log(year);
+
   const userId = req.body.userId;
   try {
     const response = await voucherExpense.findAll({

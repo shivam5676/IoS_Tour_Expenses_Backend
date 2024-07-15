@@ -4,26 +4,29 @@ const userTable = require("../../models/userTable");
 
 const getAllVoucher = async (req, res) => {
   if (req.role != "Admin" && req.role != "supervisor") {
-    console.log("objectssssssss",req.role,req.body.userId)
     return res.status(400).json({ msg: "You are not a authorised user" });
-  }  if (!req.body.userId) {
+  }
+  if (!req.body.userId) {
     return res.status(400).json({ msg: "invalid user  ...." });
   }
-  console.log("inside get voucher");
-  // return
-  const response = await assignedVoucher.findAll({
-    where: {
-      assignedTo: req.body.userId,
-    },
-    include: [
-      { model: userTable, attributes: ["firstName", "lastName"] },
-      { model: Vouchers },
-    ],
-  });
-  if (response.length == 0) {
-    return res.status(400).json({ msg: "no voucher found" });
+
+  try {
+    const response = await assignedVoucher.findAll({
+      where: {
+        assignedTo: req.body.userId,
+      },
+      include: [
+        { model: userTable, attributes: ["firstName", "lastName"] },
+        { model: Vouchers },
+      ],
+    });
+    if (response.length == 0) {
+      return res.status(200).json({ userList: [], msg: "no voucher found" });
+    }
+
+    return res.status(200).json({ userList: response });
+  } catch (err) {
+    return res.status(400).json({ msg: "something went wrong" });
   }
-  console.log(response);
-  return res.status(200).json({ userList: response });
 };
 module.exports = getAllVoucher;

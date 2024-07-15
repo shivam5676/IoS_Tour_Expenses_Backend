@@ -3,7 +3,7 @@ const userTable = require("../../models/userTable");
 
 const postComment = async (req, res) => {
   if (req.role != "Admin" && req.role != "supervisor") {
-    console.log("objectssssssss", req.role);
+   
     return res.status(400).json({ msg: "You are not a authorised user" });
   }
   if (!req.body.userId) {
@@ -21,7 +21,7 @@ const postComment = async (req, res) => {
       comment: req.body.comment,
       sender: req.body.userId,
     });
-    console.log(updatedData);
+    
     const userInfo = await userTable.findOne({
       where: {
         id: req.body.userId,
@@ -30,7 +30,7 @@ const postComment = async (req, res) => {
     });
 
     
-    console.log(userInfo);
+   
     return res.status(200).json({ details: updatedData, sender: userInfo });
   } catch (err) {
     console.log(err);

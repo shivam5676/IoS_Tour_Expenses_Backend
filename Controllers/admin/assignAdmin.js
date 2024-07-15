@@ -1,7 +1,6 @@
 const userTable = require("../../models/userTable");
 
 const assignAdmin = async (req, res, next) => {
-  console.log("executing delete component");
   const { adminId } = req.body;
 
   if (req.role != "superAdmin") {
@@ -18,7 +17,6 @@ const assignAdmin = async (req, res, next) => {
       },
     });
     if (getUser) {
-      console.log(getUser);
       await getUser.update({ isAdmin: "true" });
       return res.status(200).json({ msg: "user assigned as a admin" });
     }

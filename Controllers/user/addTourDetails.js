@@ -4,7 +4,6 @@ const Vouchers = require("../../models/VoucherTable");
 const assignedVoucher = require("../../models/assignedVoucher");
 
 const addTourDetails = async (req, res) => {
-  console.log(req.body);
   const {
     purpose,
     arrivalDate,
@@ -34,7 +33,7 @@ const addTourDetails = async (req, res) => {
   if (arrivalTime.length == 0) {
     return res.status(400).json({ msg: "arrival time field is empty" });
   }
-  console.log(typeof +advanceCash);
+
   if (isNaN(+advanceCash)) {
     return res.status(400).json({ msg: "advance cash should be only number" });
   }
@@ -114,7 +113,7 @@ const addTourDetails = async (req, res) => {
         //   DESTINATION: [{ TYPE: "USER", ID: currentUserid }],
         // });
 
-        console.log("Approval request sent successfully");
+       
       } catch (error) {
         // console.error("Error sending approval request:", error);
         throw error;
@@ -123,7 +122,7 @@ const addTourDetails = async (req, res) => {
     if (req.body.assignedTo) {
       sendApprovalRequest(req.body.userId, req.body.assignedTo, voucherId);
     }
-    console.log(updatedData);
+ 
     return res.status(200).json({ details: updatedData });
   } catch (err) {
     console.log(err);

@@ -48,7 +48,7 @@ const rejectVoucher = async (req, res) => {
         });
       }
 
-      console.log(updatedData);
+      
       return res.status(200).json({ details: updatedData });
     }
   } catch (err) {
