@@ -53,6 +53,7 @@ VouchersDescription.belongsTo(Vouchers);
 Vouchers.hasMany(voucherExpense);
 voucherExpense.belongsTo(Vouchers);
 
+
 userTable.hasMany(voucherExpense);
 voucherExpense.belongsTo(userTable);
 
