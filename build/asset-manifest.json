@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.1d80d26a.css",
-    "main.js": "/static/js/main.8d8dcd9b.js",
+    "main.css": "/static/css/main.a7aa1a56.css",
+    "main.js": "/static/js/main.d48555da.js",
     "static/media/ios logo2.png": "/static/media/ios logo2.bbfbc0f543d61ca9bacc.png",
     "static/media/accepted.png": "/static/media/accepted.f8b9a6c7dbe99d185ed6.png",
     "static/media/metaverse.gif": "/static/media/metaverse.4cd21c346a6da2121e10.gif",
@@ -18,11 +18,11 @@
     "static/media/bitrixLogo.png": "/static/media/bitrixLogo.856e24bb1cf92a37526a.png",
     "static/media/ios logo.png": "/static/media/ios logo.eb53ebab9bd47da8c6d3.png",
     "index.html": "/index.html",
-    "main.1d80d26a.css.map": "/static/css/main.1d80d26a.css.map",
-    "main.8d8dcd9b.js.map": "/static/js/main.8d8dcd9b.js.map"
+    "main.a7aa1a56.css.map": "/static/css/main.a7aa1a56.css.map",
+    "main.d48555da.js.map": "/static/js/main.d48555da.js.map"
   },
   "entrypoints": [
-    "static/css/main.1d80d26a.css",
-    "static/js/main.8d8dcd9b.js"
+    "static/css/main.a7aa1a56.css",
+    "static/js/main.d48555da.js"
   ]
 }
