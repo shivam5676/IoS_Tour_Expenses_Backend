@@ -53,7 +53,6 @@ VouchersDescription.belongsTo(Vouchers);
 Vouchers.hasMany(voucherExpense);
 voucherExpense.belongsTo(Vouchers);
 
-
 userTable.hasMany(voucherExpense);
 voucherExpense.belongsTo(userTable);
 
@@ -68,7 +67,11 @@ assignedVoucher.belongsTo(userTable);
 
 app.use(express.static(builtPath));
 
-app.post("/", (req, res) => {
+
+app.use(bodyParser.json({ extended: false, limit: "500mb" }));
+app.use("/admin", adminRoutes);
+app.use("/user", userRoutes);
+app.use(authRoutes);app.post("/", (req, res) => {
   //for bitrix redirecting
   console.log(path.join(__dirname, "build/index.html"));
   res.sendFile(path.join(__dirname, "build/index.html"));
@@ -79,10 +82,6 @@ app.get("*", (req, res) => {
   console.log(path.join(__dirname, "build/index.html"));
   res.sendFile(path.join(__dirname, "build/index.html"));
 });
-app.use(bodyParser.json({ extended: false, limit: "500mb" }));
-app.use("/admin", adminRoutes);
-app.use("/user", userRoutes);
-app.use(authRoutes);
 db.sync({ force: !true })
   .then(async () => {
     app.listen(2000, () => {});
