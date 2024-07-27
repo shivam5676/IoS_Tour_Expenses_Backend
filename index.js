@@ -14,26 +14,26 @@ const Vouchers = require("./models/VoucherTable");
 const userRoutes = require("./Routes/user");
 const path = require("path");
 const assignedVoucher = require("./models/assignedVoucher");
-// const { machine } = require("os")
+const { machine } = require("os")
 
-// const BITRIX24_INSTANCE = "https://b24-ye5msp.bitrix24.in"; // Replace with your Bitrix24 instance URL
-// const LOCALHOST_INSTANCE = "http://localhost:2000";
+const BITRIX24_INSTANCE = "https://oipl.bitrix24.in"; // Replace with your Bitrix24 instance URL
+const LOCALHOST_INSTANCE = "https://tourvoucher.is10live.com";
 // const path = require('path');
 
 // Adjust X-Frame-Options to allow framing from Bitrix24 and localhost
-// app.use((req, res, next) => {
-//   res.setHeader("X-Frame-Options", `ALLOW-FROM ${BITRIX24_INSTANCE}`);
-//   next();
-// });
+app.use((req, res, next) => {
+  res.setHeader("X-Frame-Options", `ALLOW-FROM ${BITRIX24_INSTANCE}`);
+  next();
+});
 
-// // Adjust Content-Security-Policy to allow framing from Bitrix24 and localhost
-// app.use((req, res, next) => {
-//   res.setHeader(
-//     "Content-Security-Policy",
-//     `frame-ancestors 'self' ${BITRIX24_INSTANCE} ${LOCALHOST_INSTANCE};`
-//   );
-//   next();
-// });
+// Adjust Content-Security-Policy to allow framing from Bitrix24 and localhost
+app.use((req, res, next) => {
+  res.setHeader(
+    "Content-Security-Policy",
+    `frame-ancestors 'self' ${BITRIX24_INSTANCE} ${LOCALHOST_INSTANCE};`
+  );
+  next();
+});
 app.use(cors({ credentials: true }));
 const builtPath = path.join(__dirname, "build");
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
