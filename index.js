@@ -16,24 +16,24 @@ const path = require("path");
 const assignedVoucher = require("./models/assignedVoucher");
 // const { machine } = require("os")
 
-const BITRIX24_INSTANCE = "https://b24-ye5msp.bitrix24.in"; // Replace with your Bitrix24 instance URL
-const LOCALHOST_INSTANCE = "http://localhost:2000";
+// const BITRIX24_INSTANCE = "https://b24-ye5msp.bitrix24.in"; // Replace with your Bitrix24 instance URL
+// const LOCALHOST_INSTANCE = "http://localhost:2000";
 // const path = require('path');
 
 // Adjust X-Frame-Options to allow framing from Bitrix24 and localhost
-app.use((req, res, next) => {
-  res.setHeader("X-Frame-Options", `ALLOW-FROM ${BITRIX24_INSTANCE}`);
-  next();
-});
+// app.use((req, res, next) => {
+//   res.setHeader("X-Frame-Options", `ALLOW-FROM ${BITRIX24_INSTANCE}`);
+//   next();
+// });
 
-// Adjust Content-Security-Policy to allow framing from Bitrix24 and localhost
-app.use((req, res, next) => {
-  res.setHeader(
-    "Content-Security-Policy",
-    `frame-ancestors 'self' ${BITRIX24_INSTANCE} ${LOCALHOST_INSTANCE};`
-  );
-  next();
-});
+// // Adjust Content-Security-Policy to allow framing from Bitrix24 and localhost
+// app.use((req, res, next) => {
+//   res.setHeader(
+//     "Content-Security-Policy",
+//     `frame-ancestors 'self' ${BITRIX24_INSTANCE} ${LOCALHOST_INSTANCE};`
+//   );
+//   next();
+// });
 app.use(cors({ credentials: true }));
 const builtPath = path.join(__dirname, "build");
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -71,7 +71,8 @@ app.use(express.static(builtPath));
 app.use(bodyParser.json({ extended: false, limit: "500mb" }));
 app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
-app.use(authRoutes);app.post("/", (req, res) => {
+app.use(authRoutes);
+app.post("/", (req, res) => {
   //for bitrix redirecting
   console.log(path.join(__dirname, "build/index.html"));
   res.sendFile(path.join(__dirname, "build/index.html"));
