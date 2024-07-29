@@ -1,28 +1,26 @@
 {
   "files": {
-    "main.css": "/static/css/main.b0b45e29.css",
-    "main.js": "/static/js/main.bed8f052.js",
-    "static/media/ios logo2.png": "/static/media/ios logo2.bbfbc0f543d61ca9bacc.png",
+    "main.css": "/static/css/main.a02f9093.css",
+    "main.js": "/static/js/main.f0f317e6.js",
+    "static/media/ios logo2.png": "/static/media/ios logo2.501e3540206b4481de66.png",
     "static/media/accepted.png": "/static/media/accepted.f8b9a6c7dbe99d185ed6.png",
     "static/media/metaverse.gif": "/static/media/metaverse.4cd21c346a6da2121e10.gif",
     "static/media/computer.gif": "/static/media/computer.927047f999065fc27516.gif",
     "static/media/trip.gif": "/static/media/trip.51ee0f85faefde162c53.gif",
     "static/media/budgeting.gif": "/static/media/budgeting.b9fbcf6fd0f4a61cb455.gif",
     "static/media/payment.gif": "/static/media/payment.bddbe25eae471d88fd29.gif",
-    "static/media/bg9.jpg": "/static/media/bg9.d3326e9fc1dcf2937f7c.jpg",
-    "static/media/loginImage2.png": "/static/media/loginImage2.4e2d4a83fe76faef4bbc.png",
     "static/media/vote.gif": "/static/media/vote.c375b341dc06ab5d50a7.gif",
     "static/media/rejected.png": "/static/media/rejected.e1a8ab3cf8006781818a.png",
     "static/media/Roboto-Medium.ttf": "/static/media/Roboto-Medium.7c8d04cd831df3033c8a.ttf",
     "static/media/Roboto-Bold.ttf": "/static/media/Roboto-Bold.f80816a5455d171f948d.ttf",
-    "static/media/bitrixLogo.png": "/static/media/bitrixLogo.856e24bb1cf92a37526a.png",
+    "static/media/loginImage2.png": "/static/media/loginImage2.cd78c7e1a061276b09b2.png",
     "static/media/ios logo.png": "/static/media/ios logo.eb53ebab9bd47da8c6d3.png",
     "index.html": "/index.html",
-    "main.b0b45e29.css.map": "/static/css/main.b0b45e29.css.map",
-    "main.bed8f052.js.map": "/static/js/main.bed8f052.js.map"
+    "main.a02f9093.css.map": "/static/css/main.a02f9093.css.map",
+    "main.f0f317e6.js.map": "/static/js/main.f0f317e6.js.map"
   },
   "entrypoints": [
-    "static/css/main.b0b45e29.css",
-    "static/js/main.bed8f052.js"
+    "static/css/main.a02f9093.css",
+    "static/js/main.f0f317e6.js"
   ]
 }
