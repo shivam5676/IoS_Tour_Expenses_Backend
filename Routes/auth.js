@@ -78,7 +78,7 @@ routes.get("/callback/:code", async (req, res) => {
         },
       }
     );
-    // console.log(tokenResponse,"....>")
+    console.log(tokenResponse,"....>")
     if (tokenResponse) {
       const accesstoken = tokenResponse.data.access_token;
       const admin = await axios.get(
@@ -207,7 +207,7 @@ routes.get("/callback/:code", async (req, res) => {
       }
     }
   } catch (error) {
-    console.error("Error:", error);
+    console.error("Errorsss:", error);
     // res.status(500).send('Error during authentication');
   }
 });
