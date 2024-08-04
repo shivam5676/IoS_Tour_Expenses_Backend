@@ -50,7 +50,8 @@ const addExpense = async (req, res, next) => {
     const extension = matches[1];
     const base64Data = billImage.replace(/^data:image\/\w+;base64,/, "");
     const buffer = Buffer.from(base64Data, "base64");
-    const filename = path.join(uploadDir, `${Date.now()}-billImage.${extension}`);
+    const appendedName=`${Date.now()}-billImage.${extension}`
+    const filename = path.join(uploadDir, appendedName);
 
     fs.writeFile(filename, buffer, async (err) => {
       if (err) {
@@ -67,7 +68,7 @@ const addExpense = async (req, res, next) => {
           description,
           VoucherId: voucherId,
           userId,
-          imagePath: filename,
+          imagePath: `uploads/${appendedName}`,
         });
         return res.status(200).json({ expenseData: response });
       } catch (err) {
