@@ -16,6 +16,9 @@ const deleteAdmin = async (req, res, next) => {
         supervisor: true,
       },
     });
+    if(adminId==req.body.userId){
+      return res.status(400).json({msg:"You can no delete Yourself from admin position"})
+    }
     if (getUser) {
       await getUser.update({ isAdmin: false });
       return res.status(200).json({ msg: "admin permission removed" });
