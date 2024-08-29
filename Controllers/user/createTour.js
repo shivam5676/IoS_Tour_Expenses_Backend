@@ -10,7 +10,7 @@ async function convertCurrency(fromCurrency, toCurrency, amount) {
   try {
     const response = await axios.get(`${baseUrl}${fromCurrency}`);
     const exchangeRates = response.data.conversion_rates;
-    console.log(exchangeRates)
+    console.log(exchangeRates);
     const rate = exchangeRates[toCurrency];
 
     if (!rate) {
@@ -36,9 +36,11 @@ const createTour = async (req, res) => {
     const year = now.getFullYear();
     return `${day}/${month}/${year}`;
   };
-
+console.log(req.body.date,getCurrentDate());
+  if (!req.body.date) {
+    return res.status(400).json({ msg: "plz select tour starting  date " });
+  }
   if (!req.body.city) {
-  
     return res.status(400).json({ msg: "plz add city ...." });
   }
   if (!req.body.currency) {
@@ -48,15 +50,15 @@ const createTour = async (req, res) => {
     return res.status(400).json({ msg: "invalid user  ...." });
   }
   try {
-    const rate =await convertCurrency(req.body.currency, "INR");
- 
+    const rate = await convertCurrency(req.body.currency, "INR");
+    
     const voucherCreated = await Vouchers.create({
       statusType: "Created",
       tourLocation: req.body.city,
       userId: req.body.userId,
       currency: req.body.currency,
-      tourDate: getCurrentDate(),
-      exchangeRates:rate
+      tourDate: req.body.date,
+      exchangeRates: rate,
     });
 
     if (!voucherCreated) {
