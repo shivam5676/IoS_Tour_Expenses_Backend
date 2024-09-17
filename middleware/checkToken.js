@@ -3,7 +3,7 @@ const userTable = require("../models/userTable");
 
 const checkToken = async (req, res, next) => {
   const { domain, token } = req.body;
-  console.log(domain, token);
+  
   if (!domain || !token) {
     return res.status(400).json({ error: "Domain and token are required." });
   }
@@ -27,8 +27,7 @@ const checkToken = async (req, res, next) => {
         req.body.userId = undefined;
       }
       req.body.UF_Department_Id = response.data.result.UF_DEPARTMENT[0];
-      // req.role=
-      // console.log("hello");
+    
       next();
       //   return res.status(200).json({ valid: true, user: response.data.result });
     } else {
