@@ -27,5 +27,6 @@ const DeleteOnGoingTour = async (req, res, next) => {
   } catch (error) {
     return res.status(400).json({ msg: "something went wrong" });
   }
+  
 };
 module.exports = DeleteOnGoingTour;

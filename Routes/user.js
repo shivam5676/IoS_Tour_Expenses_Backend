@@ -13,9 +13,10 @@ const DeleteOnGoingTour = require("../Controllers/user/deleteOnGoingTour");
 const UpdateDetails = require("../Controllers/user/updateDetails");
 const TokenRefresher = require("../middleware/tokenRefresher");
 const TokenIsVAlid = require("../middleware/tokenIsVAlid");
-
+const multer=require("multer")
+const upload=multer()
 const routes = express.Router();
-routes.post("/saveExpense", checkToken, addExpense);
+routes.post("/saveExpense",upload.single("billImage"), checkToken, addExpense);
 routes.post("/createTour", checkToken, createTour);
 routes.post("/getTour", checkToken, getTour);
 routes.post("/getTourExpenses", checkToken, getTourExpenses);

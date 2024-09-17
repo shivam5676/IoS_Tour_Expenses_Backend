@@ -34,6 +34,10 @@ const checkSupervisor = async (req, res, next) => {
     // else if(){
     //     req.body.assignedTo=  superVisor.data.result[0].UF_HEAD
     // }
+    if (req.body.assignedTo == 0) {
+      //if we will not find any supervisor then we will send the voucher to  parent head
+      req.body.assignedTo = 1;
+    }
     next();
   } catch (err) {
     console.log(err);

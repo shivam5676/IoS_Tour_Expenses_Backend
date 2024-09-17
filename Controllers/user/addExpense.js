@@ -12,9 +12,10 @@ const addExpense = async (req, res, next) => {
     date,
     voucherId,
     userId,
-    billImage,
   } = req.body;
-
+  const billImage = req.file;
+  console.log(billImage);
+  // return;
   const uploadDir = path.join(__dirname, "..", "..", "uploads");
 
   if (!fs.existsSync(uploadDir)) {
@@ -43,14 +44,10 @@ const addExpense = async (req, res, next) => {
   }
 
   if (billImage) {
-    const matches = billImage.match(/^data:image\/(\w+);base64,/);
-    if (!matches) {
-      return res.status(400).json({ msg: "Invalid image format" });
-    }
-    const extension = matches[1];
-    const base64Data = billImage.replace(/^data:image\/\w+;base64,/, "");
-    const buffer = Buffer.from(base64Data, "base64");
-    const appendedName=`${Date.now()}-billImage.${extension}`
+   
+    const buffer = billImage.buffer;
+  
+    const appendedName = `${Date.now()}-billImage_${billImage.originalname}`;
     const filename = path.join(uploadDir, appendedName);
 
     fs.writeFile(filename, buffer, async (err) => {

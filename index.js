@@ -68,7 +68,7 @@ assignedVoucher.belongsTo(userTable);
 app.use(express.static(builtPath));
 
 
-app.use(bodyParser.json({ extended: false, limit: "500mb" }));
+app.use(bodyParser.json({ extended: false, limit: "30mb" }));
 app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
 app.use(authRoutes);

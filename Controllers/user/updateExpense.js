@@ -15,8 +15,12 @@ const updateExpense = async (req, res, next) => {
     userId,
     billImage,
   } = req.body;
+  
   if (!req.body.userId) {
     return res.status(400).json({ msg: "invalid user  ...." });
+  }
+  if (!voucherId) {
+    return res.status(400).json({ msg: "invalid voucher id  ...." });
   }
   const uploadDir = path.join(__dirname, "..", "..", "uploads");
   if (!fs.existsSync(uploadDir)) {
@@ -126,7 +130,7 @@ const updateExpense = async (req, res, next) => {
       const getExpense = await voucherExpense.findOne({
         where: { id: expenseId },
       });
-      let imagePath=getExpense.imagePath
+      let imagePath = getExpense.imagePath;
       if (!getExpense) {
         return res
           .status(400)
@@ -145,12 +149,7 @@ const updateExpense = async (req, res, next) => {
         imagePath: billImage == "removed" ? "" : imagePath,
       });
       if (billImage === "removed" && imagePath) {
-        const oldImagePath = path.join(
-          __dirname,
-          "..",
-          "..",
-          imagePath
-        );
+        const oldImagePath = path.join(__dirname, "..", "..", imagePath);
         const newImagePath = path.join(
           __dirname,
           "..",
