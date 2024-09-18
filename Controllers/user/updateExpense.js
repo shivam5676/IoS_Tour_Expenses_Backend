@@ -13,9 +13,14 @@ const updateExpense = async (req, res, next) => {
     date,
     voucherId,
     userId,
-    billImage,
+   
   } = req.body;
-  
+  let billImage=req.body.billImage
+  if(req.file){
+    billImage=req.file
+  }
+  // console.log(billImage)
+  // return
   if (!req.body.userId) {
     return res.status(400).json({ msg: "invalid user  ...." });
   }
@@ -48,14 +53,14 @@ const updateExpense = async (req, res, next) => {
   }
 
   if (billImage && billImage != "removed") {
-    const matches = billImage.match(/^data:image\/(\w+);base64,/);
-    if (!matches) {
-      return res.status(400).json({ msg: "Invalid image format" });
-    }
-    const extension = matches[1];
-    const base64Data = billImage.replace(/^data:image\/\w+;base64,/, "");
-    const buffer = Buffer.from(base64Data, "base64");
-    const filename = `uploads/${Date.now()}-billImage.${extension}`;
+    // const matches = billImage.match(/^data:image\/(\w+);base64,/);
+    // if (!matches) {
+    //   return res.status(400).json({ msg: "Invalid image format" });
+    // }
+    // const extension = matches[1];
+    // const base64Data = billImage.replace(/^data:image\/\w+;base64,/, "");
+    const buffer = billImage.buffer;
+    const filename = `uploads/${Date.now()}-billImage_${billImage.originalname}`;
 
     fs.writeFile(filename, buffer, async (err) => {
       if (err) {
