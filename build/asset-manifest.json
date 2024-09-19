@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.c76ec73c.css",
-    "main.js": "/static/js/main.5367215c.js",
+    "main.css": "/static/css/main.b656d6a2.css",
+    "main.js": "/static/js/main.db173eef.js",
     "static/media/ios logo2.png": "/static/media/ios logo2.501e3540206b4481de66.png",
     "static/media/accepted.png": "/static/media/accepted.f8b9a6c7dbe99d185ed6.png",
     "static/media/metaverse.gif": "/static/media/metaverse.4cd21c346a6da2121e10.gif",
@@ -16,11 +16,11 @@
     "static/media/loginImage2.png": "/static/media/loginImage2.cd78c7e1a061276b09b2.png",
     "static/media/ios logo.png": "/static/media/ios logo.eb53ebab9bd47da8c6d3.png",
     "index.html": "/index.html",
-    "main.c76ec73c.css.map": "/static/css/main.c76ec73c.css.map",
-    "main.5367215c.js.map": "/static/js/main.5367215c.js.map"
+    "main.b656d6a2.css.map": "/static/css/main.b656d6a2.css.map",
+    "main.db173eef.js.map": "/static/js/main.db173eef.js.map"
   },
   "entrypoints": [
-    "static/css/main.c76ec73c.css",
-    "static/js/main.5367215c.js"
+    "static/css/main.b656d6a2.css",
+    "static/js/main.db173eef.js"
   ]
 }
