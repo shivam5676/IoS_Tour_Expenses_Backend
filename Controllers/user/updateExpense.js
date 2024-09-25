@@ -13,11 +13,10 @@ const updateExpense = async (req, res, next) => {
     date,
     voucherId,
     userId,
-   
   } = req.body;
-  let billImage=req.body.billImage
-  if(req.file){
-    billImage=req.file
+  let billImage = req.body.billImage;
+  if (req.file) {
+    billImage = req.file;
   }
   // console.log(billImage)
   // return
@@ -60,7 +59,9 @@ const updateExpense = async (req, res, next) => {
     // const extension = matches[1];
     // const base64Data = billImage.replace(/^data:image\/\w+;base64,/, "");
     const buffer = billImage.buffer;
-    const filename = `uploads/${Date.now()}-billImage_${billImage.originalname}`;
+    const filename = `uploads/${Date.now()}-billImage_${
+      billImage.originalname
+    }`;
 
     fs.writeFile(filename, buffer, async (err) => {
       if (err) {
