@@ -85,6 +85,7 @@ app.get("*", (req, res) => {
 });
 db.sync({ force: !true })
   .then(async () => {
+    
     app.listen(2000, () => {});
   })
   .catch((err) => console.log(err));
