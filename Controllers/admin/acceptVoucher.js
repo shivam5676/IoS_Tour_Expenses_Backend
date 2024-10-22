@@ -88,8 +88,8 @@ const acceptVoucher = async (req, res) => {
               params: {
                 auth: req.body.token,
                 "fields[TITLE]": `[Important]Approval Request for Voucher ${voucherId}`,
-                "fields[DESCRIPTION]": `I hope this message finds you well.I am writing to request your review and approval for the Tour Voucher with ID ${voucherId}. Please carefully examine the voucher details and the associated expenses.If tou need any biilss and other expenses related data then you can use comment only option . If you find any discrepancies or errors in the expenses or their supporting documents, I encourage you to  reject the voucher accordingly.You can access the tour voucher on the Bitrix website under the following path: Applications > Market > (:more) > Tour Voucher. Additionally, it is available at the following link: https://tourvoucher.is10live.com/.
-                 It is crucial to perform a thorough check of the voucher. If any suspicious activity is detected, please be advised that strict action will be taken.If you `,
+                "fields[DESCRIPTION]": ` I hope this message finds you well.I am writing to request your review and approval for the Tour Voucher with ID ${voucherId}. Please carefully examine the voucher details and the associated expenses.If tou need any biilss and other expenses related data then you can use comment only option . If you find any discrepancies or errors in the expenses or their supporting documents, I encourage you to  reject the voucher accordingly.You can access the tour voucher on the Bitrix website under the following path: Applications > Market > (:more) > Tour Voucher. Additionally, it is available at the following link: https://tourvoucher.is10live.com/.
+                 It is crucial to perform a thorough check of the voucher.  If any expense entry is wrong then you can guide the user for corrceting that , If any suspicious activity is detected please be advised that strict action will be taken.`,
                 "fields[RESPONSIBLE_ID]": nextUserId,
               },
             }
