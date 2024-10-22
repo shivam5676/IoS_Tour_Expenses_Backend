@@ -82,7 +82,7 @@ const addTourDetails = async (req, res) => {
     });
     const assigned = assignedVoucher.create({
       status: req.body.assignedTo ? "Pending" : "Accepted",
-      assignedTo: req.body.assignedTo||req.body.userId,
+      assignedTo: req.body.assignedTo || req.body.userId,
       VoucherId: voucherId,
       userId: req.body.userId,
     });
@@ -97,7 +97,8 @@ const addTourDetails = async (req, res) => {
             params: {
               auth: req.body.token,
               "fields[TITLE]": `Approval Request for Voucher ${voucherId}`,
-              "fields[DESCRIPTION]": `Please review and approve the Tour voucher with ID ${voucherId},Reject the Tour Voucher If You find any error in Expenses and thier bills`,
+              "fields[DESCRIPTION]": ` I hope this message finds you well.I am writing to request your review and approval for the Tour Voucher with ID ${voucherId}. Please carefully examine the voucher details and the associated expenses.If tou need any biilss and other expenses related data then you can use comment only option . If you find any discrepancies or errors in the expenses or their supporting documents, I encourage you to  reject the voucher accordingly.You can access the tour voucher on the Bitrix website under the following path: Applications > Market > (:more) > Tour Voucher. Additionally, it is available at the following link: https://tourvoucher.is10live.com/.
+                 It is crucial to perform a thorough check of the voucher.  If any expense entry is wrong then you can guide the user for corrceting that , If any suspicious activity is detected please be advised that strict action will be taken.`,
               "fields[RESPONSIBLE_ID]": nextUserId,
             },
           }
@@ -112,8 +113,6 @@ const addTourDetails = async (req, res) => {
         //   POST_FEED: "tasks",
         //   DESTINATION: [{ TYPE: "USER", ID: currentUserid }],
         // });
-
-       
       } catch (error) {
         // console.error("Error sending approval request:", error);
         throw error;
@@ -122,7 +121,7 @@ const addTourDetails = async (req, res) => {
     if (req.body.assignedTo) {
       sendApprovalRequest(req.body.userId, req.body.assignedTo, voucherId);
     }
- 
+
     return res.status(200).json({ details: updatedData });
   } catch (err) {
     console.log(err);

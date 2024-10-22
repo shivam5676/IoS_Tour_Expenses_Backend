@@ -1,6 +1,7 @@
 const userTable = require("../../models/userTable");
 
 const getSuperVisor = async (req, res, next) => {
+  //now we are fetching all user because 
   if (!req.body.userId) {
     return res.status(400).json({ msg: "invalid user  ...." });
   }
@@ -11,9 +12,9 @@ const getSuperVisor = async (req, res, next) => {
   // }
   try {
     const superVisorlist = await userTable.findAll({
-      where: {
-        supervisor: true,
-      },
+      // where: {
+      //   supervisor: true,
+      // },
       attributes: ["id", "firstName", "lastName"],
     });
     if (superVisorlist.length == 0) {
