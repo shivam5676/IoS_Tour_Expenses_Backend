@@ -29,6 +29,7 @@ const acceptVoucher = async (req, res) => {
 
     if (updateAssignedVoucher) {
       //check dailyAllowance value from  req body and update it if value exist
+      console.log(req.body.dailyAllowance,"allowance")
       if (req.body.dailyAllowance) {
         const voucherDetails = await VouchersDescription.findOne({
           where: { voucherId: req.body.voucherId },
