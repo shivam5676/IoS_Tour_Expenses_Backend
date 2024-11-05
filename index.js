@@ -64,7 +64,6 @@ assignedVoucher.belongsTo(userTable);
 
 
 
-
 app.use(express.static(builtPath));
 
 
