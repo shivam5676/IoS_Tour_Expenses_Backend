@@ -18,5 +18,15 @@ const voucherExpense = Sequelize.define("voucherExpenses", {
   imagePath: {
     type: sequelize.STRING,
   },
+  adminApprovedAmount: {
+    type: sequelize.STRING, // Adjust the type as needed
+    allowNull: true,        // Change to `false` if the column should be mandatory
+    defaultValue: null
+  },
+  adminApprovedAmountRemark:{
+    type: sequelize.STRING, // Adjust the type as needed
+    allowNull: true,        // Change to `false` if the column should be mandatory
+    defaultValue: null   
+  }
 });
 module.exports = voucherExpense;

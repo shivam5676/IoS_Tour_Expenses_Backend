@@ -14,7 +14,8 @@ const Vouchers = require("./models/VoucherTable");
 const userRoutes = require("./Routes/user");
 const path = require("path");
 const assignedVoucher = require("./models/assignedVoucher");
-const { machine } = require("os")
+const { machine } = require("os");
+const migrationRoutes = require("./Routes/migration");
 
 const BITRIX24_INSTANCE = "https://oipl.bitrix24.in"; // Replace with your Bitrix24 instance URL
 const LOCALHOST_INSTANCE = "https://tourvoucher.is10live.com";
@@ -63,14 +64,15 @@ userTable.hasMany(assignedVoucher);
 assignedVoucher.belongsTo(userTable);
 
 
-
 app.use(express.static(builtPath));
+
 
 
 app.use(bodyParser.json({ extended: false, limit: "30mb" }));
 app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
 app.use(authRoutes);
+app.use(migrationRoutes)
 app.post("/", (req, res) => {
   //for bitrix redirecting
   console.log(path.join(__dirname, "build/index.html"));

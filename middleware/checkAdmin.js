@@ -18,6 +18,9 @@ const checkAdmin = async (req, res, next) => {
       if (verifyAdmin) {
         req.role = "Admin";
       }
+      // if(!verifyAdmin){
+      //   return res.status(400).json({ msg: "user is not a admin" });
+      // }
       next();
       // else {
       //   // console.log(admin.data.result == false);
@@ -26,9 +29,11 @@ const checkAdmin = async (req, res, next) => {
     } else {
       req.role = "Admin";
       next();
+      // return res.status(400).json({ msg: "user is not a admin" });
     }
   } catch (err) {
     console.log(err);
+    return res.status(500).json({ msg: "something went wrong",err});
   }
 };
 
