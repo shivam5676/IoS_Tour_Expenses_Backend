@@ -89,6 +89,7 @@ const updateExpense = async (req, res, next) => {
           VoucherId: voucherId,
           userId,
           imagePath: filename,
+          adminApprovedAmount:+amount
         });
         if (getExpense.imagePath) {
           // const filename = path.basename(previousImageUrl);
@@ -153,6 +154,7 @@ const updateExpense = async (req, res, next) => {
         VoucherId: voucherId,
         userId,
         imagePath: billImage == "removed" ? "" : imagePath,
+        adminApprovedAmount:+amount
       });
       if (billImage === "removed" && imagePath) {
         const oldImagePath = path.join(__dirname, "..", "..", imagePath);

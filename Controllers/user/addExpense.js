@@ -44,9 +44,9 @@ const addExpense = async (req, res, next) => {
   }
 
   if (billImage) {
-   
+
     const buffer = billImage.buffer;
-  
+
     const appendedName = `${Date.now()}-billImage_${billImage.originalname}`;
     const filename = path.join(uploadDir, appendedName);
 
@@ -66,6 +66,7 @@ const addExpense = async (req, res, next) => {
           VoucherId: voucherId,
           userId,
           imagePath: `uploads/${appendedName}`,
+          adminApprovedAmount: +amount
         });
         return res.status(200).json({ expenseData: response });
       } catch (err) {
@@ -84,7 +85,7 @@ const addExpense = async (req, res, next) => {
         description,
         VoucherId: voucherId,
         userId,
-        imagePath: null,
+        imagePath: null,adminApprovedAmount: +amount
       });
       return res.status(200).json({ expenseData: response });
     } catch (err) {
