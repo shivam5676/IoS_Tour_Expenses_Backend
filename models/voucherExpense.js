@@ -26,7 +26,7 @@ const voucherExpense = Sequelize.define("voucherExpenses", {
   adminApprovedAmountRemark:{
     type: sequelize.STRING, // Adjust the type as needed
     allowNull: true,        // Change to `false` if the column should be mandatory
-    defaultValue: null   
+    defaultValue: "ok"   
   }
 });
 module.exports = voucherExpense;

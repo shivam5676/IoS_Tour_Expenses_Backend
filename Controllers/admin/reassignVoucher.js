@@ -27,7 +27,7 @@ const reAssignVoucher = async (req, res, next) => {
   } catch (err) {
     return res
       .status(400)
-      .json({ msg: "re-assigning successfulsomething went wrong" });
+      .json({ msg: "something went wrong" });
   }
 };
 module.exports = reAssignVoucher;
