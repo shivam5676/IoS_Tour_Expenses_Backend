@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
         return res.status(400).json({ msg: `You can not change voucher status - ${statusFrom} to ${statusTo}....because both are same ` })
     }
 
-    if (statusFrom != "Accepted" && statusFrom != "Rejected") {
+    if (statusFrom != "Accepted" && statusFrom != "Rejected"&&statusFrom != "Closed") {
         return res.status(400).json({ msg: `Pending Voucher Can not be processed to accepted or rejected` })
     }
     if (!userId) {
@@ -66,6 +66,32 @@ module.exports = async (req, res) => {
             const assignedVoucherResponse = await assignedVoucher.findOne({ assignedTo: userId, status: "Rejected", voucherId: voucherId, userId: updatedData.userId })
             // console.log(response, "res.....")
             await assignedVoucherResponse.update({ status: statusTo })
+        }
+        if (statusFrom == "Closed") {
+            const updatedData = await Vouchers.findOne(
+                //   { stausType: "Pending" },
+                { where: { id: voucherId, statusType: "Closed" } }
+            );
+            console.log(updatedData)
+            if (!updatedData) {
+                return res.status(400).json({ msg: "only accepted voucher can be change" })
+            }
+
+            await updatedData.update({
+                statusType: statusTo,
+
+
+            });
+            const assignedVoucherResponse = await assignedVoucher.findOne({ assignedTo: userId, status: "Accepted", voucherId: voucherId, userId: updatedData.userId })
+            // console.log(response, "res.....")
+            await assignedVoucherResponse.update({ status: statusTo })
+
+
+
+
+
+
+
         }
         return res.status(200).json({ msg: "successfullly status changed" })
 

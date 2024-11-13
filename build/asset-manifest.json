@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.eea71e6d.css",
-    "main.js": "/static/js/main.db5430e3.js",
+    "main.js": "/static/js/main.d2eecb69.js",
     "static/media/ios logo2.png": "/static/media/ios logo2.501e3540206b4481de66.png",
     "static/media/accepted.png": "/static/media/accepted.f8b9a6c7dbe99d185ed6.png",
     "static/media/metaverse.gif": "/static/media/metaverse.4cd21c346a6da2121e10.gif",
@@ -18,10 +18,10 @@
     "static/media/ios logo.png": "/static/media/ios logo.eb53ebab9bd47da8c6d3.png",
     "index.html": "/index.html",
     "main.eea71e6d.css.map": "/static/css/main.eea71e6d.css.map",
-    "main.db5430e3.js.map": "/static/js/main.db5430e3.js.map"
+    "main.d2eecb69.js.map": "/static/js/main.d2eecb69.js.map"
   },
   "entrypoints": [
     "static/css/main.eea71e6d.css",
-    "static/js/main.db5430e3.js"
+    "static/js/main.d2eecb69.js"
   ]
 }
