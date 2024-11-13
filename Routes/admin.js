@@ -29,6 +29,8 @@ const updateAdminApprovedAmount = require("../Controllers/updateAdminApprovedAmo
 const updateExpenseAdmin = require("../Controllers/admin/updateExpenseAdmin");
 // const { default: checkSupervisor } = require("../middleware/checkSupervisor");
 const multer = require("multer");
+const changeStatus = require("../Controllers/admin/changeStatus");
+const getClosedVoucher = require("../Controllers/admin/getClosedVoucher");
 const upload = multer();
 
 routes.post("/createUser", checkToken, checkSupervisor, checkAdmin, createUser);
@@ -81,12 +83,20 @@ routes.post(
   checkAdmin,
   postComment
 );
+routes.post(
+  "/changeStatus",
+  checkToken,
+  checkAdmin,
+ 
+  changeStatus
+);
 routes.post("/getSuperVisor", checkToken, checkAdmin, getSuperVisor);
 routes.post("/reAssign", checkToken, checkAdmin, reAssignVoucher);
 routes.post("/assignAsAdmin", checkToken, superAdmin, assignAdmin);
 routes.post("/removeAsAdmin", checkToken, superAdmin, deleteAdmin);
 
 routes.post("/getPaymentVoucher", checkToken, checkAdmin, getPaymentVoucher);
+routes.post("/getClosedVoucher", checkToken, checkAdmin, getClosedVoucher);
 routes.post("/deleteUser", checkToken, checkAdmin, deleteUser);
 routes.post("/allTime", checkToken, checkAdmin, getAllTimeData);
 routes.post("/adminApprovedExpense",upload.single("billImage"), checkToken, checkAdmin, updateExpenseAdmin);

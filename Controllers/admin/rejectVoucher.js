@@ -28,10 +28,10 @@ const rejectVoucher = async (req, res) => {
       );
       if (!req.body.assignedTo) {
         await updatedData.update({
-          statusType: "Accepted",
+          statusType: "Rejected",
           comment: req.body.comment,
           sender: req.body.userId,
-          assignedTo: req.body.assignedTo,
+          assignedTo: null,
         });
       } else {
         await assignedVoucher.create({
@@ -44,7 +44,7 @@ const rejectVoucher = async (req, res) => {
           statusType: "Rejected",
           comment: req.body.comment,
           sender: req.body.userId,
-          assignedTo: req.body.assignedTo,
+          assignedTo: null,
         });
       }
 

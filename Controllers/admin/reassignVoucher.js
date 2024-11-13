@@ -16,6 +16,9 @@ const reAssignVoucher = async (req, res, next) => {
         id: voucherId,
       },
     });
+    if(getVoucher.statusType=="Pending"){
+      return res.status(400).json({ msg: "Pending Voucher can not be re assigned " });
+    }
     if (!getVoucher) {
       return res.status(400).json({ msg: "no voucher found " });
     }
@@ -23,7 +26,7 @@ const reAssignVoucher = async (req, res, next) => {
       assignedTo: AccountDepartment,
       assignedName: assignedName,
     });
-    return res.status(200).json({ msg: "re-assigning successful" });
+    return res.status(200).json({ msg: "re-assigning to account department successful" });
   } catch (err) {
     return res
       .status(400)
