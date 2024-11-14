@@ -1,27 +1,34 @@
 {
   "files": {
-    "main.css": "/static/css/main.eea71e6d.css",
-    "main.js": "/static/js/main.d2eecb69.js",
+    "main.css": "/static/css/main.2e8587c9.css",
+    "main.js": "/static/js/main.efcf6365.js",
+    "static/media/CreatedIcon.gif": "/static/media/CreatedIcon.798f19bfa623c94a004e.gif",
     "static/media/ios logo2.png": "/static/media/ios logo2.501e3540206b4481de66.png",
     "static/media/accepted.png": "/static/media/accepted.f8b9a6c7dbe99d185ed6.png",
+    "static/media/rejected_status.gif": "/static/media/rejected_status.61ed9deecb4959c6335b.gif",
+    "static/media/approved.gif": "/static/media/approved.b96de76d713fa2e5c12e.gif",
     "static/media/metaverse.gif": "/static/media/metaverse.4cd21c346a6da2121e10.gif",
     "static/media/computer.gif": "/static/media/computer.927047f999065fc27516.gif",
     "static/media/trip.gif": "/static/media/trip.51ee0f85faefde162c53.gif",
     "static/media/budgeting.gif": "/static/media/budgeting.b9fbcf6fd0f4a61cb455.gif",
+    "static/media/accepted-status.gif": "/static/media/accepted-status.02cc04cfb3fcbe4aba62.gif",
     "static/media/payment.gif": "/static/media/payment.bddbe25eae471d88fd29.gif",
     "static/media/NotoSansDevanagari-VariableFont_wdth,wght.ttf": "/static/media/NotoSansDevanagari-VariableFont_wdth,wght.418b630e961693c40b20.ttf",
     "static/media/vote.gif": "/static/media/vote.c375b341dc06ab5d50a7.gif",
+    "static/media/payment-exchange.gif": "/static/media/payment-exchange.c43cd1bd7d56a2854c40.gif",
+    "static/media/pending-status.gif": "/static/media/pending-status.fef75c43b190b41ff79d.gif",
     "static/media/rejected.png": "/static/media/rejected.e1a8ab3cf8006781818a.png",
     "static/media/Roboto-Medium.ttf": "/static/media/Roboto-Medium.7c8d04cd831df3033c8a.ttf",
     "static/media/Roboto-Bold.ttf": "/static/media/Roboto-Bold.f80816a5455d171f948d.ttf",
+    "static/media/right-arrow.gif": "/static/media/right-arrow.d5b97d279be600500a28.gif",
     "static/media/loginImage2.png": "/static/media/loginImage2.cd78c7e1a061276b09b2.png",
     "static/media/ios logo.png": "/static/media/ios logo.eb53ebab9bd47da8c6d3.png",
     "index.html": "/index.html",
-    "main.eea71e6d.css.map": "/static/css/main.eea71e6d.css.map",
-    "main.d2eecb69.js.map": "/static/js/main.d2eecb69.js.map"
+    "main.2e8587c9.css.map": "/static/css/main.2e8587c9.css.map",
+    "main.efcf6365.js.map": "/static/js/main.efcf6365.js.map"
   },
   "entrypoints": [
-    "static/css/main.eea71e6d.css",
-    "static/js/main.d2eecb69.js"
+    "static/css/main.2e8587c9.css",
+    "static/js/main.efcf6365.js"
   ]
 }

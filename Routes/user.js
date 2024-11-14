@@ -14,6 +14,7 @@ const UpdateDetails = require("../Controllers/user/updateDetails");
 const TokenRefresher = require("../middleware/tokenRefresher");
 const TokenIsVAlid = require("../middleware/tokenIsVAlid");
 const multer = require("multer");
+const voucherAssigningList = require("../Controllers/admin/voucherAssigningList");
 const upload = multer();
 
 const routes = express.Router();
@@ -30,4 +31,5 @@ routes.post("/deleteOnGoingTour", checkToken, DeleteOnGoingTour);
 routes.post("/updateDetails", checkToken, UpdateDetails);
 routes.post("/sessionRefresh", TokenRefresher);
 routes.post("/sessionVerify", TokenIsVAlid);
+routes.get("/getTrackingList",voucherAssigningList)
 module.exports = routes;

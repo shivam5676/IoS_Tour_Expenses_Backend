@@ -1,11 +1,15 @@
 
-const voucherExpenses=require("../models/voucherExpense")
-async function updateAdminApprovedAmount() {
+const voucherExpenses = require("../models/voucherExpense")
+async function updateAdminApprovedAmount(req, res) {
   console.log("enter")
+  if (req.role != "Admin") {
+    return res.status(400).json({ msg: "admin can do this action" })
+  }
+  return
   try {
     // Fetch all existing records
     const records = await voucherExpenses.findAll();
-console.log(records)
+    console.log(records)
     for (const record of records) {
       // Update each record by setting `adminApprovedAmount` equal to `Amount`
       // await record.update({ adminApprovedAmountRemark: "ok" });
@@ -18,4 +22,4 @@ console.log(records)
   }
 }
 
-module.exports=updateAdminApprovedAmount
+module.exports = updateAdminApprovedAmount

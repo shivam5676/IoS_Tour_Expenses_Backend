@@ -3,7 +3,6 @@ const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const sequelize = require("sequelize");
-
 const db = require("./util/database");
 const adminRoutes = require("./Routes/admin");
 const userTable = require("./models/userTable");
@@ -65,6 +64,7 @@ assignedVoucher.belongsTo(userTable);
 
 
 app.use(express.static(builtPath));
+
 
 
 

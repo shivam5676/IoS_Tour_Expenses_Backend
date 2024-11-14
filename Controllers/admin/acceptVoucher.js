@@ -5,11 +5,22 @@ const VouchersDescription = require("../../models/VoucherDescription");
 const dotenv = require("dotenv").config();
 
 const acceptVoucher = async (req, res) => {
+  console.log(req.body, req.role)
   const voucherId = req.body.voucherId; //extraction of voucher id
   if (!req.body.userId) {
     return res.status(400).json({ msg: "invalid user  ...." });
   }
+  // this check will insure that if no assigned id found then it will found atleast account department id 
+  if (!req.body.assignedTo) {
+    if (!req.body.AccountDepartment) {
+      return res
+        .status(400)
+        .json({ msg: "please select Account department field or contact admin" });
+    }
+    console.log(req.body.assignedName);
 
+
+  }
   try {
     //find pending assignedVoucher by using status and voucherId
     const getAssignedVoucher = await assignedVoucher.findOne({
@@ -29,7 +40,7 @@ const acceptVoucher = async (req, res) => {
 
     if (updateAssignedVoucher) {
       //check dailyAllowance value from  req body and update it if value exist
-      console.log(req.body.dailyAllowance,"allowance")
+      console.log(req.body.dailyAllowance, "allowance")
       if (req.body.dailyAllowance) {
         const voucherDetails = await VouchersDescription.findOne({
           where: { voucherId: req.body.voucherId },
@@ -44,17 +55,8 @@ const acceptVoucher = async (req, res) => {
         { where: { id: voucherId } }
       );
 
-      if (!req.body.assignedTo) {
-        if (!req.body.AccountDepartment) {
-          return res
-            .status(400)
-            .json({ msg: "please select Account department field" });
-        }
-        console.log(req.body.assignedName);
 
-        //update the assigned voucher to accountDepartment with pending status
-      }
-
+      //update the assigned voucher to accountDepartment with pending status
       if (req.body.AccountDepartment) {
         await updatedData.update({
           statusType: "Accepted",
