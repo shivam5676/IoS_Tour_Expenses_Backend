@@ -31,5 +31,5 @@ routes.post("/deleteOnGoingTour", checkToken, DeleteOnGoingTour);
 routes.post("/updateDetails", checkToken, UpdateDetails);
 routes.post("/sessionRefresh", TokenRefresher);
 routes.post("/sessionVerify", TokenIsVAlid);
-routes.get("/getTrackingList",voucherAssigningList)
+routes.get("/getTrackingList/:trackingId",voucherAssigningList)
 module.exports = routes;

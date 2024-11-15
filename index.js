@@ -42,10 +42,12 @@ app.get("/popup", (req, res) => {
   console.log(path.join(__dirname, "popup.html"));
   res.sendFile(path.join(__dirname, "popup.html"));
 });
+
 // Vouchers.hasOne(userTable)
 // userTable.belongToMany(Vouchers)
 userTable.hasMany(Vouchers, { onDelete: "CASCADE" });
 Vouchers.belongsTo(userTable, { onDelete: "CASCADE" });
+
 
 Vouchers.hasOne(VouchersDescription);
 VouchersDescription.belongsTo(Vouchers);
