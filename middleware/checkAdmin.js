@@ -14,7 +14,7 @@ const checkAdmin = async (req, res, next) => {
           isAdmin: true,
         },
       })
-      console.log(verifyAdmin, "verify");
+      // console.log(verifyAdmin, "verify");
       if (verifyAdmin) {
         req.role = "Admin";
       }

@@ -16,8 +16,11 @@ const checkSupervisor = async (req, res, next) => {
     }
     console.log("object", req.body.userId);
     console.log(superVisor.data.result[0], userId);
+
     if (superVisor.data.result[0].UF_HEAD) {
-      if (superVisor.data.result[0].UF_HEAD == req.body.userId) {
+      if (superVisor.data.result[0].UF_HEAD == 0) {
+        req.body.assignedTo = superVisor.data.result[0].ID;
+      } else if (superVisor.data.result[0].UF_HEAD == req.body.userId) {
         req.role = "supervisor";
         const parentResponse = await axios.get(
           `https://${process.env.COMPANY_DOMAIN}/rest/department.get.json?ID=${superVisor.data.result[0].PARENT}&auth=${accessToken}`
@@ -38,6 +41,7 @@ const checkSupervisor = async (req, res, next) => {
       //if we will not find any supervisor then we will send the voucher to  parent head
       req.body.assignedTo = 1;
     }
+    // return; //need to check why data is not assigning to thier supervisor when no team leader i there
     next();
   } catch (err) {
     console.log(err);

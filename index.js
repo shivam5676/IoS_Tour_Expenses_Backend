@@ -48,7 +48,6 @@ app.get("/popup", (req, res) => {
 userTable.hasMany(Vouchers, { onDelete: "CASCADE" });
 Vouchers.belongsTo(userTable, { onDelete: "CASCADE" });
 
-
 Vouchers.hasOne(VouchersDescription);
 VouchersDescription.belongsTo(Vouchers);
 
@@ -64,31 +63,25 @@ assignedVoucher.belongsTo(Vouchers);
 userTable.hasMany(assignedVoucher);
 assignedVoucher.belongsTo(userTable);
 
-
 app.use(express.static(builtPath));
-
-
-
 
 app.use(bodyParser.json({ extended: false, limit: "30mb" }));
 app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
 app.use(authRoutes);
-app.use(migrationRoutes)
+app.use(migrationRoutes);
 app.post("/", (req, res) => {
   //for bitrix redirecting
   console.log(path.join(__dirname, "build/index.html"));
   res.sendFile(path.join(__dirname, "build/index.html"));
 });
 app.get("*", (req, res) => {
-
   //for bitrix redirecting
   console.log(path.join(__dirname, "build/index.html"));
   res.sendFile(path.join(__dirname, "build/index.html"));
 });
 db.sync({ force: !true })
   .then(async () => {
-
     app.listen(2000, () => {});
   })
   .catch((err) => console.log(err));

@@ -22,6 +22,7 @@ const createUser = async (req, res) => {
       .json({ msg: "account already created with this email id" });
   }
   try {
+  
     const response = await userTable.create({
       firstName,
       lastName,

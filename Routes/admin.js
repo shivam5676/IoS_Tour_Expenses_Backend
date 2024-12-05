@@ -37,6 +37,7 @@ routes.post("/createUser", checkToken, checkSupervisor, checkAdmin, createUser);
 routes.post("/getAllUser", checkToken, checkSupervisor, checkAdmin, getAllUser);
 routes.post("/getUser", checkToken, checkSupervisor, checkAdmin, getUser);
 routes.post("/getUserVouchers", checkToken, checkSupervisor, getUsersVouchers);
+
 routes.post(
   "/viewVoucher",
   checkToken,

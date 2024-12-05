@@ -31,7 +31,7 @@ routes.post("/login", Login);
 
 routes.post("/", (req, res) => {
   //for bitrix redirecting
-  console.log(path.join(__dirname, "../", "build/index.html"));
+
   res.sendFile(path.join(__dirname, "../", "build/index.html"));
 });
 routes.get("/home", (req, res) => {
@@ -78,7 +78,7 @@ routes.get("/callback/:code", async (req, res) => {
         },
       }
     );
-    console.log(tokenResponse,"....>")
+  
     if (tokenResponse) {
       const accesstoken = tokenResponse.data.access_token;
       const admin = await axios.get(
@@ -93,16 +93,12 @@ routes.get("/callback/:code", async (req, res) => {
           },
         }
       );
-      // console.log(userDetails, "....>");
-      // return;
-      // console.log(tokenResponse.data.mobile, "..............");
+   
       const userValid = await userTable.findOne({
         where: { id: tokenResponse.data.user_id },
       });
 
-      // console.log(supervisor);
-      // console.log(supervisor.data.result, "======>result")
-      // return
+
       if (!userValid) {
         const departments = userDetails.data.result.UF_DEPARTMENT;
         let supervisor = false;
@@ -214,7 +210,7 @@ routes.get("/callback/:code", async (req, res) => {
 
 routes.post("/check-token", async (req, res) => {
   const { domain, token } = req.body;
-  console.log(domain);
+
   if (!domain || !token) {
     return res.status(400).json({ error: "Domain and token are required." });
   }
@@ -223,7 +219,7 @@ routes.post("/check-token", async (req, res) => {
     const response = await axios.get(
       `https://${domain}/rest/user.current?auth=${token}`
     );
-    console.log(response.data.result);
+
     if (response.data.result) {
       return res.status(200).json({ valid: true, user: response.data.result });
     } else {
