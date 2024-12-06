@@ -15,11 +15,17 @@ const TokenRefresher = require("../middleware/tokenRefresher");
 const TokenIsVAlid = require("../middleware/tokenIsVAlid");
 const multer = require("multer");
 const voucherAssigningList = require("../Controllers/admin/voucherAssigningList");
+const checkAdmin = require("../middleware/checkAdmin");
 const upload = multer();
 
 const routes = express.Router();
 routes.post("/saveExpense", upload.single("billImage"), checkToken, addExpense);
-routes.post("/updateExpense",upload.single("billImage"), checkToken, updateExpense);
+routes.post(
+  "/updateExpense",
+  upload.single("billImage"),
+  checkToken,
+  updateExpense
+);
 routes.post("/createTour", checkToken, createTour);
 routes.post("/getTour", checkToken, getTour);
 routes.post("/getTourExpenses", checkToken, getTourExpenses);
@@ -28,8 +34,8 @@ routes.post("/getPendingVouchers", checkToken, getPendingVoucher);
 routes.post("/deleteExpense", checkToken, deleteExpense);
 
 routes.post("/deleteOnGoingTour", checkToken, DeleteOnGoingTour);
-routes.post("/updateDetails", checkToken, UpdateDetails);
+routes.post("/updateDetails", checkToken, checkAdmin, UpdateDetails);
 routes.post("/sessionRefresh", TokenRefresher);
 routes.post("/sessionVerify", TokenIsVAlid);
-routes.get("/getTrackingList/:trackingId",voucherAssigningList)
+routes.get("/getTrackingList/:trackingId", voucherAssigningList);
 module.exports = routes;

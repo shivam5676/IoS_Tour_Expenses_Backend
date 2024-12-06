@@ -1,8 +1,7 @@
 const VouchersDescription = require("../../models/VoucherDescription");
 const Vouchers = require("../../models/VoucherTable");
 
-const UpdateDetails = async(req, res) => {
-
+const UpdateDetails = async (req, res) => {
   const {
     purpose,
     arrivalDate,
@@ -18,7 +17,7 @@ const UpdateDetails = async(req, res) => {
     uid,
     descriptionId,
   } = req.body;
- 
+
   if (purpose.length == 0) {
     return res.status(400).json({ msg: "purpose field is empty" });
   }
@@ -68,10 +67,31 @@ const UpdateDetails = async(req, res) => {
         .status(400)
         .json({ msg: "no voucher description found for this description id" });
     }
-    if (getDescription?.Voucher?.userId != userId) {
+    console.log(req.role)
+    if (getDescription?.Voucher?.userId != userId && req.role != "Admin") {
       return res.status(400).json({
-        msg: "only the creator of this voucher can edit it......you are not authorize for doing this action",
+        msg: "only the creator of this voucher and Admin can edit it......you are not authorize for doing this action",
       });
+    }
+    if (req.role == "Admin") {
+      const savedDetails = await getDescription.update({
+        purpose: purpose,
+        arrivalDate: arrivalDate,
+        departureDate: departureDate,
+        transportArrival: transportArrival,
+        transportDeparture: transportDeparture,
+        arrivalTime: arrivalTime,
+        departureTime: departureTime,
+        advanceCash: advanceCash,
+        dailyAllowance: dailyAllowance,
+      });
+      if (!savedDetails) {
+        return res
+          .status(400)
+          .json({ msg: "description could not saved...check all fields " });
+      }
+
+      return res.status(200).json(savedDetails);
     }
 
     const savedDetails = await getDescription.update({
@@ -83,7 +103,7 @@ const UpdateDetails = async(req, res) => {
       arrivalTime: arrivalTime,
       departureTime: departureTime,
       advanceCash: advanceCash,
-      dailyAllowance: dailyAllowance,
+      // dailyAllowance: dailyAllowance,
     });
     if (!savedDetails) {
       return res
