@@ -1,10 +1,11 @@
 const sequelize = require("sequelize");
 const Sequelize = require("../util/database");
 const Vouchers = Sequelize.define("Vouchers", {
-  // status: {
-  //   type: sequelize.STRING,
-  //   // defaultValue: "pending",
-  // },
+  chatGroup: {
+    type: sequelize.STRING,
+    allowNull: true,        // Change to `false` if the column should be mandatory
+    defaultValue: null 
+  },
   statusType: {
     type: sequelize.STRING,
     // allowNull: false,
