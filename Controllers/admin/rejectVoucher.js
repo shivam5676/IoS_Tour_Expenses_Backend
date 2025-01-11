@@ -2,7 +2,7 @@ const Vouchers = require("../../models/VoucherTable");
 const assignedVoucher = require("../../models/assignedVoucher");
 
 const rejectVoucher = async (req, res) => {
-  if (req.role != "Admin" && req.role != "supervisor") {
+  if (req.role != "Admin" && req.role != "paymentAdmin") {
     return res.status(400).json({ msg: "You are not a authorised user" });
   }
   const voucherId = req.body.voucherId;

@@ -35,9 +35,14 @@ const userTable = Sequelize.define("users", {
   supervisor: {
     type: sequelize.BOOLEAN,
   },
-  profilePic:{
+  profilePic: {
     type: sequelize.STRING,
-  }
+  },
+  paymentAdmin: {
+    type: sequelize.BOOLEAN, // Adjust the type as needed
+    allowNull: true, // Change to `false` if the column should be mandatory
+    defaultValue: false, // Set a default value if needed
+  },
 });
 // console.log("i am inside user table");
 

@@ -3,7 +3,7 @@ const userTable = require("../models/userTable");
 
 const checkToken = async (req, res, next) => {
   const { domain, token } = req.body;
-  
+
   if (!domain || !token) {
     return res.status(400).json({ error: "Domain and token are required." });
   }
@@ -12,7 +12,7 @@ const checkToken = async (req, res, next) => {
     const response = await axios.get(
       `https://${domain}/rest/user.current?auth=${token}`
     );
-    console.log(response.data.result, "=========>");
+
     if (response.data.result) {
       if (response.data.result.ID) {
         const getUser = await userTable.findOne({
@@ -22,12 +22,18 @@ const checkToken = async (req, res, next) => {
         });
         if (getUser) {
           req.body.userId = response.data.result.ID;
+          console.log(getUser)
+          req.role = getUser.isAdmin
+            ? "Admin"
+            : getUser.paymentAdmin
+            ? "paymentAdmin"
+            : "";
         }
       } else {
         req.body.userId = undefined;
       }
       req.body.UF_Department_Id = response.data.result.UF_DEPARTMENT[0];
-    
+
       next();
       //   return res.status(200).json({ valid: true, user: response.data.result });
     } else {

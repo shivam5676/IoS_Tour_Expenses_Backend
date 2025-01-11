@@ -78,7 +78,7 @@ routes.get("/callback/:code", async (req, res) => {
         },
       }
     );
-  
+
     if (tokenResponse) {
       const accesstoken = tokenResponse.data.access_token;
       const admin = await axios.get(
@@ -93,11 +93,10 @@ routes.get("/callback/:code", async (req, res) => {
           },
         }
       );
-   
+
       const userValid = await userTable.findOne({
         where: { id: tokenResponse.data.user_id },
       });
-
 
       if (!userValid) {
         const departments = userDetails.data.result.UF_DEPARTMENT;
@@ -127,6 +126,7 @@ routes.get("/callback/:code", async (req, res) => {
             id: tokenResponse.data.user_id,
             supervisor: supervisor,
             profilePic: userDetails.data.result.PERSONAL_PHOTO,
+            paymentAdmin: false,
           });
           return res.status(200).json({
             data: {
@@ -144,6 +144,7 @@ routes.get("/callback/:code", async (req, res) => {
               supervisor: supervisor,
               id: tokenResponse.data.user_id,
               profilePic: userDetails.data.result.PERSONAL_PHOTO,
+              paymentAdmin: false,
             },
           });
         } catch (err) {
@@ -198,6 +199,7 @@ routes.get("/callback/:code", async (req, res) => {
             supervisor: userValid.supervisor,
             id: tokenResponse.data.user_id,
             profilePic: userDetails.data.result.PERSONAL_PHOTO,
+            paymentAdmin: userValid.paymentAdmin,
           },
         });
       }

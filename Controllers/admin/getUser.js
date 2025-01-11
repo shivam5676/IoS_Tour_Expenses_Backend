@@ -3,14 +3,13 @@ const userTable = require("../../models/userTable");
 const voucherExpense = require("../../models/voucherExpense");
 const db = require("../../util/database");
 
-const getUser = async (req, res) => { if (req.role != "Admin" && req.role != "supervisor") {
-  
+const getUser = async (req, res) => {
+  if (req.role != "Admin" && req.role != "paymentAdmin") {
+    return res.status(400).json({ msg: "You are not a authorised user" });
+  }
   if (!req.body.userId) {
     return res.status(400).json({ msg: "invalid user  ...." });
   }
-  return res.status(400).json({ msg: "You are not a authorised user" });
-}
- 
   // return;
   try {
     const findUser = await userTable.findOne({
@@ -25,7 +24,6 @@ const getUser = async (req, res) => { if (req.role != "Admin" && req.role != "su
       ],
     });
 
-    console.log(findUser.Vouchers);
     if (!findUser) {
       return res.status(400).json({ msg: "no user exist" });
     }

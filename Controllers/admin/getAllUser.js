@@ -1,7 +1,6 @@
 const userTable = require("../../models/userTable");
 const getAllUser = async (req, res) => {
-  if (req.role != "Admin" ) {
-   
+  if (req.role != "Admin" && req.role != "paymentAdmin") {
     return res.status(400).json({ msg: "You are not a authorised user" });
   }
   if (!req.body.userId) {

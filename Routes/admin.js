@@ -31,76 +31,82 @@ const updateExpenseAdmin = require("../Controllers/admin/updateExpenseAdmin");
 const multer = require("multer");
 const changeStatus = require("../Controllers/admin/changeStatus");
 const getClosedVoucher = require("../Controllers/admin/getClosedVoucher");
+const assignVoucherToPaymentAdmin = require("../middleware/assignVoucherToPaymentAdmin");
+const checkPaymentAdmin = require("../middleware/checkPaymentAdmin");
+const givePaymentReviewPermission = require("../Controllers/admin/givePaymentReviewPermission");
+const removePaymentReviewPermission = require("../Controllers/admin/removePaymentREviewPErmission");
 const upload = multer();
 
-routes.post("/createUser", checkToken, checkSupervisor, checkAdmin, createUser);
-routes.post("/getAllUser", checkToken, checkSupervisor, checkAdmin, getAllUser);
-routes.post("/getUser", checkToken, checkSupervisor, checkAdmin, getUser);
-routes.post("/getUserVouchers", checkToken, checkSupervisor, getUsersVouchers);
+// routes.post("/createUser", checkToken, checkAdmin, createUser);
+routes.post("/getAllUser", checkToken, getAllUser);
+routes.post("/getUser", checkToken, getUser);
+routes.post("/getUserVouchers", checkToken, getUsersVouchers);
 
 routes.post(
   "/viewVoucher",
   checkToken,
-  checkSupervisor,
-  checkAdmin,
+
   viewVoucher
 );
 routes.post(
   "/allVoucher",
   checkToken,
-  checkSupervisor,
-  checkAdmin,
+
   getAllVoucher
 );
-routes.post("/year", checkToken, checkSupervisor, checkAdmin, getYearData);
-routes.post("/user", checkToken, checkSupervisor, checkAdmin, getUserReport);
+routes.post("/year", checkToken, getYearData);
+routes.post("/user", checkToken, getUserReport);
 
 routes.post("/trackVoucher", checkToken, trackVoucherStatus);
 routes.post(
   "/acceptVoucher",
+
   checkToken,
-  checkAdmin,
-  checkSupervisor,
+
   acceptVoucher
 );
 routes.post(
   "/closeVoucher",
   checkToken,
-  checkAdmin,
-  checkSupervisor,
+
   closeVoucher
 );
 routes.post(
   "/rejectVoucher",
   checkToken,
-  checkSupervisor,
-  checkAdmin,
+
   rejectVoucher
 );
 routes.post(
   "/postComment",
   checkToken,
-  checkSupervisor,
-  checkAdmin,
+
+  // checkAdmin,
   postComment
 );
 routes.post(
   "/changeStatus",
   checkToken,
-  checkAdmin,
- 
+
   changeStatus
 );
-routes.post("/getSuperVisor", checkToken, checkAdmin, getSuperVisor);
-routes.post("/reAssign", checkToken, checkAdmin, reAssignVoucher);
+routes.post("/getSuperVisor", checkToken, getSuperVisor);
+routes.post("/reAssign", checkToken, reAssignVoucher);
 routes.post("/assignAsAdmin", checkToken, superAdmin, assignAdmin);
 routes.post("/removeAsAdmin", checkToken, superAdmin, deleteAdmin);
-
-routes.post("/getPaymentVoucher", checkToken, checkAdmin, getPaymentVoucher);
-routes.post("/getClosedVoucher", checkToken, checkAdmin, getClosedVoucher);
-routes.post("/deleteUser", checkToken, checkAdmin, deleteUser);
-routes.post("/allTime", checkToken, checkAdmin, getAllTimeData);
-routes.post("/adminApprovedExpense",upload.single("billImage"), checkToken, checkAdmin, updateExpenseAdmin);
+routes.post("/givePaymentHandlingPermission", checkToken, superAdmin, givePaymentReviewPermission);
+routes.post("/removePaymentHandlingPermission", checkToken, superAdmin, removePaymentReviewPermission);
+routes.post("/getPaymentVoucher", checkToken, getPaymentVoucher);
+routes.post("/getClosedVoucher", checkToken, getClosedVoucher);
+routes.post("/deleteUser", checkToken, deleteUser);
+routes.post("/allTime", checkToken, getAllTimeData);
+routes.post(
+  "/adminApprovedExpense",
+  upload.single("billImage"),
+  checkToken,
+  checkAdmin,
+  updateExpenseAdmin
+);
 // routes.post("/sessionVerify", checkToken);
 // routes.post("/sessionRefresh", TokenRefresher);
 module.exports = routes;

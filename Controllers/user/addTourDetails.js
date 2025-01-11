@@ -72,11 +72,13 @@ const addTourDetails = async (req, res) => {
       //   { stausType: "Pending" },
       { where: { id: voucherId, userId: +userId } }
     );
+
     // if (!req.body.assignedTo) {
     //   return res
     //     .status(400)
     //     .json({ msg: "something went wrong...contact administration " }); //if therreis problem in bitrix hierrachy
     // }
+
     await updatedData.update({
       statusType: req.body.assignedTo ? "Pending" : "Accepted",
     });
@@ -103,16 +105,6 @@ const addTourDetails = async (req, res) => {
             },
           }
         );
-
-        // Send notification to the origin user
-        // await axios.post("https://your-bitrix24-url/rest/feed.item.add", {
-        //   auth: "your-access-token",
-        //   POST_TITLE: `Your Approval Request for Voucher ${voucherId}`,
-        //   POST_MESSAGE: `Your approval request for the voucher with ID ${voucherId} has been sent to ${nextUserId}`,
-        //   POST_SUB_TITLE: "Voucher Approval",
-        //   POST_FEED: "tasks",
-        //   DESTINATION: [{ TYPE: "USER", ID: currentUserid }],
-        // });
       } catch (error) {
         // console.error("Error sending approval request:", error);
         throw error;

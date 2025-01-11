@@ -4,8 +4,10 @@ const Vouchers = require("../../models/VoucherTable");
 module.exports = async (req, res) => {
   const { voucherId, statusTo, statusFrom, userId } = req.body;
 
-  if (req.role != "Admin") {
-    return res.status(400).json({ msg: "Only Admin Can perform this Action" });
+  if (req.role != "Admin" && req.role != "paymentAdmin") {
+    return res
+      .status(400)
+      .json({ msg: "Only Admin or paymentadminCan perform this Action" });
   }
   if (!statusFrom || !statusTo) {
     return res.status(400).json({ msg: "Status type is undefined" });

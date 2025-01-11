@@ -3,7 +3,8 @@ const assignedVoucher = require("../../models/assignedVoucher");
 const userTable = require("../../models/userTable");
 
 const getAllVoucher = async (req, res) => {
-  if (req.role != "Admin" && req.role != "supervisor") {
+  console.log(req.role)
+  if (req.role != "Admin" && req.role!="paymentAdmin") {
     return res.status(400).json({ msg: "You are not a authorised user" });
   }
   if (!req.body.userId) {
@@ -26,7 +27,7 @@ const getAllVoucher = async (req, res) => {
 
     return res.status(200).json({ userList: response });
   } catch (err) {
-    return res.status(400).json({ msg: "something went wrong" });
+    return res.status(400).json({ msg: "something went wrong",err:err });
   }
 };
 module.exports = getAllVoucher;

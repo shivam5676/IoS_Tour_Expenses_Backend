@@ -6,10 +6,25 @@ const checkSupervisor = async (req, res, next) => {
   const userId = req.body.userId;
   const DepartMentId = req.body.UF_Department_Id;
   // console.log(userId);
+  const findChatGroup = await axios.post(
+    `https://${process.env.COMPANY_DOMAIN}/rest/im.department.get`,
+    {
+      auth: req.body.token,
+      ID: [DepartMentId], //numerical only
+      // ENTITY_TYPE: entityType, //any type
+    }
+  );
+  console.log(findChatGroup.data.result, "fgfggf");
+  const superVisor = await axios.get(
+    `https://${process.env.COMPANY_DOMAIN}/rest/department.get.json?ID=${DepartMentId}&auth=${accessToken}`
+  );
+  console.log(superVisor.data, "super");
+  return;
   try {
     const superVisor = await axios.get(
       `https://${process.env.COMPANY_DOMAIN}/rest/department.get.json?ID=${DepartMentId}&auth=${accessToken}`
     );
+    console.log(superVisor.data, "super");
     if (!superVisor.data.result) {
       console.log("no supervisor ");
       return;
@@ -42,7 +57,7 @@ const checkSupervisor = async (req, res, next) => {
       req.body.assignedTo = 1;
     }
     // return; //need to check why data is not assigning to thier supervisor when no team leader i there
-    next();
+    // next();
   } catch (err) {
     console.log(err);
   }

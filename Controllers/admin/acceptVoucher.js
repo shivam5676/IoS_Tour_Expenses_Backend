@@ -5,21 +5,18 @@ const VouchersDescription = require("../../models/VoucherDescription");
 const dotenv = require("dotenv").config();
 
 const acceptVoucher = async (req, res) => {
-  console.log(req.body, req.role)
   const voucherId = req.body.voucherId; //extraction of voucher id
   if (!req.body.userId) {
     return res.status(400).json({ msg: "invalid user  ...." });
   }
-  // this check will insure that if no assigned id found then it will found atleast account department id 
+  // this check will insure that if no assigned id found then it will found atleast account department id
   if (!req.body.assignedTo) {
     if (!req.body.AccountDepartment) {
-      return res
-        .status(400)
-        .json({ msg: "please select Account department field or contact admin" });
+      return res.status(400).json({
+        msg: "please select Account department field or contact admin",
+      });
     }
     console.log(req.body.assignedName);
-
-
   }
   try {
     //find pending assignedVoucher by using status and voucherId
@@ -40,7 +37,7 @@ const acceptVoucher = async (req, res) => {
 
     if (updateAssignedVoucher) {
       //check dailyAllowance value from  req body and update it if value exist
-      console.log(req.body.dailyAllowance, "allowance")
+      console.log(req.body.dailyAllowance, "allowance");
       if (req.body.dailyAllowance) {
         const voucherDetails = await VouchersDescription.findOne({
           where: { voucherId: req.body.voucherId },
@@ -54,7 +51,6 @@ const acceptVoucher = async (req, res) => {
         //   { stausType: "Pending" },
         { where: { id: voucherId } }
       );
-
 
       //update the assigned voucher to accountDepartment with pending status
       if (req.body.AccountDepartment) {
@@ -97,16 +93,6 @@ const acceptVoucher = async (req, res) => {
               },
             }
           );
-
-          // Send notification to the origin user
-          // await axios.post("https://your-bitrix24-url/rest/feed.item.add", {
-          //   auth: "your-access-token",
-          //   POST_TITLE: `Your Approval Request for Voucher ${voucherId}`,
-          //   POST_MESSAGE: `Your approval request for the voucher with ID ${voucherId} has been sent to ${nextUserId}`,
-          //   POST_SUB_TITLE: "Voucher Approval",
-          //   POST_FEED: "tasks",
-          //   DESTINATION: [{ TYPE: "USER", ID: currentUserid }],
-          // });
         } catch (error) {
           // console.error("Error sending approval request:", error);
           throw error;
