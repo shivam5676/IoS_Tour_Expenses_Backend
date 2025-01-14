@@ -2,6 +2,8 @@ const { default: axios } = require("axios");
 const VouchersDescription = require("../../models/VoucherDescription");
 const Vouchers = require("../../models/VoucherTable");
 const assignedVoucher = require("../../models/assignedVoucher");
+const createBitrixGroup = require("../../services/createBitrixGroup");
+const userTable = require("../../models/userTable");
 
 const addTourDetails = async (req, res) => {
   const {
@@ -68,9 +70,18 @@ const addTourDetails = async (req, res) => {
         .status(400)
         .json({ msg: "description could not saved...check all fields " });
     }
-    const updatedData = await Vouchers.findOne(
+    const voucherData = await Vouchers.findOne(
       //   { stausType: "Pending" },
-      { where: { id: voucherId, userId: +userId } }
+      {
+        where: { id: voucherId, userId: +userId },
+        include: [
+          {
+            model: userTable, // Associated model
+
+            attributes: ["id", "firstName", "lastName"], // Fields from the Users table
+          },
+        ],
+      }
     );
 
     // if (!req.body.assignedTo) {
@@ -79,7 +90,7 @@ const addTourDetails = async (req, res) => {
     //     .json({ msg: "something went wrong...contact administration " }); //if therreis problem in bitrix hierrachy
     // }
 
-    await updatedData.update({
+    await voucherData.update({
       statusType: req.body.assignedTo ? "Pending" : "Accepted",
     });
     const assigned = assignedVoucher.create({
@@ -112,12 +123,52 @@ const addTourDetails = async (req, res) => {
     }
     if (req.body.assignedTo) {
       sendApprovalRequest(req.body.userId, req.body.assignedTo, voucherId);
+      // const chatTitle=`TourVoucher_Disputes (${voucherData.tourLocation}-${voucherData.tourDate})`
+      const tourVoucherPersonName =
+        voucherData?.user?.dataValues?.firstName +
+        voucherData?.user?.dataValues?.lastName;
+
+      const tourVoucherPersonId = voucherData?.user?.dataValues?.id;
+
+      let chatTitle = `TourVoucher_Disputes (${voucherData.tourLocation}-${voucherData.tourDate})`;
+      let entityId = `${tourVoucherPersonId}${voucherId}`;
+      let entityType = `${voucherId}-chat`;
+      const token = req.body.token;
+      const OWNER_ID = req.body.assignedTo;
+      const comment = null;
+      const chatGRoupData = await createBitrixGroup(
+        chatTitle,
+        tourVoucherPersonName,
+        voucherData,
+        tourVoucherPersonId,
+        comment,
+        token,
+        entityId,
+        entityType,
+        OWNER_ID
+      );
+      const findChatGroup = await axios.post(
+        `https://${process.env.COMPANY_DOMAIN}/rest/im.chat.get`,
+        {
+          auth: req.body.token,
+          ENTITY_ID: entityId, //numerical only
+          ENTITY_TYPE: entityType, //any type
+        }
+      );
+
+      if (findChatGroup?.data?.result?.ID) {
+        const updatedData = await voucherData.update({
+          comment: req.body.comment,
+          sender: req.body.userId,
+          chatGroup: findChatGroup.data.result.ID,
+        });
+      }
     }
 
-    return res.status(200).json({ details: updatedData });
+    return res.status(200).json({ details: voucherData });
   } catch (err) {
     console.log(err);
-    return res.status(400).json({ msg: "something went wrong" });
+    return res.status(400).json({ msg: "something went wrong", err: err });
   }
 };
 module.exports = addTourDetails;

@@ -2,6 +2,7 @@ const { default: axios } = require("axios");
 const Vouchers = require("../../models/VoucherTable");
 const assignedVoucher = require("../../models/assignedVoucher");
 const VouchersDescription = require("../../models/VoucherDescription");
+const sendMessageToGroup = require("../../services/sendMEssageToGRoup");
 const dotenv = require("dotenv").config();
 
 const acceptVoucher = async (req, res) => {
@@ -106,6 +107,20 @@ const acceptVoucher = async (req, res) => {
           req.body.AccountDepartment,
           voucherId
         );
+        const addUSerResponse = await axios.post(
+          `https://${process.env.COMPANY_DOMAIN}/rest/im.chat.user.add`,
+          {
+            auth: req.body.token,
+
+            DIALOG_ID: `chat${updatedData.chatGroup}`, //append chat with chatgroup data
+            USERS: [req.body.AccountDepartment],
+          }
+        );
+        await sendMessageToGroup({
+          token: req.body.token,
+          message: `[b]Your voucher has been accepted by me and forwarded to the Accounts Department for final verification of voucher expenses and payment.once Voucher And Expenses Will be verified then Payment Process will start .[/b]`,
+          groupID: updatedData.chatGroup,
+        });
       }
       return res.status(200).json({ details: updatedData });
     }

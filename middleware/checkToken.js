@@ -22,7 +22,8 @@ const checkToken = async (req, res, next) => {
         });
         if (getUser) {
           req.body.userId = response.data.result.ID;
-          console.log(getUser)
+      
+          console.log(getUser);
           req.role = getUser.isAdmin
             ? "Admin"
             : getUser.paymentAdmin

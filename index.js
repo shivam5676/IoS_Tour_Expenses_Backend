@@ -63,6 +63,7 @@ assignedVoucher.belongsTo(Vouchers);
 userTable.hasMany(assignedVoucher);
 assignedVoucher.belongsTo(userTable);
 
+
 app.use(express.static(builtPath));
 app.use(bodyParser.json({ extended: false, limit: "30mb" }));
 app.use("/admin", adminRoutes);
@@ -79,6 +80,8 @@ app.get("*", (req, res) => {
   console.log(path.join(__dirname, "build/index.html"));
   res.sendFile(path.join(__dirname, "build/index.html"));
 });
+
+
 db.sync({ force: !true })
   .then(async () => {
     app.listen(2000, () => {});

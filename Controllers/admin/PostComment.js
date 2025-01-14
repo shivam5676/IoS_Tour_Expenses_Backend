@@ -3,7 +3,7 @@ const Vouchers = require("../../models/VoucherTable");
 const userTable = require("../../models/userTable");
 const dontenv = require("dotenv").config();
 const postComment = async (req, res) => {
-  console.log("first")
+  console.log("first");
   if (req.role != "Admin" && req.role != "paymentAdmin") {
     return res.status(400).json({ msg: "You are not a authorised user" });
   }
@@ -31,18 +31,18 @@ const postComment = async (req, res) => {
       }
     );
 
-    const tourVoucherPersonName =
-      voucherData?.user?.dataValues?.firstName +
-      voucherData?.user?.dataValues?.lastName;
-
-      const tourVoucherPersonId=voucherData?.user?.dataValues?.id
-
+    
     const userInfo = await userTable.findOne({
       where: {
         id: req.body.userId,
       },
-      attributes: ["firstName", "lastName", "chatGroup", "id"],
+      attributes: ["firstName", "lastName", "id"],
     });
+    const tourVoucherPersonName =
+      voucherData?.user?.dataValues?.firstName +
+      voucherData?.user?.dataValues?.lastName;
+
+    const tourVoucherPersonId = voucherData?.user?.dataValues?.id;
 
     let chatTitle = `TourVoucher_Disputes (${voucherData.tourLocation}-${voucherData.tourDate})`;
     let entityId = `${tourVoucherPersonId}${voucherId}`;
@@ -75,10 +75,10 @@ const postComment = async (req, res) => {
 This group has been created to handle all your tour-related concerns. You can directly coordinate with the Voucher Handling Admin and other authorities for this tour only.\n\n
 
 [b]Tour Details:[/b]\n
--[b]user name [/b] ${tourVoucherPersonName}
-- [b]Location:[/b] ${voucherData.tourLocation}\n
-- [b]Creation Date:[/b] ${voucherData.tourDate}\n
-- [b]Voucher ID:[/b] ${voucherData.id}\n\n
+- [b]user name : [/b] ${tourVoucherPersonName}
+- [b]Location :[/b] ${voucherData.tourLocation}\n
+- [b]Creation Date :[/b] ${voucherData.tourDate}\n
+- [b]Voucher ID :[/b] ${voucherData.id}\n\n
 
 [b]Tour Voucher Handling Instructions[/b]\n\n
  [b] - User can Edit and delete Any Expense If Voucher Status is Pending.If voucher  status is accepted/rejected/closed then User can not edit or delete any expense.[/b]\n
@@ -90,7 +90,7 @@ Note - If this tour does not belong to you, please send a message  and forward t
  [b]**Don't send message to any admin outside of this group regarding this tour Voucher.All of your tour related problems will be acknowleged  here only [/b] \n\n - [b]OMR INDIA OUTSOURCES PVT LTD[/b]`,
 
           MESSAGE: req.body.comment,
-          USERS: [tourVoucherPersonId, req.body.userId1],
+          USERS: [tourVoucherPersonId, req.body.userId],
           auth: req.body.token,
           ENTITY_ID: entityId,
           ENTITY_TYPE: entityType,

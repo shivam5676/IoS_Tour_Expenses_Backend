@@ -1,5 +1,6 @@
 const assignedVoucher = require("../../models/assignedVoucher");
 const Vouchers = require("../../models/VoucherTable");
+const sendMessageToGroup = require("../../services/sendMEssageToGRoup");
 
 module.exports = async (req, res) => {
   const { voucherId, statusTo, statusFrom, userId } = req.body;
@@ -59,12 +60,21 @@ module.exports = async (req, res) => {
       });
 
       await assignedVoucherResponse.update({ status: statusTo });
+      await sendMessageToGroup({
+        token: req.body.token,
+        message: `Your Voucher Status has been changed From [b]${statusFrom}[/b] to [b]${statusTo}[/b].${
+          statusTo == "Pending"
+            ? "Now You Can update or delete  the previous  Expenses and Data "
+            : ""
+        }`,
+        groupID: updatedData.chatGroup,
+      });
     }
     if (statusFrom == "Rejected") {
       const updatedData = await Vouchers.findOne({
         where: { id: voucherId, statusType: "Rejected" },
       });
-      console.log(updatedData);
+
       if (!updatedData) {
         return res
           .status(400)
@@ -83,6 +93,15 @@ module.exports = async (req, res) => {
       });
       // console.log(response, "res.....")
       await assignedVoucherResponse.update({ status: statusTo });
+      await sendMessageToGroup({
+        token: req.body.token,
+        message: `Your Voucher Status has been changed From [b]${statusFrom}[/b] to [b]${statusTo}[/b].${
+          statusTo == "Pending"
+            ? "Now You Can update or delete  the previous  Expenses and Data "
+            : ""
+        }`,
+        groupID: updatedData.chatGroup,
+      });
     }
     if (statusFrom == "Closed") {
       const updatedData = await Vouchers.findOne(
@@ -109,10 +128,21 @@ module.exports = async (req, res) => {
       });
       // console.log(response, "res.....")
       await assignedVoucherResponse.update({ status: statusTo });
+      await sendMessageToGroup({
+        token: req.body.token,
+        message: `Your Voucher Status has been changed From [b]${statusFrom}[/b] to [b]${statusTo}[/b].${
+          statusTo == "Pending"
+            ? "Now You Can update or delete  the previous  Expenses and Data "
+            : ""
+        }`,
+        groupID: updatedData.chatGroup,
+      });
     }
+
     return res.status(200).json({ msg: "successfullly status changed" });
   } catch (error) {
     console.log(error);
+
     return res.status(400).json({ msg: "error", error });
   }
 };
