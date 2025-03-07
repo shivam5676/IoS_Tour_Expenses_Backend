@@ -10,6 +10,9 @@ const acceptVoucher = async (req, res) => {
   if (!req.body.userId) {
     return res.status(400).json({ msg: "invalid user  ...." });
   }
+  if (req.role != "Admin" && req.role != "paymentAdmin") {
+    return res.status(400).json({ msg: "You are not a authorised user" });
+  }
   // this check will insure that if no assigned id found then it will found atleast account department id
   if (!req.body.assignedTo) {
     if (!req.body.AccountDepartment) {

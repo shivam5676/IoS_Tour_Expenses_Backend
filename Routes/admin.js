@@ -35,6 +35,8 @@ const assignVoucherToPaymentAdmin = require("../middleware/assignVoucherToPaymen
 const checkPaymentAdmin = require("../middleware/checkPaymentAdmin");
 const givePaymentReviewPermission = require("../Controllers/admin/givePaymentReviewPermission");
 const removePaymentReviewPermission = require("../Controllers/admin/removePaymentREviewPErmission");
+const VerifyVoucher = require("../Controllers/admin/verifyVoucher");
+const assignVoucherToVerifier = require("../middleware/assignVoucherToVerifier");
 const upload = multer();
 
 // routes.post("/createUser", checkToken, checkAdmin, createUser);
@@ -58,6 +60,7 @@ routes.post("/year", checkToken, getYearData);
 routes.post("/user", checkToken, getUserReport);
 
 routes.post("/trackVoucher", checkToken, trackVoucherStatus);
+routes.post("/verifyVoucher",checkToken,assignVoucherToPaymentAdmin,VerifyVoucher)
 routes.post(
   "/acceptVoucher",
 

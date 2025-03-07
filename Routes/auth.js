@@ -127,6 +127,7 @@ routes.get("/callback/:code", async (req, res) => {
             supervisor: supervisor,
             profilePic: userDetails.data.result.PERSONAL_PHOTO,
             paymentAdmin: false,
+            voucherVerifier: false,
           });
           return res.status(200).json({
             data: {
@@ -145,6 +146,7 @@ routes.get("/callback/:code", async (req, res) => {
               id: tokenResponse.data.user_id,
               profilePic: userDetails.data.result.PERSONAL_PHOTO,
               paymentAdmin: false,
+              voucherVerifier: false,
             },
           });
         } catch (err) {
@@ -200,6 +202,7 @@ routes.get("/callback/:code", async (req, res) => {
             id: tokenResponse.data.user_id,
             profilePic: userDetails.data.result.PERSONAL_PHOTO,
             paymentAdmin: userValid.paymentAdmin,
+            voucherVerifier: userValid.voucherVerifier,
           },
         });
       }

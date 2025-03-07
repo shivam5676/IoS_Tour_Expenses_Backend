@@ -22,19 +22,21 @@ const checkToken = async (req, res, next) => {
         });
         if (getUser) {
           req.body.userId = response.data.result.ID;
-      
+
           console.log(getUser);
           req.role = getUser.isAdmin
             ? "Admin"
             : getUser.paymentAdmin
             ? "paymentAdmin"
+            : getUser.voucherVerifier
+            ? "voucherVerifier"
             : "";
         }
       } else {
         req.body.userId = undefined;
       }
       req.body.UF_Department_Id = response.data.result.UF_DEPARTMENT[0];
-
+console.log(req.role,"kjhfdkdjkfhsjkfhcjdfjgshji")
       next();
       //   return res.status(200).json({ valid: true, user: response.data.result });
     } else {
@@ -52,7 +54,10 @@ const checkToken = async (req, res, next) => {
 
     return res
       .status(500)
-      .json({ valid: false, error: "An unknown error occurred." });
+      .json({
+        valid: false,
+        error: "An unknown error occurred at the time of token verification",
+      });
   }
 };
 module.exports = checkToken;

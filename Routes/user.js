@@ -17,6 +17,7 @@ const multer = require("multer");
 const voucherAssigningList = require("../Controllers/admin/voucherAssigningList");
 const checkAdmin = require("../middleware/checkAdmin");
 const assignVoucherToPaymentAdmin = require("../middleware/assignVoucherToPaymentAdmin");
+const assignVoucherToVerifier = require("../middleware/assignVoucherToVerifier");
 const upload = multer();
 
 const routes = express.Router();
@@ -34,7 +35,8 @@ routes.post("/getTourExpenses", checkToken, getTourExpenses);
 routes.post(
   "/addDetails",
   checkToken,
-  assignVoucherToPaymentAdmin,
+  // assignVoucherToPaymentAdmin,
+  assignVoucherToVerifier,
   addTourDetails
 );
 routes.post("/getPendingVouchers", checkToken, getPendingVoucher);

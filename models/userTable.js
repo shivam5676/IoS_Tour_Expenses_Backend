@@ -43,6 +43,10 @@ const userTable = Sequelize.define("users", {
     allowNull: true, // Change to `false` if the column should be mandatory
     defaultValue: false, // Set a default value if needed
   },
+  voucherVerifier: {
+    type: sequelize.BOOLEAN,
+    defaultValue: false,
+  },
 });
 // console.log("i am inside user table");
 

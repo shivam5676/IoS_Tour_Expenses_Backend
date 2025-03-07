@@ -4,7 +4,7 @@ const userTable = require("../../models/userTable");
 
 const getAllVoucher = async (req, res) => {
   console.log(req.role)
-  if (req.role != "Admin" && req.role!="paymentAdmin") {
+  if (req.role != "Admin" && req.role!="paymentAdmin"&&req.role!="voucherVerifier") {
     return res.status(400).json({ msg: "You are not a authorised user" });
   }
   if (!req.body.userId) {

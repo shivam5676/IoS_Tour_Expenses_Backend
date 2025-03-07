@@ -81,7 +81,7 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "build/index.html"));
 });
 
-db.sync({ force: !true })
+db.sync()
   .then(async () => {
     app.listen(2000, () => {});
   })
