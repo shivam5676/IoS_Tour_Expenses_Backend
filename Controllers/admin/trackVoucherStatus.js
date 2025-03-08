@@ -43,6 +43,7 @@ const trackVoucherStatus = async (req, res) => {
             images.push(dataUrl);
           } catch (err) {
             console.error("Error reading image file:", err);
+            throw new Error("err while loading image")
           }
         }
       })

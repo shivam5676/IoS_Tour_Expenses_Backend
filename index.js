@@ -64,6 +64,8 @@ userTable.hasMany(assignedVoucher);
 assignedVoucher.belongsTo(userTable);
 
 
+
+
 app.use(express.static(builtPath));
 app.use(bodyParser.json({ extended: false, limit: "30mb" }));
 app.use("/admin", adminRoutes);
@@ -75,6 +77,7 @@ app.post("/", (req, res) => {
   console.log(path.join(__dirname, "build/index.html"));
   res.sendFile(path.join(__dirname, "build/index.html"));
 });
+
 app.get("*", (req, res) => {
   //for bitrix redirecting
   console.log(path.join(__dirname, "build/index.html"));

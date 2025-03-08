@@ -37,6 +37,8 @@ const givePaymentReviewPermission = require("../Controllers/admin/givePaymentRev
 const removePaymentReviewPermission = require("../Controllers/admin/removePaymentREviewPErmission");
 const VerifyVoucher = require("../Controllers/admin/verifyVoucher");
 const assignVoucherToVerifier = require("../middleware/assignVoucherToVerifier");
+const giveVoucherVerifyPermission = require("../Controllers/admin/giveVoucherVerifyPermission");
+const removeVoucherVerifyPermission = require("../Controllers/admin/removeVoucherVerifyPermission");
 const upload = multer();
 
 // routes.post("/createUser", checkToken, checkAdmin, createUser);
@@ -99,6 +101,8 @@ routes.post("/assignAsAdmin", checkToken, superAdmin, assignAdmin);
 routes.post("/removeAsAdmin", checkToken, superAdmin, deleteAdmin);
 routes.post("/givePaymentHandlingPermission", checkToken, superAdmin, givePaymentReviewPermission);
 routes.post("/removePaymentHandlingPermission", checkToken, superAdmin, removePaymentReviewPermission);
+routes.post("/giveVoucherVerifyPermission", checkToken, superAdmin, giveVoucherVerifyPermission);
+routes.post("/removeVoucherVerifyPermission", checkToken, superAdmin, removeVoucherVerifyPermission);
 routes.post("/getPaymentVoucher", checkToken, getPaymentVoucher);
 routes.post("/getClosedVoucher", checkToken, getClosedVoucher);
 routes.post("/deleteUser", checkToken, deleteUser);
