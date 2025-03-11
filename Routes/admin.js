@@ -62,7 +62,12 @@ routes.post("/year", checkToken, getYearData);
 routes.post("/user", checkToken, getUserReport);
 
 routes.post("/trackVoucher", checkToken, trackVoucherStatus);
-routes.post("/verifyVoucher",checkToken,assignVoucherToPaymentAdmin,VerifyVoucher)
+routes.post(
+  "/verifyVoucher",
+  checkToken,
+  assignVoucherToPaymentAdmin,
+  VerifyVoucher
+);
 routes.post(
   "/acceptVoucher",
 
@@ -99,10 +104,28 @@ routes.post("/getSuperVisor", checkToken, getSuperVisor);
 routes.post("/reAssign", checkToken, reAssignVoucher);
 routes.post("/assignAsAdmin", checkToken, superAdmin, assignAdmin);
 routes.post("/removeAsAdmin", checkToken, superAdmin, deleteAdmin);
-routes.post("/givePaymentHandlingPermission", checkToken, superAdmin, givePaymentReviewPermission);
-routes.post("/removePaymentHandlingPermission", checkToken, superAdmin, removePaymentReviewPermission);
-routes.post("/giveVoucherVerifyPermission", checkToken,  giveVoucherVerifyPermission);
-routes.post("/removeVoucherVerifyPermission", checkToken,  removeVoucherVerifyPermission);
+routes.post(
+  "/givePaymentHandlingPermission",
+  checkToken,
+  superAdmin,
+  givePaymentReviewPermission
+);
+routes.post(
+  "/removePaymentHandlingPermission",
+  checkToken,
+  superAdmin,
+  removePaymentReviewPermission
+);
+routes.post(
+  "/giveVoucherVerifyPermission",
+  checkToken,
+  giveVoucherVerifyPermission
+);
+routes.post(
+  "/removeVoucherVerifyPermission",
+  checkToken,
+  removeVoucherVerifyPermission
+);
 routes.post("/getPaymentVoucher", checkToken, getPaymentVoucher);
 routes.post("/getClosedVoucher", checkToken, getClosedVoucher);
 routes.post("/deleteUser", checkToken, deleteUser);
