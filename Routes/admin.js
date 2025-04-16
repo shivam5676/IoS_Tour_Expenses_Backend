@@ -5,7 +5,7 @@ const getUser = require("../Controllers/admin/getUser");
 const getUsersVouchers = require("../Controllers/admin/getUsersVouchers");
 const viewVoucher = require("../Controllers/admin/viewVoucher");
 const getAllUser = require("../Controllers/admin/getAllUser");
-const getAllVoucher = require("../Controllers/admin/getAllVoucher");
+const getAllPendingVoucher = require("../Controllers/admin/getAllPendingVoucher");
 const getYearData = require("../Controllers/admin/getYearData");
 const trackVoucherStatus = require("../Controllers/admin/trackVoucherStatus");
 const acceptVoucher = require("../Controllers/admin/acceptVoucher");
@@ -39,6 +39,8 @@ const VerifyVoucher = require("../Controllers/admin/verifyVoucher");
 const assignVoucherToVerifier = require("../middleware/assignVoucherToVerifier");
 const giveVoucherVerifyPermission = require("../Controllers/admin/giveVoucherVerifyPermission");
 const removeVoucherVerifyPermission = require("../Controllers/admin/removeVoucherVerifyPermission");
+const getAllRejectedVoucher = require("../Controllers/admin/getAllRejectedVoucher");
+const getAllAcceptedVoucher = require("../Controllers/admin/getAllAcceptedVoucher");
 const upload = multer();
 
 // routes.post("/createUser", checkToken, checkAdmin, createUser);
@@ -53,10 +55,21 @@ routes.post(
   viewVoucher
 );
 routes.post(
-  "/allVoucher",
+  "/allPendingVoucher",
   checkToken,
 
-  getAllVoucher
+  getAllPendingVoucher
+);
+routes.post(
+  "/allAcceptedVoucher",
+  checkToken,
+  getAllAcceptedVoucher
+);
+routes.post(
+  "/allRejectedVoucher",
+  checkToken,
+
+  getAllRejectedVoucher
 );
 routes.post("/year", checkToken, getYearData);
 routes.post("/user", checkToken, getUserReport);

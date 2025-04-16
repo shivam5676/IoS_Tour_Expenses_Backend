@@ -2,9 +2,13 @@ const Vouchers = require("../../models/VoucherTable");
 const assignedVoucher = require("../../models/assignedVoucher");
 const userTable = require("../../models/userTable");
 
-const getAllVoucher = async (req, res) => {
-  console.log(req.role)
-  if (req.role != "Admin" && req.role!="paymentAdmin"&&req.role!="voucherVerifier") {
+const getAllRejectedVoucher = async (req, res) => {
+  console.log(req.role);
+  if (
+    req.role != "Admin" &&
+    req.role != "paymentAdmin" &&
+    req.role != "voucherVerifier"
+  ) {
     return res.status(400).json({ msg: "You are not a authorised user" });
   }
   if (!req.body.userId) {
@@ -14,6 +18,7 @@ const getAllVoucher = async (req, res) => {
   try {
     const response = await assignedVoucher.findAll({
       where: {
+        status:"Rejected",
         assignedTo: req.body.userId,
       },
       include: [
@@ -22,12 +27,12 @@ const getAllVoucher = async (req, res) => {
       ],
     });
     if (response.length == 0) {
-      return res.status(200).json({ userList: [], msg: "no voucher found" });
+      return res.status(200).json({ userData: [], msg: "no voucher found" });
     }
 
-    return res.status(200).json({ userList: response });
+    return res.status(200).json({ userData: response });
   } catch (err) {
-    return res.status(400).json({ msg: "something went wrong",err:err });
+    return res.status(400).json({ msg: "something went wrong", err: err });
   }
 };
-module.exports = getAllVoucher;
+module.exports = getAllRejectedVoucher;
