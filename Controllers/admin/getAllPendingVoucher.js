@@ -18,6 +18,7 @@ const getAllPendingVoucher = async (req, res) => {
   try {
     const response = await assignedVoucher.findAll({
       where: {
+        status: "Pending",
         assignedTo: req.body.userId,
       },
       include: [
